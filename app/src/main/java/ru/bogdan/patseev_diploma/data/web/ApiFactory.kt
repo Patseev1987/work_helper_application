@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object ApiFactory {
-    private val BASE_URL = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/"
+    private val BASE_URL = "https://10.10.0.101:1337/api"
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
