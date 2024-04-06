@@ -1,7 +1,8 @@
-package ru.bogdan.patseev_diploma
+package ru.bogdan.patseev_diploma.presentor
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.bogdan.patseev_diploma.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
