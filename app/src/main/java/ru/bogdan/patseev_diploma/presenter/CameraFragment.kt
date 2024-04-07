@@ -34,7 +34,7 @@ class CameraFragment : Fragment() {
                     "Permissions is not granted",
                     Toast.LENGTH_SHORT
                 ).show()
-                this.requireActivity().finish()
+                this@CameraFragment.requireActivity().onBackPressed()
             }
         }
     }
@@ -44,10 +44,15 @@ class CameraFragment : Fragment() {
     private lateinit var executor: Executor
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        executor = this.requireContext().mainExecutor
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         checkPermissions()
         _binding = FragmentCameraBinding.inflate(inflater, container, false)
         return binding.root
