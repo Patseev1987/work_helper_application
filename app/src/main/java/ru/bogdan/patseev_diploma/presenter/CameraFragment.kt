@@ -10,18 +10,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.Preview
+import androidx.annotation.OptIn
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.google.common.util.concurrent.ListenableFuture
+import com.google.mlkit.vision.barcode.BarcodeScanner
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
-import ru.bogdan.patseev_diploma.R
+import com.google.mlkit.vision.common.InputImage
 import ru.bogdan.patseev_diploma.databinding.FragmentCameraBinding
 import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class CameraFragment : Fragment() {
 
@@ -46,6 +50,8 @@ class CameraFragment : Fragment() {
     private var imageCapture: ImageCapture? = null
 
     private lateinit var executor: Executor
+
+    private lateinit var imageAnalyzer: ImageAnalysis
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +87,7 @@ class CameraFragment : Fragment() {
     }
 
 
+    @OptIn(ExperimentalGetImage::class)
     private fun startCamera(binding: FragmentCameraBinding, executor: Executor) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this.requireContext())
         cameraProviderFuture.addListener({
@@ -89,15 +96,48 @@ class CameraFragment : Fragment() {
             preview.setSurfaceProvider(binding.cameraViewFinder.surfaceProvider)
             imageCapture = ImageCapture.Builder().build()
 
+            val barcodeScanner = BarcodeScanning.getClient(
+                BarcodeScannerOptions.Builder()
+                    .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+                    .build()
+            )
+
+            imageAnalyzer = ImageAnalysis.Builder()
+                .setTargetRotation(binding.cameraViewFinder.display.rotation)
+                .build()
+
+            var imageAnalysis = ImageAnalysis.Analyzer { imageProxy ->
+                val image = imageProxy.image ?: return@Analyzer
+                val inputImage = InputImage.fromMediaImage(imageProxy.image!!, imageProxy.imageInfo.rotationDegrees)
+                barcodeScanner.process(inputImage).addOnSuccessListener { barcodes ->
+                    barcodes.firstOrNull()?.let {
+                        binding.twInformation.text = it.rawValue
+                    }
+                }.addOnCompleteListener {
+                    imageProxy.close()
+                }
+            }
+            imageAnalyzer.setAnalyzer(executor,imageAnalysis)
+
+
+
+
+
+
+
+
             cameraProvider.unbindAll()
             cameraProvider.bindToLifecycle(
                 this,
                 CameraSelector.DEFAULT_BACK_CAMERA,
                 preview,
                 imageCapture,
+                imageAnalyzer
             )
         }, executor)
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()

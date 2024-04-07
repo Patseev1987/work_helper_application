@@ -6,6 +6,7 @@ abstract class Tool(
    open val description: String,
    open val notes: String?,
    open val icon: String,
+   open val place: Place
 ) {
 
 }

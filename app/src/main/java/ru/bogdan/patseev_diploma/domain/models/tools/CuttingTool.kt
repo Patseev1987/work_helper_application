@@ -8,6 +8,6 @@ import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
      override val description: String,
      override val notes:String? = null,
      val type:ToolType,
-     override val icon:String
-    ): Tool(code, name, description, notes,icon) {
-}
+     override val icon:String,
+     override val place: Place
+    ): Tool(code, name, description, notes,icon, place)

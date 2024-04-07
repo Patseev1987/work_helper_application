@@ -10,6 +10,7 @@ class MeasureTool(
     override val  notes: String?,
     val type: ToolType = ToolType.MEASURE,
     val dateNextCheck: LocalDate,
-    override val icon:String
-) : Tool(code, name, description, notes,icon) {
+    override val icon:String,
+    override val place: Place
+) : Tool(code, name, description, notes,icon, place) {
 }
