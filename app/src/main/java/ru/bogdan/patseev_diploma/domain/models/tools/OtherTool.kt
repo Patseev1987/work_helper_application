@@ -7,6 +7,7 @@ class OtherTool(
     override val  name: String,
     override val  description: String,
     override val  notes: String?,
-    val type:ToolType = ToolType.HELPERS
-): Tool(code, name, description, notes) {
+    val type:ToolType = ToolType.HELPERS,
+    override val icon:String
+): Tool(code, name, description, notes, icon) {
 }

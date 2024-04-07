@@ -5,4 +5,8 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="sing_in">Sing in</string>
+    <string name="tool_icon">tool icon</string>
+    <string name="code">Code:</string>
+    <string name="description">Description:</string>
+    <string name="name">Name:</string>
 </resources>

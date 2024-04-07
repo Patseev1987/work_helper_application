@@ -5,6 +5,7 @@ abstract class Tool(
    open val name: String,
    open val description: String,
    open val notes: String?,
+   open val icon: String,
 ) {
 
 }
