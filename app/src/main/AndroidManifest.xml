@@ -20,7 +20,7 @@
             android:theme="@style/Theme.Patseev_Diploma"
             tools:targetApi="31">
         <activity
-                android:name=".presentor.MainActivity"
+                android:name=".presenter.MainActivity"
                 android:windowSoftInputMode="adjustResize"
                 android:exported="true">
             <intent-filter>

@@ -4,10 +4,19 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
             app:startDestination="@id/loginFragment">
 
-    <fragment android:id="@+id/loginFragment" android:name="ru.bogdan.patseev_diploma.presentor.LoginFragment"
+    <fragment android:id="@+id/loginFragment" android:name="ru.bogdan.patseev_diploma.presenter.LoginFragment"
               android:label="fragment_login" tools:layout="@layout/fragment_login">
         <action android:id="@+id/action_loginFragment_to_workerFragment" app:destination="@id/workerFragment"/>
+        <action android:id="@+id/action_loginFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
     </fragment>
-    <fragment android:id="@+id/workerFragment" android:name="ru.bogdan.patseev_diploma.presentor.WorkerFragment"
+    <fragment android:id="@+id/workerFragment" android:name="ru.bogdan.patseev_diploma.presenter.WorkerFragment"
               android:label="fragment_user" tools:layout="@layout/fragment_worker"/>
+    <fragment android:id="@+id/recycleViewToolsFragment"
+              android:name="ru.bogdan.patseev_diploma.presenter.RecycleViewToolsFragment"
+              android:label="fragment_recycle_view_tools" tools:layout="@layout/fragment_recycle_view_tools"/>
+    <fragment android:id="@+id/transactionFragment"
+              android:name="ru.bogdan.patseev_diploma.presenter.TransactionFragment"
+              android:label="fragment_transaction" tools:layout="@layout/fragment_transaction"/>
+    <fragment android:id="@+id/cameraFragment" android:name="ru.bogdan.patseev_diploma.presenter.CameraFragment"
+              android:label="fragment_camera" tools:layout="@layout/fragment_camera"/>
 </navigation>

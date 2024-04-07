@@ -1,4 +1,4 @@
-package ru.bogdan.patseev_diploma.presentor
+package ru.bogdan.patseev_diploma.presenter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

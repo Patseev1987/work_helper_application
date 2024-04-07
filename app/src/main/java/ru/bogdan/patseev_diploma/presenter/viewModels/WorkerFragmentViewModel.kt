@@ -1,4 +1,4 @@
-package ru.bogdan.patseev_diploma.presentor.viewModels
+package ru.bogdan.patseev_diploma.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
 
