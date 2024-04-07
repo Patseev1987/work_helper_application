@@ -15,6 +15,10 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
+import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
+import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentCameraBinding
 import java.util.concurrent.Executor
@@ -27,7 +31,7 @@ class CameraFragment : Fragment() {
     private val launcher by lazy {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { map ->
             if (map.values.all { it }) {
-                startCamera(executor)
+                startCamera(binding, executor)
             } else {
                 Toast.makeText(
                     this.requireContext(),
@@ -53,8 +57,8 @@ class CameraFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        checkPermissions()
         _binding = FragmentCameraBinding.inflate(inflater, container, false)
+        checkPermissions()
         return binding.root
     }
 
@@ -70,14 +74,14 @@ class CameraFragment : Fragment() {
                 "Permission is granted",
                 Toast.LENGTH_SHORT
             ).show()
-            startCamera(executor)
+            startCamera(binding, executor)
         } else {
             launcher.launch(REQUEST_PERMISSIONS)
         }
     }
 
 
-    private fun startCamera(executor: Executor) {
+    private fun startCamera(binding: FragmentCameraBinding, executor: Executor) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this.requireContext())
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
@@ -99,6 +103,19 @@ class CameraFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+
+    fun scanning(): GmsBarcodeScanner {
+        val options = GmsBarcodeScannerOptions.Builder()
+            .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+            .build()
+
+        val scanner = GmsBarcodeScanning.getClient(this.requireContext(),options)
+
+       return scanner
+    }
+
+
 
     companion object {
         private val REQUEST_PERMISSIONS: Array<String> = buildList {
