@@ -16,6 +16,7 @@
         <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
         <action android:id="@+id/action_workerFragment_to_recycleViewToolsFragment"
                 app:destination="@id/recycleViewToolsFragment"/>
+        <action android:id="@+id/action_workerFragment_to_helpFragment2" app:destination="@id/helpFragment2"/>
     </fragment>
     <fragment android:id="@+id/recycleViewToolsFragment"
               android:name="ru.bogdan.patseev_diploma.presenter.RecycleViewToolsFragment"
@@ -34,9 +35,12 @@
                 app:destination="@id/recycleViewToolsFragment"/>
         <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
         <action android:id="@+id/action_storageWorkerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
+        <action android:id="@+id/action_storageWorkerFragment_to_helpFragment2" app:destination="@id/helpFragment2"/>
     </fragment>
     <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
         <argument android:name="tool" app:argType="ru.bogdan.patseev_diploma.domain.models.tools.Tool"/>
     </fragment>
+    <fragment android:id="@+id/helpFragment2" android:name="ru.bogdan.patseev_diploma.presenter.HelpFragment"
+              android:label="fragment_help" tools:layout="@layout/fragment_help"/>
 </navigation>

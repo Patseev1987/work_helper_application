@@ -87,7 +87,7 @@ class RecycleViewToolsFragment : Fragment() {
             "Ivanich",
             LocalDate.now(),
             Department.DEPARTMENT_19,
-            WorkerType.CONTROLLER
+            WorkerType.STORAGE_WORKER
         )
         val worker3 = Worker(
             1,
@@ -96,7 +96,7 @@ class RecycleViewToolsFragment : Fragment() {
             "Ivanich",
             LocalDate.now(),
             Department.DEPARTMENT_19,
-            WorkerType.MANAGER
+            WorkerType.STORAGE_WORKER
         )
 
         val workers = listOf(worker1, worker2, worker3)
