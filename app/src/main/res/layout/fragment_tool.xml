@@ -56,23 +56,23 @@
             app:layout_constraintBottom_toBottomOf="@+id/tw_name_label"/>
 
     <TextView
-            android:id="@+id/tw_amount_label"
+            android:id="@+id/tw_place_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            tools:text="Amount: "
+            android:text="@string/place"
             app:layout_constraintTop_toBottomOf="@+id/icon"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tw_amount"/>
+            app:layout_constraintEnd_toStartOf="@+id/tw_place"/>
     <TextView
-            android:id="@+id/tw_amount"
+            android:id="@+id/tw_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
             tools:text="25"
-            app:layout_constraintTop_toTopOf="@+id/tw_amount_label"
-            app:layout_constraintStart_toEndOf="@+id/tw_amount_label"
+            app:layout_constraintTop_toTopOf="@+id/tw_place_label"
+            app:layout_constraintStart_toEndOf="@+id/tw_place_label"
             app:layout_constraintEnd_toEndOf="parent"/>
 
 

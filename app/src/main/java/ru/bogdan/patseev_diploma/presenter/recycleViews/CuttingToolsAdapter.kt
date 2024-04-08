@@ -5,14 +5,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
-import ru.bogdan.patseev_diploma.domain.models.tools.CuttingTool
-import ru.bogdan.patseev_diploma.domain.models.tools.MeasureTool
 
 class CuttingToolsAdapter(private val onClickListener: ((StorageRecord) -> Unit)? = null) :
     ListAdapter<StorageRecord, CuttingToolsAdapter.CuttingToolViewHolder>(DiffCallbackCuttingTool()) {
@@ -20,7 +17,7 @@ class CuttingToolsAdapter(private val onClickListener: ((StorageRecord) -> Unit)
     class CuttingToolViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView) {
         private val twName = itemView.findViewById<TextView>(R.id.tw_name)
         private val twCode = itemView.findViewById<TextView>(R.id.tw_code)
-        private val twAmount = itemView.findViewById<TextView>(R.id.tw_amount)
+        private val twAmount = itemView.findViewById<TextView>(R.id.tw_place)
         private val iwIcon = itemView.findViewById<ImageView>(R.id.icon)
 
         fun bind(storageRecord: StorageRecord, onClickListener: ((StorageRecord) -> Unit)? = null) {
