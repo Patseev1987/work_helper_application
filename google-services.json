@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "495414621651",
+    "project_id": "diploma-1ed0b",
+    "storage_bucket": "diploma-1ed0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495414621651:android:3550c09b83a5bdbbeaab26",
+        "android_client_info": {
+          "package_name": "ru.diploma.patseev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ51930nPxRyExpFA9dMpyauEajNdPWm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
