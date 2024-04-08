@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("androidx.navigation.safeargs")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -90,4 +91,6 @@ dependencies {
     implementation ("com.google.android.gms:play-services-code-scanner:16.1.0")
     implementation ("com.google.mlkit:barcode-scanning:17.2.0")
 
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    implementation("com.google.firebase:firebase-analytics")
 }
