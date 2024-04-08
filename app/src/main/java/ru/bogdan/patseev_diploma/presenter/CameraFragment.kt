@@ -1,11 +1,13 @@
 package ru.bogdan.patseev_diploma.presenter
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -53,7 +55,6 @@ class CameraFragment : Fragment() {
 
     private lateinit var imageAnalyzer: ImageAnalysis
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         executor = this.requireContext().mainExecutor
@@ -68,6 +69,10 @@ class CameraFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setOnTouchListener(binding)
+    }
 
     private fun checkPermissions() {
         val isAlLGranted = REQUEST_PERMISSIONS.all { permission ->
@@ -85,7 +90,6 @@ class CameraFragment : Fragment() {
             launcher.launch(REQUEST_PERMISSIONS)
         }
     }
-
 
     @OptIn(ExperimentalGetImage::class)
     private fun startCamera(binding: FragmentCameraBinding, executor: Executor) {
@@ -119,13 +123,6 @@ class CameraFragment : Fragment() {
             }
             imageAnalyzer.setAnalyzer(executor,imageAnalysis)
 
-
-
-
-
-
-
-
             cameraProvider.unbindAll()
             cameraProvider.bindToLifecycle(
                 this,
@@ -137,24 +134,27 @@ class CameraFragment : Fragment() {
         }, executor)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setOnTouchListener(binding: FragmentCameraBinding){
+        binding.twInformation.setOnTouchListener { v, event ->
+            val action = event.action
+            when(action){
+                MotionEvent.ACTION_MOVE -> {
+                    v.x += event.x
+                    v.y += event.y
+                }
+            }
+            true
+        }
+    }
+
+
 
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
-
-    fun scanning(): GmsBarcodeScanner {
-        val options = GmsBarcodeScannerOptions.Builder()
-            .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-            .build()
-
-        val scanner = GmsBarcodeScanning.getClient(this.requireContext(),options)
-
-       return scanner
-    }
-
 
 
     companion object {
