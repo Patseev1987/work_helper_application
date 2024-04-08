@@ -1,8 +1,10 @@
 package ru.bogdan.patseev_diploma.domain.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import ru.bogdan.patseev_diploma.domain.models.tools.Tool
 import java.time.LocalDateTime
-
+@Parcelize
 data class Transaction(
     val id:Long,
     val from:Worker,
@@ -11,5 +13,5 @@ data class Transaction(
     val tool:Tool,
     val amount:Int,
     val note:String? = null
-) {
+): Parcelable {
 }

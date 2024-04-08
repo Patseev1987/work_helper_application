@@ -1,10 +1,12 @@
 package ru.bogdan.patseev_diploma.domain.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import java.time.LocalDate
 import java.time.LocalDateTime
-
+@Parcelize
 data class Worker(
     val id:Long,
     val firstName:String,
@@ -13,5 +15,5 @@ data class Worker(
     val joinDate: LocalDate,
     val department: Department,
     val type:WorkerType
-) {
+):Parcelable {
 }
