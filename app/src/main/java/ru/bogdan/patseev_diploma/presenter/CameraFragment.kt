@@ -136,19 +136,39 @@ class CameraFragment : Fragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setOnTouchListener(binding: FragmentCameraBinding){
-        binding.twInformation.setOnTouchListener { v, event ->
+        binding.cardView.setOnTouchListener { v, event ->
             val action = event.action
+
             when(action){
                 MotionEvent.ACTION_MOVE -> {
-                    v.x += event.x
-                    v.y += event.y
+                        v.x += event.x -(v.width/2)
+                        v.y += event.y -(v.height/2)
+                }
+                MotionEvent.ACTION_UP -> {
+                    checkConditionsPosition(v,binding)
+                }
+                else -> {
+
                 }
             }
             true
         }
     }
 
-
+private fun checkConditionsPosition(view: View,binding: FragmentCameraBinding){
+    if (view.x < 0 ){
+        view.x = 0f;
+    }
+    if (view.y < 0){
+        view.y = 0f;
+    }
+    if( view.x > binding.cameraViewFinder.width-view.width){
+        view.x = (binding.cameraViewFinder.width-view.width).toFloat()
+    }
+    if( view.y > binding.cameraViewFinder.height-view.height){
+        view.y = (binding.cameraViewFinder.height-view.height).toFloat()
+    }
+}
 
 
     override fun onDestroy() {
