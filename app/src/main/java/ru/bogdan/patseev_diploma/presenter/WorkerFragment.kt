@@ -38,16 +38,13 @@ class WorkerFragment : Fragment() {
     }
 
     private fun menu(binding: FragmentWorkerBinding) {
-        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.help_Fragment_menu -> {
-                    findNavController().navigate(R.id.action_workerFragment_to_helpFragment2)
-                    true
-                }
+//
 
-                else -> false
-            }
-        }
+
+
+
+
+
     }
 
 }
