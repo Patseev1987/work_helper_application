@@ -148,7 +148,6 @@ class CameraFragment : Fragment() {
                     checkConditionsPosition(v,binding)
                 }
                 else -> {
-
                 }
             }
             true

@@ -27,7 +27,8 @@ private var _binding:FragmentLoginBinding? =null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.bSingIn.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_cameraFragment)
+           // findNavController().navigate(R.id.action_loginFragment_to_cameraFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_recycleViewToolsFragment)
         }
     }
 

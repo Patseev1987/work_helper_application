@@ -5,7 +5,7 @@
         android:layout_margin="10dp"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +13,7 @@
             android:layout_height="wrap_content">
 
         <ImageView
-                android:id="@+id/icons"
+                android:id="@+id/icon"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 tools:src="@drawable/ic_launcher_background"
@@ -28,8 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                app:layout_constraintTop_toTopOf="@+id/icons"
-                app:layout_constraintStart_toEndOf="@+id/icons"/>
+                app:layout_constraintTop_toTopOf="@+id/icon"
+                app:layout_constraintStart_toEndOf="@+id/icon"/>
         <TextView
                 android:id="@+id/tw_code"
                 tools:text="1111-1111"
@@ -45,7 +45,7 @@
                 android:text="@string/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/icons"
+                app:layout_constraintBottom_toBottomOf="@+id/icon"
                 app:layout_constraintStart_toStartOf="@+id/tw_code_label"
                 app:layout_constraintTop_toBottomOf="@+id/tw_code_label"/>
         <TextView
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 tools:text="Amount: "
-                app:layout_constraintTop_toBottomOf="@+id/icons"
+                app:layout_constraintTop_toBottomOf="@+id/icon"
                 android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tw_amount"/>

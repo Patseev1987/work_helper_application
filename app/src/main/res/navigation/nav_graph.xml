@@ -8,6 +8,8 @@
               android:label="fragment_login" tools:layout="@layout/fragment_login">
         <action android:id="@+id/action_loginFragment_to_workerFragment" app:destination="@id/workerFragment"/>
         <action android:id="@+id/action_loginFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
+        <action android:id="@+id/action_loginFragment_to_recycleViewToolsFragment"
+                app:destination="@id/recycleViewToolsFragment"/>
     </fragment>
     <fragment android:id="@+id/workerFragment" android:name="ru.bogdan.patseev_diploma.presenter.WorkerFragment"
               android:label="fragment_user" tools:layout="@layout/fragment_worker"/>
