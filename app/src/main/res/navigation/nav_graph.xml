@@ -7,18 +7,36 @@
     <fragment android:id="@+id/loginFragment" android:name="ru.bogdan.patseev_diploma.presenter.LoginFragment"
               android:label="fragment_login" tools:layout="@layout/fragment_login">
         <action android:id="@+id/action_loginFragment_to_workerFragment" app:destination="@id/workerFragment"/>
-        <action android:id="@+id/action_loginFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
-        <action android:id="@+id/action_loginFragment_to_recycleViewToolsFragment"
-                app:destination="@id/recycleViewToolsFragment"/>
+        <action android:id="@+id/action_loginFragment_to_storageWorkerFragment"
+                app:destination="@id/storageWorkerFragment"/>
     </fragment>
     <fragment android:id="@+id/workerFragment" android:name="ru.bogdan.patseev_diploma.presenter.WorkerFragment"
-              android:label="fragment_user" tools:layout="@layout/fragment_worker"/>
+              android:label="fragment_user" tools:layout="@layout/fragment_worker">
+        <action android:id="@+id/action_workerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
+        <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
+        <action android:id="@+id/action_workerFragment_to_recycleViewToolsFragment"
+                app:destination="@id/recycleViewToolsFragment"/>
+    </fragment>
     <fragment android:id="@+id/recycleViewToolsFragment"
               android:name="ru.bogdan.patseev_diploma.presenter.RecycleViewToolsFragment"
-              android:label="fragment_recycle_view_tools" tools:layout="@layout/fragment_recycle_view_tools"/>
+              android:label="fragment_recycle_view_tools" tools:layout="@layout/fragment_recycle_view_tools">
+        <action android:id="@+id/action_recycleViewToolsFragment_to_toolFragment" app:destination="@id/toolFragment"/>
+    </fragment>
     <fragment android:id="@+id/transactionFragment"
               android:name="ru.bogdan.patseev_diploma.presenter.TransactionFragment"
               android:label="fragment_transaction" tools:layout="@layout/fragment_transaction"/>
     <fragment android:id="@+id/cameraFragment" android:name="ru.bogdan.patseev_diploma.presenter.CameraFragment"
               android:label="fragment_camera" tools:layout="@layout/fragment_camera"/>
+    <fragment android:id="@+id/storageWorkerFragment"
+              android:name="ru.bogdan.patseev_diploma.presenter.StorageWorkerFragment"
+              android:label="fragment_storage_worker" tools:layout="@layout/fragment_storage_worker">
+        <action android:id="@+id/action_storageWorkerFragment_to_recycleViewToolsFragment"
+                app:destination="@id/recycleViewToolsFragment"/>
+        <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
+        <action android:id="@+id/action_storageWorkerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
+    </fragment>
+    <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.ToolFragment"
+              android:label="fragment_tool" tools:layout="@layout/fragment_tool">
+        <argument android:name="tool" app:argType="ru.bogdan.patseev_diploma.domain.models.tools.Tool"/>
+    </fragment>
 </navigation>
