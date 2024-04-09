@@ -9,11 +9,17 @@
         android:fitsSystemWindows="true"
         tools:openDrawer="start"
         tools:context=".presenter.WorkerFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigate_view"
             app:menu="@menu/storage_worker_screen_menu"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
+            android:backgroundTint="@color/design_default_color_primary"
             android:fitsSystemWindows="true"
             android:layout_gravity="start"/>
 </androidx.drawerlayout.widget.DrawerLayout>
