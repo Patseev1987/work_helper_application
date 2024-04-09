@@ -17,7 +17,7 @@ class CuttingToolsAdapter(private val onClickListener: ((StorageRecord) -> Unit)
     class CuttingToolViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView) {
         private val twName = itemView.findViewById<TextView>(R.id.tw_name)
         private val twCode = itemView.findViewById<TextView>(R.id.tw_code)
-        private val twAmount = itemView.findViewById<TextView>(R.id.tw_place)
+        private val twAmount = itemView.findViewById<TextView>(R.id.tw_amount)
         private val iwIcon = itemView.findViewById<ImageView>(R.id.icon)
 
         fun bind(storageRecord: StorageRecord, onClickListener: ((StorageRecord) -> Unit)? = null) {

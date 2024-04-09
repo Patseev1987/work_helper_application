@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import ru.bogdan.m17_recyclerview.presentation.recycleView.CuttingToolsAdapter
 import ru.bogdan.patseev_diploma.R
-import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewToolsBinding
+import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewCuttingToolsBinding
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
@@ -20,10 +20,9 @@ import ru.bogdan.patseev_diploma.domain.models.tools.Tool
 import java.time.LocalDate
 
 
-class RecycleViewToolsFragment : Fragment() {
-    private var _binding: FragmentRecycleViewToolsBinding? = null
+class RecycleViewCuttingToolsFragment : Fragment() {
+    private var _binding:FragmentRecycleViewCuttingToolsBinding? = null
     private val binding get() = _binding!!
-
     val  records:List<StorageRecord>
     init {
         val tools = mutableListOf<Tool>()
@@ -135,24 +134,33 @@ class RecycleViewToolsFragment : Fragment() {
             worker3,cutter,1000
         )
 
-         records = listOf(storageRecord1, storageRecord2, storageRecord3, storageRecord4, storageRecord5, storageRecord6)
+        records = listOf(storageRecord1, storageRecord2, storageRecord3, storageRecord4, storageRecord5, storageRecord6)
 
     }
+
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRecycleViewToolsBinding.inflate(inflater, container, false)
+        _binding = FragmentRecycleViewCuttingToolsBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    val adapter = CuttingToolsAdapter()
+        val adapter = CuttingToolsAdapter()
         adapter.submitList(records)
-        binding.tools.adapter = adapter
+        binding.cuttingTools.adapter = adapter
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    companion object{
+        fun newInstance() = RecycleViewCuttingToolsFragment()
+    }
 }
