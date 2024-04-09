@@ -9,8 +9,8 @@ class OtherTool(
     override val  name: String,
     override val  description: String,
     override val  notes: String?,
-    val type:ToolType = ToolType.HELPERS,
+    override val type:ToolType = ToolType.HELPERS,
     override val icon:String,
     override val place: Place
-): Tool(code, name, description, notes, icon,place), Parcelable {
+): Tool(code, name, description, notes, icon,place, type), Parcelable {
 }

@@ -28,6 +28,15 @@ class RecycleViewCuttingToolsFragment : Fragment() {
     private var _binding: FragmentRecycleViewCuttingToolsBinding? = null
     private val binding get() = _binding!!
 
+    private var position: Int = 0
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        position = arguments?.let {
+            it.getInt(POSITION)
+        } ?: -1
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,9 +59,8 @@ class RecycleViewCuttingToolsFragment : Fragment() {
             findNavController().navigate(action)
 
 
-
         }
-        adapter.submitList(viewModel.records)
+        adapter.submitList(viewModel.getList(position))
         binding.cuttingTools.adapter = adapter
     }
 
@@ -62,6 +70,14 @@ class RecycleViewCuttingToolsFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = RecycleViewCuttingToolsFragment()
+        private const val POSITION = "position"
+
+        @JvmStatic
+        fun newInstance(position: Int) =
+            RecycleViewCuttingToolsFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(POSITION, position)
+                }
+            }
     }
 }

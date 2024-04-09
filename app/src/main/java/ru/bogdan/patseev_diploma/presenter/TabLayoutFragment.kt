@@ -5,17 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayout
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
-import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentTabLayoutBinding
+import ru.bogdan.patseev_diploma.presenter.viewModels.TabLayoutVieModel
 
 
 class TabLayoutFragment : Fragment() {
     private var _binding: FragmentTabLayoutBinding? = null
     private val binding get() = _binding!!
 
-    private val fragment = RecycleViewCuttingToolsFragment.newInstance()
+    private val viewModel by lazy {
+        ViewModelProvider(this)[TabLayoutVieModel::class.java]
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +38,7 @@ class TabLayoutFragment : Fragment() {
 
         binding.apply {
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                tab.text = "Tab"
+                tab.text = viewModel.tabNames[position]
             }.attach()
         }
 

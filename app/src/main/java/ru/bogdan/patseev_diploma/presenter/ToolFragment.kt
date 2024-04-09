@@ -18,9 +18,6 @@ class ToolFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentToolBinding.inflate(inflater, container, false)
-        binding.uuu.setOnClickListener {
-            findNavController().navigate(R.id.action_toolFragment_to_tabLayoutFragment)
-        }
         return binding.root
     }
 

@@ -12,6 +12,6 @@ class PageAdapter(fragment:FragmentActivity):FragmentStateAdapter(fragment) {
     }
 
     override fun createFragment(position: Int): Fragment {
-            return RecycleViewCuttingToolsFragment.newInstance()
+            return RecycleViewCuttingToolsFragment.newInstance(position)
     }
 }

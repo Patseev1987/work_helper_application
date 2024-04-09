@@ -9,9 +9,9 @@ data  class CuttingTool(
      override val name: String,
      override val description: String,
      override val notes:String? = null,
-     val type:ToolType,
+     override val type:ToolType,
      override val icon:String,
      override val place: Place
-    ): Tool(code, name, description, notes,icon, place), Parcelable{
+    ): Tool(code, name, description, notes,icon, place, type), Parcelable{
 
     }

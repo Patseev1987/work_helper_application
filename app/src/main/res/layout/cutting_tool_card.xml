@@ -79,7 +79,7 @@
                 app:layout_constraintTop_toTopOf="@+id/tw_place_label"
                 app:layout_constraintStart_toEndOf="@+id/tw_place_label"
                 app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="8dp"/>
+            android:paddingBottom="10dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
