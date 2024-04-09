@@ -10,7 +10,7 @@
         tools:openDrawer="start"
         tools:context=".presenter.WorkerFragment">
     <com.google.android.material.navigation.NavigationView
-            app:menu="@menu/worker_screen_menu"
+            app:menu="@menu/storage_worker_screen_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"

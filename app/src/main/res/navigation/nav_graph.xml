@@ -23,9 +23,6 @@
               android:label="fragment_recycle_view_tools" tools:layout="@layout/fragment_recycle_view_tools">
         <action android:id="@+id/action_recycleViewToolsFragment_to_toolFragment" app:destination="@id/toolFragment"/>
     </fragment>
-    <fragment android:id="@+id/transactionFragment"
-              android:name="ru.bogdan.patseev_diploma.presenter.TransactionFragment"
-              android:label="fragment_transaction" tools:layout="@layout/fragment_transaction"/>
     <fragment android:id="@+id/cameraFragment" android:name="ru.bogdan.patseev_diploma.presenter.CameraFragment"
               android:label="fragment_camera" tools:layout="@layout/fragment_camera"/>
     <fragment android:id="@+id/storageWorkerFragment"
@@ -36,11 +33,31 @@
         <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
         <action android:id="@+id/action_storageWorkerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
         <action android:id="@+id/action_storageWorkerFragment_to_helpFragment2" app:destination="@id/helpFragment2"/>
+        <action android:id="@+id/action_storageWorkerFragment_to_takeToolFragment"
+                app:destination="@id/takeToolFragment"/>
+        <action android:id="@+id/action_storageWorkerFragment_to_giveToolFragment"
+                app:destination="@id/giveToolFragment"/>
+        <action android:id="@+id/action_storageWorkerFragment_to_sendToolFragment"
+                app:destination="@id/sendToolFragment"/>
+        <action android:id="@+id/action_storageWorkerFragment_to_writeOffToolFragment"
+                app:destination="@id/writeOffToolFragment"/>
     </fragment>
-    <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.ToolFragment"
+    <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.presenter.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
         <argument android:name="tool" app:argType="ru.bogdan.patseev_diploma.domain.models.tools.Tool"/>
     </fragment>
     <fragment android:id="@+id/helpFragment2" android:name="ru.bogdan.patseev_diploma.presenter.HelpFragment"
               android:label="fragment_help" tools:layout="@layout/fragment_help"/>
+    <fragment android:id="@+id/giveToolFragment"
+              android:name="ru.bogdan.patseev_diploma.presenter.ationsWithToolFragments.GiveToolFragment"
+              android:label="fragment_give_tool" tools:layout="@layout/fragment_give_tool"/>
+    <fragment android:id="@+id/sendToolFragment"
+              android:name="ru.bogdan.patseev_diploma.presenter.ationsWithToolFragments.SendToolFragment"
+              android:label="fragment_send_tool" tools:layout="@layout/fragment_send_tool"/>
+    <fragment android:id="@+id/takeToolFragment"
+              android:name="ru.bogdan.patseev_diploma.presenter.ationsWithToolFragments.TakeToolFragment"
+              android:label="fragment_take_tool" tools:layout="@layout/fragment_take_tool"/>
+    <fragment android:id="@+id/writeOffToolFragment"
+              android:name="ru.bogdan.patseev_diploma.presenter.ationsWithToolFragments.WriteOffToolFragment"
+              android:label="fragment_write_off_tool" tools:layout="@layout/fragment_write_off_tool"/>
 </navigation>

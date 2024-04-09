@@ -4,31 +4,32 @@ xmlns:tools="http://schemas.android.com/tools"
 tools:showIn="navigation_view">
     <item android:title="actions with tool"/>
     <group
-            android:id="@+id/group1"
-            android:checkableBehavior="single">
+            android:id="@+id/group1">
         <item
-                android:id="@+id/item1"
+                android:id="@+id/takeToolFragment"
                 android:title="take tool back to sotrage"
                 android:checked="true"/>
         <item
-                android:id="@+id/item2"
+                android:id="@+id/giveToolFragment"
                 android:title="give tool from storage"/>
         <item
-                android:id="@+id/item3"
+                android:id="@+id/sendToolFragment"
                 android:title="send tool to sharpen"/>
+        <item
+                android:id="@+id/writeOffToolFragment"
+                android:title="write off tool"/>
     </group>
 
     <item android:title="actions for search tool"/>
 
     <group
-            android:id="@+id/group2"
-            android:checkableBehavior="single">
+            android:id="@+id/group2">
         <item
                 android:id="@+id/item4"
                 android:title="search in database"
                 android:checked="true"/>
         <item
-                android:id="@+id/item5"
+                android:id="@+id/cameraFragment"
                 android:title="search with qr-code"/>
     </group>
 </menu>

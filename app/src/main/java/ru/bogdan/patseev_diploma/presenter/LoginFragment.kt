@@ -28,7 +28,8 @@ private var _binding:FragmentLoginBinding? =null
         super.onViewCreated(view, savedInstanceState)
         binding.bSingIn.setOnClickListener {
            // findNavController().navigate(R.id.action_loginFragment_to_cameraFragment)
-            findNavController().navigate(R.id.action_loginFragment_to_workerFragment)
+           // findNavController().navigate(R.id.action_loginFragment_to_workerFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_storageWorkerFragment)
         }
     }
 
