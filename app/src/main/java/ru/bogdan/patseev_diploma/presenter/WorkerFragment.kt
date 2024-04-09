@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentStorageWorkerBinding
 import ru.bogdan.patseev_diploma.databinding.FragmentWorkerBinding
@@ -27,8 +28,8 @@ class WorkerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        menu(binding)
-
+        val navController = this.findNavController()
+        binding.bottomNavMenu.setupWithNavController(navController)
     }
 
 
@@ -36,15 +37,4 @@ class WorkerFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
-    private fun menu(binding: FragmentWorkerBinding) {
-//
-
-
-
-
-
-
-    }
-
 }

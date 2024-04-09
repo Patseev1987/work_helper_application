@@ -11,4 +11,7 @@
     <string name="name">Name:</string>
     <string name="place">Place:</string>
     <string name="help">Help</string>
+    <string name="profile">Profile</string>
+    <string name="wealth">Wealth</string>
+    <string name="search_with_qr_code">Search with QR-CODE</string>
 </resources>

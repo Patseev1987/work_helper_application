@@ -6,7 +6,8 @@
 
     <fragment android:id="@+id/loginFragment" android:name="ru.bogdan.patseev_diploma.presenter.LoginFragment"
               android:label="fragment_login" tools:layout="@layout/fragment_login">
-        <action android:id="@+id/action_loginFragment_to_workerFragment" app:destination="@id/workerFragment"/>
+        <action android:id="@+id/action_loginFragment_to_workerFragment" app:destination="@id/workerFragment"
+                app:popUpTo="@id/nav_graph"/>
         <action android:id="@+id/action_loginFragment_to_storageWorkerFragment"
                 app:destination="@id/storageWorkerFragment" app:popUpTo="@id/nav_graph"/>
     </fragment>
