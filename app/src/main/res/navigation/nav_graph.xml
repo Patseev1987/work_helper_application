@@ -8,7 +8,7 @@
               android:label="fragment_login" tools:layout="@layout/fragment_login">
         <action android:id="@+id/action_loginFragment_to_workerFragment" app:destination="@id/workerFragment"/>
         <action android:id="@+id/action_loginFragment_to_storageWorkerFragment"
-                app:destination="@id/storageWorkerFragment"/>
+                app:destination="@id/storageWorkerFragment" app:popUpTo="@id/nav_graph"/>
     </fragment>
     <fragment android:id="@+id/workerFragment" android:name="ru.bogdan.patseev_diploma.presenter.WorkerFragment"
               android:label="fragment_user" tools:layout="@layout/fragment_worker">
@@ -34,13 +34,15 @@
         <action android:id="@+id/action_storageWorkerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
         <action android:id="@+id/action_storageWorkerFragment_to_helpFragment2" app:destination="@id/helpFragment2"/>
         <action android:id="@+id/action_storageWorkerFragment_to_takeToolFragment"
-                app:destination="@id/takeToolFragment"/>
+                app:destination="@id/takeToolFragment" app:popUpTo="@id/takeToolFragment"
+        />
         <action android:id="@+id/action_storageWorkerFragment_to_giveToolFragment"
-                app:destination="@id/giveToolFragment"/>
+                app:destination="@id/giveToolFragment" app:popUpTo="@id/storageWorkerFragment"
+        />
         <action android:id="@+id/action_storageWorkerFragment_to_sendToolFragment"
-                app:destination="@id/sendToolFragment"/>
+                app:destination="@id/sendToolFragment" app:popUpTo="@id/storageWorkerFragment"/>
         <action android:id="@+id/action_storageWorkerFragment_to_writeOffToolFragment"
-                app:destination="@id/writeOffToolFragment"/>
+                app:destination="@id/writeOffToolFragment" app:popUpTo="@id/storageWorkerFragment"/>
     </fragment>
     <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.presenter.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
