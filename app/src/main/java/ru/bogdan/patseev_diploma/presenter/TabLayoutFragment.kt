@@ -1,16 +1,13 @@
 package ru.bogdan.patseev_diploma.presenter
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentTabLayoutBinding
-import ru.bogdan.patseev_diploma.domain.models.StorageRecord
-
 
 
 class TabLayoutFragment : Fragment() {

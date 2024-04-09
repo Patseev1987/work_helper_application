@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.bogdan.m17_recyclerview.presentation.recycleView.CuttingToolsAdapter
-import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewCuttingToolsBinding
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 import ru.bogdan.patseev_diploma.domain.models.Worker
@@ -150,7 +149,10 @@ class RecycleViewCuttingToolsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = CuttingToolsAdapter()
+        val adapter = CuttingToolsAdapter(){ storageRecord ->
+            val tool = storageRecord.tool
+ val action =   RecycleViewCuttingToolsFragmentDirections.ActionRecycleViewCuttingToolsFragmentToToolFragment(tool)
+        }
         adapter.submitList(records)
         binding.cuttingTools.adapter = adapter
     }

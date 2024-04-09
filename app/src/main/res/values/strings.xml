@@ -14,4 +14,7 @@
     <string name="profile">Profile</string>
     <string name="wealth">Wealth</string>
     <string name="search_with_qr_code">Search with QR-CODE</string>
+    <string name="column">Column:</string>
+    <string name="self">Self:</string>
+    <string name="row">Row:</string>
 </resources>

@@ -8,17 +8,16 @@ import android.view.ViewGroup
 import ru.bogdan.patseev_diploma.databinding.FragmentToolBinding
 
 class ToolFragment : Fragment() {
- private var _binding:FragmentToolBinding? = null
+    private var _binding: FragmentToolBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentToolBinding.inflate(inflater,container,false)
+        _binding = FragmentToolBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
 
     override fun onDestroy() {

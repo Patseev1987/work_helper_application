@@ -44,7 +44,9 @@
     </fragment>
     <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.presenter.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
-        <argument android:name="tool" app:argType="ru.bogdan.patseev_diploma.domain.models.tools.Tool"/>
+        <argument
+            android:name="tool"
+            app:argType="ru.bogdan.patseev_diploma.domain.models.tools.Tool" />
     </fragment>
     <fragment android:id="@+id/helpFragment2" android:name="ru.bogdan.patseev_diploma.presenter.HelpFragment"
               android:label="fragment_help" tools:layout="@layout/fragment_help"/>
@@ -67,9 +69,6 @@
         android:label="fragment_tab_layout"
         tools:layout="@layout/fragment_tab_layout" >
         <action
-            android:id="@+id/action_tabLayoutFragment_to_toolFragment"
-            app:destination="@id/toolFragment" />
-        <action
             android:id="@+id/action_tabLayoutFragment_to_recycleViewCuttingToolsFragment2"
             app:destination="@id/recycleViewCuttingToolsFragment" />
     </fragment>
@@ -77,5 +76,9 @@
         android:id="@+id/recycleViewCuttingToolsFragment"
         android:name="ru.bogdan.patseev_diploma.presenter.RecycleViewCuttingToolsFragment"
         android:label="fragment_recycle_view_cutting_tools"
-        tools:layout="@layout/fragment_recycle_view_cutting_tools" />
+        tools:layout="@layout/fragment_recycle_view_cutting_tools" >
+        <action
+            android:id="@+id/action_recycleViewCuttingToolsFragment_to_toolFragment"
+            app:destination="@id/toolFragment" />
+    </fragment>
 </navigation>
