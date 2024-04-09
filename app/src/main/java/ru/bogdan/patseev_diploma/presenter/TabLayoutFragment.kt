@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentTabLayoutBinding
 
@@ -29,29 +30,19 @@ class TabLayoutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tabLayout.addOnTabSelectedListener(object:TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(p0: TabLayout.Tab?) {
-                when (p0?.position){
-                    0 -> {
-                        this@TabLayoutFragment.requireActivity()
-                            .supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.place_holder,fragment)
-                            .commit()
-                    }
-                }
+        val adapter = PageAdapter(this.requireActivity())
+        binding.viewPager.adapter = adapter
 
-            }
+        binding.apply {
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                tab.text = "Tab"
+            }.attach()
+        }
 
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
+    }
 
-            }
-
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-
-            }
-
-        })
+    override fun onResume() {
+        super.onResume()
     }
 
 }
