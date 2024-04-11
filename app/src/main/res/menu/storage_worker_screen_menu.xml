@@ -19,6 +19,9 @@ tools:showIn="navigation_view">
         <item
                 android:id="@+id/writeOffToolFragment"
                 android:title="write off tool"/>
+
+        <item android:id="@+id/QRCodeFragment"
+            android:title="QR-CODE action"/>
     </group>
 
     <item android:title="actions for search tool"

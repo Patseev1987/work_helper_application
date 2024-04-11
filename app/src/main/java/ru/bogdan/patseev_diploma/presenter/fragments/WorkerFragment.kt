@@ -1,4 +1,4 @@
-package ru.bogdan.patseev_diploma.presenter
+package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
 import android.view.*

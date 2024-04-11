@@ -1,4 +1,4 @@
-package ru.bogdan.patseev_diploma.presenter
+package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.bogdan.patseev_diploma.databinding.FragmentTabLayoutBinding
+import ru.bogdan.patseev_diploma.presenter.PageAdapter
 import ru.bogdan.patseev_diploma.presenter.viewModels.TabLayoutVieModel
 
 

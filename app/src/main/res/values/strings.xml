@@ -17,4 +17,9 @@
     <string name="column">Column:</string>
     <string name="self">Self:</string>
     <string name="row">Row:</string>
+    <string name="title_for_dialog_qr_code">You can choose action with that tool</string>
+    <string name="you_should_choose_the_action">You should choose the action</string>
+    <string name="take_tool_back">Take tool back</string>
+    <string name="give_tool_to_worker">give tool to worker</string>
+
 </resources>

@@ -4,14 +4,14 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
             app:startDestination="@id/loginFragment">
 
-    <fragment android:id="@+id/loginFragment" android:name="ru.bogdan.patseev_diploma.presenter.LoginFragment"
+    <fragment android:id="@+id/loginFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.LoginFragment"
               android:label="fragment_login" tools:layout="@layout/fragment_login">
         <action android:id="@+id/action_loginFragment_to_workerFragment" app:destination="@id/workerFragment"
                 app:popUpTo="@id/nav_graph"/>
         <action android:id="@+id/action_loginFragment_to_storageWorkerFragment"
                 app:destination="@id/storageWorkerFragment" app:popUpTo="@id/nav_graph"/>
     </fragment>
-    <fragment android:id="@+id/workerFragment" android:name="ru.bogdan.patseev_diploma.presenter.WorkerFragment"
+    <fragment android:id="@+id/workerFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.WorkerFragment"
               android:label="fragment_user" tools:layout="@layout/fragment_worker">
         <action android:id="@+id/action_workerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
         <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
@@ -20,10 +20,10 @@
             android:id="@+id/action_workerFragment_to_tabLayoutFragment"
             app:destination="@id/tabLayoutFragment" />
     </fragment>
-    <fragment android:id="@+id/cameraFragment" android:name="ru.bogdan.patseev_diploma.presenter.CameraFragment"
+    <fragment android:id="@+id/cameraFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.CameraFragment"
               android:label="fragment_camera" tools:layout="@layout/fragment_camera"/>
     <fragment android:id="@+id/storageWorkerFragment"
-              android:name="ru.bogdan.patseev_diploma.presenter.StorageWorkerFragment"
+              android:name="ru.bogdan.patseev_diploma.presenter.fragments.StorageWorkerFragment"
               android:label="fragment_storage_worker" tools:layout="@layout/fragment_storage_worker">
         <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
         <action android:id="@+id/action_storageWorkerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
@@ -41,8 +41,11 @@
         <action
             android:id="@+id/action_storageWorkerFragment_to_tabLayoutFragment"
             app:destination="@id/tabLayoutFragment" />
+        <action
+            android:id="@+id/action_storageWorkerFragment_to_QRCodeFragment"
+            app:destination="@id/QRCodeFragment" />
     </fragment>
-    <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.presenter.ToolFragment"
+    <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
         <argument
             android:name="tool"
@@ -54,7 +57,7 @@
             android:id="@+id/action_toolFragment_to_recycleViewCuttingToolsFragment"
             app:destination="@id/recycleViewCuttingToolsFragment" />
     </fragment>
-    <fragment android:id="@+id/helpFragment2" android:name="ru.bogdan.patseev_diploma.presenter.HelpFragment"
+    <fragment android:id="@+id/helpFragment2" android:name="ru.bogdan.patseev_diploma.presenter.fragments.HelpFragment"
               android:label="fragment_help" tools:layout="@layout/fragment_help"/>
     <fragment android:id="@+id/giveToolFragment"
               android:name="ru.bogdan.patseev_diploma.presenter.ationsWithToolFragments.GiveToolFragment"
@@ -71,7 +74,7 @@
 
     <fragment
         android:id="@+id/tabLayoutFragment"
-        android:name="ru.bogdan.patseev_diploma.presenter.TabLayoutFragment"
+        android:name="ru.bogdan.patseev_diploma.presenter.fragments.TabLayoutFragment"
         android:label="fragment_tab_layout"
         tools:layout="@layout/fragment_tab_layout" >
         <action
@@ -86,7 +89,20 @@
     </fragment>
     <fragment
         android:id="@+id/recycleViewCuttingToolsFragment"
-        android:name="ru.bogdan.patseev_diploma.presenter.RecycleViewCuttingToolsFragment"
+        android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewCuttingToolsFragment"
         android:label="fragment_recycle_view_cutting_tools"
         tools:layout="@layout/fragment_recycle_view_cutting_tools" />
+    <dialog
+        android:id="@+id/dialogForQRCode"
+        android:name="ru.bogdan.patseev_diploma.presenter.DialogForQRCode"
+        android:label="DialogForQRCode" />
+    <fragment
+        android:id="@+id/QRCodeFragment"
+        android:name="ru.bogdan.patseev_diploma.presenter.fragments.QRCodeFragment"
+        android:label="fragment_q_r_code"
+        tools:layout="@layout/fragment_q_r_code" >
+        <action
+            android:id="@+id/action_QRCodeFragment_to_dialogForQRCode"
+            app:destination="@id/dialogForQRCode" />
+    </fragment>
 </navigation>

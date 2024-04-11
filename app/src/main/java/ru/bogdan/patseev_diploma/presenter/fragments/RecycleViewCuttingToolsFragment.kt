@@ -1,27 +1,15 @@
-package ru.bogdan.patseev_diploma.presenter
+package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import ru.bogdan.m17_recyclerview.presentation.recycleView.CuttingToolsAdapter
-import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewCuttingToolsBinding
-import ru.bogdan.patseev_diploma.domain.models.StorageRecord
-import ru.bogdan.patseev_diploma.domain.models.Worker
-import ru.bogdan.patseev_diploma.domain.models.enums.Department
-import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
-import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
-import ru.bogdan.patseev_diploma.domain.models.tools.CuttingTool
-import ru.bogdan.patseev_diploma.domain.models.tools.MeasureTool
-import ru.bogdan.patseev_diploma.domain.models.tools.Place
-import ru.bogdan.patseev_diploma.domain.models.tools.Tool
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewViewModel
-import java.time.LocalDate
 
 
 class RecycleViewCuttingToolsFragment : Fragment() {

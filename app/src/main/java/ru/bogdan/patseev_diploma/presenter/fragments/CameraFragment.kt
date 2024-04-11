@@ -1,4 +1,4 @@
-package ru.bogdan.patseev_diploma.presenter
+package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -17,17 +17,12 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 
-import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
-import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
-import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import ru.bogdan.patseev_diploma.databinding.FragmentCameraBinding
 import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 class CameraFragment : Fragment() {
 

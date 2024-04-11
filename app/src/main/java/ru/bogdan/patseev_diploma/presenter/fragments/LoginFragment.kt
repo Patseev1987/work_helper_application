@@ -1,4 +1,4 @@
-package ru.bogdan.patseev_diploma.presenter
+package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.bogdan.patseev_diploma.R
-import ru.bogdan.patseev_diploma.databinding.FragmentCameraBinding
 import ru.bogdan.patseev_diploma.databinding.FragmentLoginBinding
-import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.presenter.viewModels.LoginViewModel
 
