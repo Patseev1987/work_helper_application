@@ -2,6 +2,7 @@ package ru.bogdan.patseev_diploma.util
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.google.gson.GsonBuilder
 import ru.bogdan.patseev_diploma.domain.models.Transaction
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
@@ -11,6 +12,7 @@ import ru.bogdan.patseev_diploma.domain.models.tools.Place
 import ru.bogdan.patseev_diploma.domain.models.tools.Tool
 import java.time.LocalDate
 import java.time.LocalDateTime
+
 
 fun Fragment.transaction(
     id: Long,
@@ -101,6 +103,30 @@ fun generateTools():List<Tool>{
         )
     }
     return tools
+}
+
+
+fun String.checkTool():Boolean{
+    val regex = """"""
+
+    val cutter = CuttingTool(
+        "6161-1212",
+        "Cutter",
+        "This Cutter for turing equipment",
+        null,
+        ToolType.CUTTING,
+        "https://iconduck.com/icons/21805/cog",
+        Place("1", "2", "3")
+    )
+
+    val gson = GsonBuilder()
+        .setPrettyPrinting()
+        .create()
+
+    val result = gson.toJson(cutter)
+
+    println(result)
+    return false
 }
 
 

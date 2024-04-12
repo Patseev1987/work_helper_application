@@ -1,36 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presenter.fragments.CameraFragment">
+
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/camera_view_finder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".presenter.fragments.CameraFragment">
-
-
-        <androidx.camera.view.PreviewView
-            android:id="@+id/camera_view_finder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-        </androidx.camera.view.PreviewView>
+        android:layout_height="match_parent" />
 
 
     <androidx.cardview.widget.CardView
-            android:id="@+id/card_view"
-            android:backgroundTint="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="40dp"
-            android:layout_marginHorizontal="40dp">
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginBottom="90dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
         <TextView
-                android:id="@+id/tw_information"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:text="1000"/>
+            android:id="@+id/tw_information"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            tools:text="@string/search_string_template" />
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/_b_take_tool"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textSize="20sp"
+        android:text="Take tool back"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_margin="4dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/b_give_tool"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/b_give_tool"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textSize="20sp"
+        android:text="Give tool"
+        android:layout_margin="4dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/_b_take_tool" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

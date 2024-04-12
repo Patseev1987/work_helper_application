@@ -22,6 +22,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import ru.bogdan.patseev_diploma.databinding.FragmentCameraBinding
+import ru.bogdan.patseev_diploma.util.checkTool
 import java.util.concurrent.Executor
 
 class CameraFragment : Fragment() {
