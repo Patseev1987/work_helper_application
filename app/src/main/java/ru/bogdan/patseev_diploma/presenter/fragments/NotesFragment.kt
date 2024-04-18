@@ -1,4 +1,4 @@
-package ru.bogdan.patseev_diploma.presenter
+package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,14 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import ru.bogdan.patseev_diploma.R
 
-class TransactionFragment : Fragment() {
+
+class NotesFragment : Fragment() {
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.fragment_transaction, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_notes, container, false)
     }
+
 
 }

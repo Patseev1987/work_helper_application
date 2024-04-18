@@ -11,4 +11,25 @@
     <string name="name">Name:</string>
     <string name="place">Place:</string>
     <string name="help">Help</string>
+    <string name="profile">Profile</string>
+    <string name="wealth">Wealth</string>
+    <string name="search_with_qr_code">Search with QR-CODE</string>
+    <string name="column">Column:</string>
+    <string name="self">Self:</string>
+    <string name="row">Row:</string>
+    <string name="title_for_dialog_qr_code">You can choose action with that tool</string>
+    <string name="you_should_choose_the_action">You should choose the action</string>
+    <string name="take_tool_back">Take tool back</string>
+    <string name="give_tool_to_worker">give tool to worker</string>
+    <string name="actions_with_tool">actions with tool</string>
+    <string name="take_tool_back_to_storage">take tool back to storage</string>
+    <string name="give_tool_from_storage">give tool from storage</string>
+    <string name="send_tool_to_sharpen">send tool to sharpen</string>
+    <string name="write_off_tool">write off tool</string>
+    <string name="qr_code_action">QR-CODE action</string>
+    <string name="actions_for_search_tool">actions for search tool</string>
+    <string name="search_in_database">search in database</string>
+    <string name="search_with_qr_code_2">search with qr-code</string>
+    <string name="search_string_template">Code: ?\nName: ?\nPlace:\nShelf: ? Column: ? Row:?</string>
+
 </resources>
