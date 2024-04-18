@@ -12,7 +12,6 @@ class MyImageAnalyzer: ImageAnalysis.Analyzer {
         val mediaImage = imageProxy.image
         if (mediaImage != null) {
             val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-
         }
     }
 }
