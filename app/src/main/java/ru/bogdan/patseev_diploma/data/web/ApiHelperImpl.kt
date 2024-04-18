@@ -3,29 +3,21 @@ package ru.bogdan.m17_recyclerview.data
 
 import android.util.Log
 import kotlinx.coroutines.flow.*
+import ru.bogdan.patseev_diploma.data.web.WorkerMapper
+import ru.bogdan.patseev_diploma.domain.models.Worker
 
 import javax.inject.Inject
 import kotlin.math.log
 
-class ApiHelperImpl @Inject constructor(
-
+class ApiHelperImpl (
     private val apiService: ApiService,
-    private val flow: MutableSharedFlow<Unit>,
-    private var page: Int
+    private val mapper: WorkerMapper
 ) : ApiHelper {
-//
-//    override fun getPhotos(earthDate: String): Flow<List<PhotoByRover>> {
-//        return flow {
-//            emit(
-//                mapper.listWithPhotoFromNASAToListWithPhotoByRover(apiService.loadPhotos(earthDate, page))
-//            )
-//            flow.collect {
-//                emit(mapper.listWithPhotoFromNASAToListWithPhotoByRover(apiService.loadPhotos(earthDate, ++page)))
-//            }
-//        }
-//    }
-
-    override suspend fun updatePhotos() {
-        flow.emit(Unit)
+    override suspend fun checkLogin(login:String, password:String): Flow<Worker> {
+      return  flow {
+           emit ( mapper.WorkerWEBToWorker( apiService.checkLogin(login, password)) )
+        }
     }
+
+
 }

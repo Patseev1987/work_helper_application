@@ -1,4 +1,4 @@
-package ru.bogdan.patseev_diploma.domain.models.tools
+package ru.bogdan.patseev_diploma.domain.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

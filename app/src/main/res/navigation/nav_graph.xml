@@ -5,11 +5,7 @@
             app:startDestination="@id/loginFragment">
 
     <fragment android:id="@+id/loginFragment" android:name="ru.bogdan.patseev_diploma.presenter.LoginFragment"
-              android:label="fragment_login" tools:layout="@layout/fragment_login">
-        <action android:id="@+id/action_loginFragment_to_workerFragment" app:destination="@id/workerFragment"/>
-        <action android:id="@+id/action_loginFragment_to_storageWorkerFragment"
-                app:destination="@id/storageWorkerFragment"/>
-    </fragment>
+              android:label="fragment_login" tools:layout="@layout/fragment_login"/>
     <fragment android:id="@+id/workerFragment" android:name="ru.bogdan.patseev_diploma.presenter.WorkerFragment"
               android:label="fragment_user" tools:layout="@layout/fragment_worker">
         <action android:id="@+id/action_workerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
@@ -39,7 +35,7 @@
     </fragment>
     <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
-        <argument android:name="tool" app:argType="ru.bogdan.patseev_diploma.domain.models.tools.Tool"/>
+        <argument android:name="tool" app:argType="ru.bogdan.patseev_diploma.domain.models.Tool"/>
     </fragment>
     <fragment android:id="@+id/helpFragment2" android:name="ru.bogdan.patseev_diploma.presenter.HelpFragment"
               android:label="fragment_help" tools:layout="@layout/fragment_help"/>

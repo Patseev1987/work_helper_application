@@ -12,8 +12,10 @@ data class Worker(
     val firstName:String,
     val secondName:String,
     val patronymic:String,
-    val joinDate: LocalDate,
+    val joinDate: String,
     val department: Department,
-    val type:WorkerType
+    val type:WorkerType,
+    val login:String,
+    val password:String
 ):Parcelable {
 }
