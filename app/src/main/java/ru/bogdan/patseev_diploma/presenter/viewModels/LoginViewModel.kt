@@ -8,12 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.bogdan.m17_recyclerview.data.ApiFactory
-import ru.bogdan.patseev_diploma.data.web.WorkerMapper
-import ru.bogdan.patseev_diploma.domain.models.Worker
-import ru.bogdan.patseev_diploma.domain.models.enums.Department
-import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
+import ru.bogdan.patseev_diploma.data.web.mappers.WorkerMapper
 import ru.bogdan.patseev_diploma.presenter.states.LoginState
-import java.time.LocalDate
 
 class LoginViewModel:ViewModel() {
 
@@ -27,7 +23,7 @@ class LoginViewModel:ViewModel() {
         viewModelScope.launch {
             _state.value = LoginState.Loading
             Log.d("Tag", apiService.checkLogin(login, password).toString())
-            val worker = mapper.WorkerWEBToWorker(apiService.checkLogin(login, password))
+            val worker = mapper.workerWEBToWorker(apiService.checkLogin(login, password))
             if (worker.login.isNotEmpty()) {
                 _state.value = LoginState.LoginResult(worker)
             } else {

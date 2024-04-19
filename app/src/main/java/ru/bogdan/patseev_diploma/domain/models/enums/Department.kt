@@ -1,11 +1,13 @@
 package ru.bogdan.patseev_diploma.domain.models.enums
 
-enum class Department(name:String) {
-    DEPARTMENT_19("Металообрабатывающий цех №19"),
-    STORAGE("Главный склад"),
-    DEPARTMENT_65("Управление главного технолога"),
-    DEPARTMENT_15("Термический цех"),
-    DEPARTMENT_41("Цех Инструментального производства"),
-    DEPARTMENT_17("Штамповочный цех"),
-    DEPARTMENT_28("Металообрабатывающий цех №28"),
+enum class Department {
+    DEPARTMENT_19,
+    MAIN_STORAGE,
+    DEPARTMENT_65,
+    DEPARTMENT_15,
+    DEPARTMENT_41,
+    DEPARTMENT_17,
+    DEPARTMENT_28,
+    SHARPENING,
+    STORAGE_DECOMMISSIONED_TOOLS
 }

@@ -3,6 +3,7 @@ package ru.bogdan.patseev_diploma.domain.models
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Parcelize
@@ -14,7 +15,7 @@ data class Tool(
    val icon: String? = null,
    val place: Place,
    val type: ToolType,
-   val controlDate: LocalDateTime? = null
+   val controlDate: LocalDate? = null
 ): Parcelable {
 
 }
