@@ -12,7 +12,7 @@ data class Worker(
     val firstName:String,
     val secondName:String,
     val patronymic:String,
-    val joinDate: String,
+    val joinDate: LocalDate,
     val department: Department,
     val type:WorkerType,
     val login:String,

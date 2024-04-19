@@ -65,14 +65,14 @@ class LoginFragment : Fragment() {
                             binding.progressBar.visibility = View.GONE
                             when (it.worker.type) {
                                 WorkerType.WORKER -> {
-//                                    val action = LoginFragmentDirections.actionLoginFragmentToStorageWorkerFragment(it.worker)
-//                                    findNavController().navigate(action)
+                                    val action = LoginFragmentDirections.actionLoginFragmentToWorkerFragment(it.worker)
+                                    findNavController().navigate(action)
                                 }
 
                                 WorkerType.STORAGE_WORKER -> {
-//                                    val action =
-//                                        LoginFragmentDirections.actionLoginFragmentToStorageWorkerFragment(it.worker)
-//                                    findNavController().navigate(action)
+                                    val action =
+                                        LoginFragmentDirections.actionLoginFragmentToStorageWorkerFragment(it.worker)
+                                    findNavController().navigate(action)
                                 }
                             }
                         }

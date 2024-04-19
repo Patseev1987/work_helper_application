@@ -2,6 +2,7 @@ package ru.bogdan.patseev_diploma.data.web
 
 import ru.bogdan.patseev_diploma.data.web.pojo.WorkerWEB
 import ru.bogdan.patseev_diploma.domain.models.Worker
+import java.time.LocalDate
 
 class WorkerMapper {
 
@@ -14,7 +15,7 @@ class WorkerMapper {
             patronymic = worker.patronymic,
             login = worker.login,
             password = worker.password,
-            joinDate = worker.joinDate,
+            joinDate = worker.joinDate.toString(),
             type = worker.type,
         )
     }
@@ -25,7 +26,7 @@ class WorkerMapper {
             secondName = workerWEB.lastName,
             firstName = workerWEB.firstName,
             type = workerWEB.type,
-            joinDate =  workerWEB.joinDate,
+            joinDate = LocalDate.parse(workerWEB.joinDate),
             department = workerWEB.department,
             patronymic = workerWEB.patronymic,
             login = workerWEB.login,

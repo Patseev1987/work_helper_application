@@ -88,6 +88,6 @@ dependencies {
 
     implementation("com.airbnb.android:lottie:6.3.0")
 
-    implementation ("com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0")
+    implementation ("com.google.android.gms:play-services-mlkit-barcode-scanning:16.1.0")
     implementation ("com.google.mlkit:barcode-scanning:17.2.0")
 }

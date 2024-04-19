@@ -1,13 +1,11 @@
 package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -16,13 +14,14 @@ import androidx.annotation.OptIn
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-
+import androidx.lifecycle.ViewModelProvider
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentCameraBinding
-
+import ru.bogdan.patseev_diploma.presenter.viewModels.CameraFragmentViewModel
 import java.util.concurrent.Executor
 
 class CameraFragment : Fragment() {
@@ -51,6 +50,10 @@ class CameraFragment : Fragment() {
 
     private lateinit var imageAnalyzer: ImageAnalysis
 
+    private val viewModel by lazy {
+        ViewModelProvider(this)[CameraFragmentViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         executor = this.requireContext().mainExecutor
@@ -67,7 +70,7 @@ class CameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnTouchListener(binding)
+      //  setOnTouchListener(binding)
     }
 
     private fun checkPermissions() {
@@ -108,10 +111,21 @@ class CameraFragment : Fragment() {
 
             var imageAnalysis = ImageAnalysis.Analyzer { imageProxy ->
                 val image = imageProxy.image ?: return@Analyzer
+                var toolInfo = mapOf<String,String>()
                 val inputImage = InputImage.fromMediaImage(imageProxy.image!!, imageProxy.imageInfo.rotationDegrees)
                 barcodeScanner.process(inputImage).addOnSuccessListener { barcodes ->
                     barcodes.firstOrNull()?.let {
-                        binding.twInformation.text = it.rawValue
+                        it.rawValue?.let{json ->
+                        toolInfo = viewModel.getInformationAboutTool(json)
+                        }
+                        binding.twInformation.text = String.format(
+                          getString( R.string.search_string_template),
+                            toolInfo[CameraFragmentViewModel.CODE],
+                            toolInfo[CameraFragmentViewModel.NAME],
+                            toolInfo[CameraFragmentViewModel.SHELF],
+                            toolInfo[CameraFragmentViewModel.COLUMN],
+                            toolInfo[CameraFragmentViewModel.ROW]
+                            )
                     }
                 }.addOnCompleteListener {
                     imageProxy.close()
@@ -130,40 +144,40 @@ class CameraFragment : Fragment() {
         }, executor)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setOnTouchListener(binding: FragmentCameraBinding){
-        binding.cardView.setOnTouchListener { v, event ->
-            val action = event.action
-
-            when(action){
-                MotionEvent.ACTION_MOVE -> {
-                    v.x += event.x -(v.width/2)
-                    v.y += event.y -(v.height/2)
-                }
-                MotionEvent.ACTION_UP -> {
-                    checkConditionsPosition(v,binding)
-                }
-                else -> {
-                }
-            }
-            true
-        }
-    }
-
-    private fun checkConditionsPosition(view: View,binding: FragmentCameraBinding){
-        if (view.x < 0 ){
-            view.x = 0f;
-        }
-        if (view.y < 0){
-            view.y = 0f;
-        }
-        if( view.x > binding.cameraViewFinder.width-view.width){
-            view.x = (binding.cameraViewFinder.width-view.width).toFloat()
-        }
-        if( view.y > binding.cameraViewFinder.height-view.height){
-            view.y = (binding.cameraViewFinder.height-view.height).toFloat()
-        }
-    }
+//    @SuppressLint("ClickableViewAccessibility")
+//    private fun setOnTouchListener(binding: FragmentCameraBinding){
+//        binding.cardView.setOnTouchListener { v, event ->
+//            val action = event.action
+//
+//            when(action){
+//                MotionEvent.ACTION_MOVE -> {
+//                    v.x += event.x -(v.width/2)
+//                    v.y += event.y -(v.height/2)
+//                }
+//                MotionEvent.ACTION_UP -> {
+//                    checkConditionsPosition(v,binding)
+//                }
+//                else -> {
+//                }
+//            }
+//            true
+//        }
+//    }
+//
+//    private fun checkConditionsPosition(view: View,binding: FragmentCameraBinding){
+//        if (view.x < 0 ){
+//            view.x = 0f;
+//        }
+//        if (view.y < 0){
+//            view.y = 0f;
+//        }
+//        if( view.x > binding.cameraViewFinder.width-view.width){
+//            view.x = (binding.cameraViewFinder.width-view.width).toFloat()
+//        }
+//        if( view.y > binding.cameraViewFinder.height-view.height){
+//            view.y = (binding.cameraViewFinder.height-view.height).toFloat()
+//        }
+//    }
 
 
     override fun onDestroy() {

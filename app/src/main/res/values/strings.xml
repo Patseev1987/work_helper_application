@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">PBA Helper</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
@@ -31,5 +30,8 @@
     <string name="search_in_database">search in database</string>
     <string name="search_with_qr_code_2">search with qr-code</string>
     <string name="search_string_template">Code: ?\nName: ?\nPlace:\nShelf: ? Column: ? Row:?</string>
+    <string name="cutting_tools">Cutting tools</string>
+    <string name="measuring_tools">Measuring tools</string>
+    <string name="helper_tools">Helper tools</string>
 
 </resources>
