@@ -9,9 +9,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.bogdan.m17_recyclerview.data.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.WorkerMapper
+import ru.bogdan.patseev_diploma.domain.models.Worker
+import ru.bogdan.patseev_diploma.domain.models.enums.Department
+import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.presenter.states.LoginState
+import java.time.LocalDate
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel:ViewModel() {
 
     private val _state: MutableStateFlow<LoginState> = MutableStateFlow(LoginState.Waiting)
     val state: StateFlow<LoginState> = _state.asStateFlow()

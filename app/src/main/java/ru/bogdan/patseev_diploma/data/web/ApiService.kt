@@ -18,5 +18,12 @@ interface ApiService {
        @Query("password") password: String
    ): WorkerWEB
 
+
+
+    @GET("check_login")
+    suspend fun checkLogin(
+        @Query("login") login: String,
+        @Query("password") password: String
+    ): WorkerWEB
 }
 

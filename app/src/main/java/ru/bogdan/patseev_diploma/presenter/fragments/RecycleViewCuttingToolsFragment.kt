@@ -48,7 +48,7 @@ class RecycleViewCuttingToolsFragment : Fragment() {
 
 
         }
-        adapter.submitList(viewModel.getList(position))
+      //  adapter.submitList(viewModel.getList(position))
         binding.cuttingTools.adapter = adapter
     }
 

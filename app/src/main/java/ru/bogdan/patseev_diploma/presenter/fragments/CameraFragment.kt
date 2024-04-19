@@ -22,7 +22,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import ru.bogdan.patseev_diploma.databinding.FragmentCameraBinding
-import ru.bogdan.patseev_diploma.util.checkTool
+
 import java.util.concurrent.Executor
 
 class CameraFragment : Fragment() {
@@ -137,8 +137,8 @@ class CameraFragment : Fragment() {
 
             when(action){
                 MotionEvent.ACTION_MOVE -> {
-                        v.x += event.x -(v.width/2)
-                        v.y += event.y -(v.height/2)
+                    v.x += event.x -(v.width/2)
+                    v.y += event.y -(v.height/2)
                 }
                 MotionEvent.ACTION_UP -> {
                     checkConditionsPosition(v,binding)
@@ -150,20 +150,20 @@ class CameraFragment : Fragment() {
         }
     }
 
-private fun checkConditionsPosition(view: View,binding: FragmentCameraBinding){
-    if (view.x < 0 ){
-        view.x = 0f;
+    private fun checkConditionsPosition(view: View,binding: FragmentCameraBinding){
+        if (view.x < 0 ){
+            view.x = 0f;
+        }
+        if (view.y < 0){
+            view.y = 0f;
+        }
+        if( view.x > binding.cameraViewFinder.width-view.width){
+            view.x = (binding.cameraViewFinder.width-view.width).toFloat()
+        }
+        if( view.y > binding.cameraViewFinder.height-view.height){
+            view.y = (binding.cameraViewFinder.height-view.height).toFloat()
+        }
     }
-    if (view.y < 0){
-        view.y = 0f;
-    }
-    if( view.x > binding.cameraViewFinder.width-view.width){
-        view.x = (binding.cameraViewFinder.width-view.width).toFloat()
-    }
-    if( view.y > binding.cameraViewFinder.height-view.height){
-        view.y = (binding.cameraViewFinder.height-view.height).toFloat()
-    }
-}
 
 
     override fun onDestroy() {
