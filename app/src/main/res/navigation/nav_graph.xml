@@ -47,15 +47,15 @@
     </fragment>
     <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
-        <argument
-            android:name="tool"
-            app:argType="ru.bogdan.patseev_diploma.domain.models.tools.Tool" />
         <action
             android:id="@+id/action_toolFragment_to_tabLayoutFragment"
             app:destination="@id/tabLayoutFragment" />
         <action
             android:id="@+id/action_toolFragment_to_recycleViewCuttingToolsFragment"
             app:destination="@id/recycleViewCuttingToolsFragment" />
+        <argument
+            android:name="tool"
+            app:argType="ru.bogdan.patseev_diploma.domain.models.Tool" />
     </fragment>
     <fragment android:id="@+id/helpFragment2" android:name="ru.bogdan.patseev_diploma.presenter.fragments.HelpFragment"
               android:label="fragment_help" tools:layout="@layout/fragment_help"/>

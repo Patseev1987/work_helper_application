@@ -12,11 +12,6 @@ interface ApiService {
     @GET("tools")
    suspend fun loadTools()
 
-   @GET("check_login")
-   suspend fun checkLogin(
-       @Query("login") login: String,
-       @Query("password") password: String
-   ): WorkerWEB
 
 
 

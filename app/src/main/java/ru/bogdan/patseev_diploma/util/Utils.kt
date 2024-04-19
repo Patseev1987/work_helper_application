@@ -2,13 +2,9 @@ package ru.bogdan.patseev_diploma.util
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import com.google.gson.GsonBuilder
+import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Transaction
 import ru.bogdan.patseev_diploma.domain.models.Worker
-import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
-import ru.bogdan.patseev_diploma.domain.models.tools.Place
-import ru.bogdan.patseev_diploma.domain.models.tools.Tool
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 
