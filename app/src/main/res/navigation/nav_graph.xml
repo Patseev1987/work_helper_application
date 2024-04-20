@@ -89,7 +89,7 @@
     </fragment>
     <fragment
         android:id="@+id/recycleViewCuttingToolsFragment"
-        android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewCuttingToolsFragment"
+        android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewStorageRecordsFragment"
         android:label="fragment_recycle_view_cutting_tools"
         tools:layout="@layout/fragment_recycle_view_cutting_tools" />
     <dialog

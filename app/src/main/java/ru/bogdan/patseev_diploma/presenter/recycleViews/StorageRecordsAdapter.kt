@@ -11,8 +11,8 @@ import com.bumptech.glide.Glide
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 
-class CuttingToolsAdapter(private val onClickListener: ((StorageRecord) -> Unit)? = null) :
-    ListAdapter<StorageRecord, CuttingToolsAdapter.CuttingToolViewHolder>(DiffCallbackCuttingTool()) {
+class StorageRecordsAdapter(private val onClickListener: ((StorageRecord) -> Unit)? = null) :
+    ListAdapter<StorageRecord, StorageRecordsAdapter.CuttingToolViewHolder>(DiffCallbackStorageRecords()) {
 
     class CuttingToolViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView) {
         private val twName = itemView.findViewById<TextView>(R.id.tw_name)
