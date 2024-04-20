@@ -59,6 +59,11 @@ class WorkerFragment : Fragment() {
                     findNavController().navigate(action)
                     true
                 }
+
+                R.id.cameraFragment -> {
+                    findNavController().navigate(R.id.action_workerFragment_to_cameraFragment)
+                    true
+                }
                 else -> {
                     false
                 }

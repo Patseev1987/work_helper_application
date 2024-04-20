@@ -34,5 +34,6 @@
     <string name="measuring_tools">Measuring tools</string>
     <string name="helper_tools">Helper tools</string>
     <string name="amount">Amount:</string>
+    <string name="storage_weatlth">Storage weatlth</string>
 
 </resources>
