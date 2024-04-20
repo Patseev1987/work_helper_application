@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -13,18 +12,17 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
-import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentLoginBinding
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.viewModels.LoginViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
 
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModelFactory: ViewModelFactoryWithApplication
 
     private val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this,viewModelFactory)[LoginViewModel::class.java]
@@ -32,7 +30,7 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModelFactory = ViewModelFactory(requireActivity().application as MyApplication)
+        viewModelFactory = ViewModelFactoryWithApplication(requireActivity().application as MyApplication)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import ru.bogdan.m17_recyclerview.data.ApiFactory
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.data.web.mappers.toWorker
+import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.presenter.states.LoginState
 
 class LoginViewModel(private val application: MyApplication):ViewModel() {
@@ -27,6 +28,10 @@ class LoginViewModel(private val application: MyApplication):ViewModel() {
             val worker = apiService.checkLogin(login, password).toWorker()
             if (worker.login.isNotEmpty()) {
                 application.setWorker(worker)
+                if (worker.type != WorkerType.STORAGE_WORKER){
+                    val storageWorker = apiService.loadStorageWorkerByDepartment(worker.department).toWorker()
+                    application.setStorageWorker(storageWorker);
+                }
                 _state.value = LoginState.LoginResult(worker)
             } else {
                 _state.value = LoginState.Error

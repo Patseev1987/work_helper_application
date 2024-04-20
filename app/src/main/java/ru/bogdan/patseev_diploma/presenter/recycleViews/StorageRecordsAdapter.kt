@@ -21,7 +21,8 @@ class StorageRecordsAdapter(private val onClickListener: ((StorageRecord) -> Uni
         private val iwIcon = itemView.findViewById<ImageView>(R.id.icon)
 
         fun bind(storageRecord: StorageRecord, onClickListener: ((StorageRecord) -> Unit)? = null) {
-            twName.text = storageRecord.tool.name
+            val newName = storageRecord.tool.name.replace(" ","\n")
+            twName.text = newName
             twCode.text = storageRecord.tool.code
             twAmount.text = storageRecord.amount.toString()
 

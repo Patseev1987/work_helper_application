@@ -1,10 +1,12 @@
 package ru.bogdan.patseev_diploma.presenter.fragments
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,9 +16,13 @@ import kotlinx.coroutines.launch
 import ru.bogdan.m17_recyclerview.presentation.recycleView.StorageRecordsAdapter
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewCuttingToolsBinding
+import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithWorker
+
+
 
 
 class RecycleViewStorageRecordsFragment : Fragment() {
@@ -24,6 +30,11 @@ class RecycleViewStorageRecordsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var position: Int = 0
+    @Suppress("DEPRECATION")
+    // min SDK lower than 33 (TIRAMISU)
+    private val worker:Worker by lazy {
+        requireArguments().getParcelable(WORKER)!!
+    }
     private val adapter by lazy {
         StorageRecordsAdapter { storageRecord ->
             val tool = storageRecord.tool
@@ -37,7 +48,7 @@ class RecycleViewStorageRecordsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         position = arguments?.getInt(POSITION) ?: -1
-        viewModelFactory = ViewModelFactory(requireActivity().application as MyApplication)
+        viewModelFactory = ViewModelFactoryWithWorker(worker)
     }
 
     override fun onCreateView(
@@ -47,7 +58,7 @@ class RecycleViewStorageRecordsFragment : Fragment() {
         _binding = FragmentRecycleViewCuttingToolsBinding.inflate(inflater, container, false)
         return binding.root
     }
-    private lateinit var viewModelFactory:ViewModelFactory
+    private lateinit var viewModelFactory:ViewModelFactoryWithWorker
 
     private val viewModel by lazy {
         ViewModelProvider(this,viewModelFactory)[RecycleViewViewModel::class.java]
@@ -93,12 +104,14 @@ class RecycleViewStorageRecordsFragment : Fragment() {
 
     companion object {
         private const val POSITION = "position"
+        private const val WORKER = "worker"
 
         @JvmStatic
-        fun newInstance(position: Int) =
+        fun newInstance(position: Int, worker: Worker) =
             RecycleViewStorageRecordsFragment().apply {
                 arguments = Bundle().apply {
                     putInt(POSITION, position)
+                    putParcelable(WORKER,worker)
                 }
             }
     }
