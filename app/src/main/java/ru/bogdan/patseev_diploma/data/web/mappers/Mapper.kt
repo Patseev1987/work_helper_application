@@ -67,7 +67,7 @@ fun ToolWEB.toTool(): Tool {
         icon = this.icon,
         place = this.place.toPlace(),
         type = this.type,
-        controlDate = LocalDate.parse(this.controlDate) ?: null
+        controlDate = this.controlDate?.let { LocalDate.parse(it)}
     )
 }
 
@@ -79,7 +79,7 @@ fun Tool.toToolWEB(): ToolWEB {
         description = this.description,
         icon = this.icon,
         place = this.place.toPlaceWEB(),
-        controlDate = this.controlDate.toString() ?: null,
+        controlDate = this.controlDate.toString() ,
         type = this.type
     )
 }

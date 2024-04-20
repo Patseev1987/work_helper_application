@@ -40,7 +40,8 @@ class ToolFragment : Fragment() {
             .into(binding.icon)
 
         binding.twCode.text = tool.code
-        binding.twName.text = tool.name
+        val newName = tool.name.replace(" ","\n")
+        binding.twName.text = newName
         binding.twNote.text = tool.notes
         binding.twDescriptions.text = tool.description
         binding.twColumn.text = tool.place.column

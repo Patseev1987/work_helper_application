@@ -86,12 +86,19 @@
             app:launchSingleTop="false"
             app:popUpTo="@id/tabLayoutFragment"
             app:popUpToInclusive="false" />
+        <argument
+            android:name="worker"
+            app:argType="ru.bogdan.patseev_diploma.domain.models.Worker" />
     </fragment>
     <fragment
         android:id="@+id/recycleViewCuttingToolsFragment"
         android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewStorageRecordsFragment"
         android:label="fragment_recycle_view_cutting_tools"
-        tools:layout="@layout/fragment_recycle_view_cutting_tools" />
+        tools:layout="@layout/fragment_recycle_view_cutting_tools" >
+        <argument
+            android:name="worker"
+            app:argType="ru.bogdan.patseev_diploma.domain.models.Worker" />
+    </fragment>
     <dialog
         android:id="@+id/dialogForQRCode"
         android:name="ru.bogdan.patseev_diploma.presenter.DialogForQRCode"

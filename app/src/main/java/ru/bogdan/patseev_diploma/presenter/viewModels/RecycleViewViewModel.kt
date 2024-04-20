@@ -12,17 +12,20 @@ import ru.bogdan.m17_recyclerview.data.ApiFactory
 import ru.bogdan.m17_recyclerview.data.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
+import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
 
 
-class RecycleViewViewModel(private val application: MyApplication) : ViewModel() {
+class RecycleViewViewModel(
+    private val worker: Worker
+) : ViewModel() {
 
 
     private val apiHelper = ApiHelperImpl(ApiFactory.apiService)
 
     val state: Flow<RecycleViewState> = apiHelper
-        .loadStorageRecordByWorkerId(application.worker.id)
+        .loadStorageRecordByWorkerId(worker.id)
         .map {
             RecycleViewState.Result(it) as RecycleViewState
         }

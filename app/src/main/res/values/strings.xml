@@ -33,5 +33,6 @@
     <string name="cutting_tools">Cutting tools</string>
     <string name="measuring_tools">Measuring tools</string>
     <string name="helper_tools">Helper tools</string>
+    <string name="amount">Amount:</string>
 
 </resources>
