@@ -72,12 +72,12 @@
             android:layout_marginTop="10dp"
             android:text="@string/amount"
             android:textSize="25sp"
-            app:layout_constraintEnd_toStartOf="@+id/tw_amount_transaction"
+            app:layout_constraintEnd_toStartOf="@+id/tw_amount_tool"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/icon_tool" />
 
         <TextView
-            android:id="@+id/tw_amount_transaction"
+            android:id="@+id/tw_amount_tool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
