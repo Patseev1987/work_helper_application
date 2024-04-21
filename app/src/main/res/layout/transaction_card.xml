@@ -33,8 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tool"
-            app:layout_constraintEnd_toEndOf="@+id/tw_tool"
-            app:layout_constraintStart_toStartOf="@+id/tw_tool"
+            app:layout_constraintEnd_toEndOf="@+id/tw_tool_transaction"
+            app:layout_constraintStart_toStartOf="@+id/tw_tool_transaction"
             app:layout_constraintTop_toTopOf="@+id/icon_transaction" />
 
         <TextView
@@ -65,7 +65,7 @@
             app:layout_constraintTop_toTopOf="@id/tw_tool_label" />
 
         <TextView
-            android:id="@+id/tw_tool"
+            android:id="@+id/tw_tool_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/tw_amount_transaction"
@@ -81,8 +81,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/tw_sender"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tw_tool"
-            app:layout_constraintTop_toTopOf="@+id/tw_tool"
+            app:layout_constraintStart_toEndOf="@+id/tw_tool_transaction"
+            app:layout_constraintTop_toTopOf="@+id/tw_tool_transaction"
             tools:text="@string/amount" />
 
         <TextView
@@ -92,7 +92,7 @@
             app:layout_constraintEnd_toStartOf="@+id/tw_receiver"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tw_amount_transaction"
-            app:layout_constraintTop_toTopOf="@+id/tw_tool"
+            app:layout_constraintTop_toTopOf="@+id/tw_tool_transaction"
             tools:text="@string/sender" />
 
         <TextView
@@ -102,7 +102,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tw_sender"
-            app:layout_constraintTop_toTopOf="@+id/tw_tool"
+            app:layout_constraintTop_toTopOf="@+id/tw_tool_transaction"
             tools:text="@string/receiver" />
 
 

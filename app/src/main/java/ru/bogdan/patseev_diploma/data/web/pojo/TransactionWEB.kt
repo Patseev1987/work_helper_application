@@ -14,6 +14,6 @@ data class TransactionWEB(
     val sender: WorkerWEB,
     @SerializedName("tool")
     val tool: ToolWEB,
-    @SerializedName("transaction_date")
+    @SerializedName("transactionDate")
     val transactionDate: String
 )

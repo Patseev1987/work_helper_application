@@ -12,8 +12,10 @@ class ViewModelFactoryWithApplication(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TabLayoutVieModel::class.java)) {
             return TabLayoutVieModel(application = application) as T
-        }else if (modelClass.isAssignableFrom(LoginViewModel::class.java)){
+        }else if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(application) as T
+        }else if (modelClass.isAssignableFrom(WorkerFragmentViewModel::class.java)){
+            return WorkerFragmentViewModel(application) as T
         } else {
             throw RuntimeException("Unknown ViewModel-> $modelClass")
         }

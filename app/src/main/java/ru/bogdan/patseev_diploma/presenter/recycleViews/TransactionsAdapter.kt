@@ -1,5 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.recycleViews
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -17,7 +18,7 @@ class TransactionsAdapter(private val onClickListener: ((Transaction) -> Unit)? 
     ListAdapter<Transaction, TransactionsAdapter.TransactionViewHolder>(DiffCallbackTransaction()) {
 
     class TransactionViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView) {
-        private val twTool = itemView.findViewById<TextView>(R.id.tw_tool)
+        private val twTool = itemView.findViewById<TextView>(R.id.tw_tool_transaction)
         private val twAmount = itemView.findViewById<TextView>(R.id.tw_amount_transaction)
         private val twSender = itemView.findViewById<TextView>(R.id.tw_sender)
         private val twReceiver = itemView.findViewById<TextView>(R.id.tw_receiver)
@@ -63,7 +64,7 @@ class TransactionsAdapter(private val onClickListener: ((Transaction) -> Unit)? 
         companion object {
             fun inflateFrom(p0: ViewGroup): TransactionViewHolder {
                 val inflater = LayoutInflater.from(p0.context)
-                val view = inflater.inflate(R.layout.tool_card, p0, false) as CardView
+                val view = inflater.inflate(R.layout.transaction_card, p0, false) as CardView
                 return TransactionViewHolder(view)
             }
         }

@@ -12,6 +12,5 @@ data class Transaction(
     val date: LocalDate,
     val tool: Tool,
     val amount:Int,
-    val note:String? = null
 ): Parcelable {
 }
