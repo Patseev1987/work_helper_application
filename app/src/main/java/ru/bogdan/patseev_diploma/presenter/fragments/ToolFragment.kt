@@ -37,7 +37,7 @@ class ToolFragment : Fragment() {
     private fun initView(binding: FragmentToolBinding, tool: Tool){
         Glide.with(this)
             .load(tool.icon)
-            .into(binding.icon)
+            .into(binding.iconToolFragment)
 
         binding.twCode.text = tool.code
         val newName = tool.name.replace(" ","\n")

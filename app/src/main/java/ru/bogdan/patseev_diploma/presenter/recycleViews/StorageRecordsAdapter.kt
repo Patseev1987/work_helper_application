@@ -1,4 +1,4 @@
-package ru.bogdan.m17_recyclerview.presentation.recycleView
+package ru.bogdan.patseev_diploma.presenter.recycleViews
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,13 +12,15 @@ import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 
 class StorageRecordsAdapter(private val onClickListener: ((StorageRecord) -> Unit)? = null) :
-    ListAdapter<StorageRecord, StorageRecordsAdapter.CuttingToolViewHolder>(DiffCallbackStorageRecords()) {
+    ListAdapter<StorageRecord, StorageRecordsAdapter.CuttingToolViewHolder>(
+        DiffCallbackStorageRecords()
+    ) {
 
     class CuttingToolViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView) {
         private val twName = itemView.findViewById<TextView>(R.id.tw_name)
         private val twCode = itemView.findViewById<TextView>(R.id.tw_code)
-        private val twAmount = itemView.findViewById<TextView>(R.id.tw_amount)
-        private val iwIcon = itemView.findViewById<ImageView>(R.id.icon)
+        private val twAmount = itemView.findViewById<TextView>(R.id.tw_amount_transaction)
+        private val iwIcon = itemView.findViewById<ImageView>(R.id.icon_tool)
 
         fun bind(storageRecord: StorageRecord, onClickListener: ((StorageRecord) -> Unit)? = null) {
             val newName = storageRecord.tool.name.replace(" ","\n")
@@ -40,7 +42,7 @@ class StorageRecordsAdapter(private val onClickListener: ((StorageRecord) -> Uni
         companion object {
             fun inflateFrom(p0: ViewGroup): CuttingToolViewHolder {
                 val inflater = LayoutInflater.from(p0.context)
-                val view = inflater.inflate(R.layout.cutting_tool_card, p0, false) as CardView
+                val view = inflater.inflate(R.layout.tool_card, p0, false) as CardView
                 return CuttingToolViewHolder(view)
             }
         }

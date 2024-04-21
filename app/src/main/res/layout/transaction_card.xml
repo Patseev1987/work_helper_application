@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/transaction_card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:padding="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:id="@+id/icon_transaction"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/tool_icon"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/tw_tool_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tool"
+            app:layout_constraintEnd_toEndOf="@+id/tw_tool"
+            app:layout_constraintStart_toStartOf="@+id/tw_tool"
+            app:layout_constraintTop_toTopOf="@+id/icon_transaction" />
+
+        <TextView
+            android:id="@+id/tw_amount_label_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/amount"
+            app:layout_constraintEnd_toEndOf="@+id/tw_amount_transaction"
+            app:layout_constraintStart_toStartOf="@+id/tw_amount_transaction"
+            app:layout_constraintTop_toTopOf="@+id/tw_tool_label" />
+
+        <TextView
+            android:id="@+id/tw_sender_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sender"
+            app:layout_constraintEnd_toEndOf="@+id/tw_sender"
+            app:layout_constraintStart_toStartOf="@+id/tw_sender"
+            app:layout_constraintTop_toTopOf="@+id/tw_tool_label" />
+
+        <TextView
+            android:id="@+id/tw_receiver_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/receiver"
+            app:layout_constraintEnd_toEndOf="@+id/tw_receiver"
+            app:layout_constraintStart_toStartOf="@+id/tw_receiver"
+            app:layout_constraintTop_toTopOf="@id/tw_tool_label" />
+
+        <TextView
+            android:id="@+id/tw_tool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/tw_amount_transaction"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/icon_transaction"
+            app:layout_constraintTop_toBottomOf="@+id/tw_tool_label"
+            android:layout_marginTop="8dp"
+            tools:text="@string/tool" />
+
+        <TextView
+            android:id="@+id/tw_amount_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/tw_sender"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tw_tool"
+            app:layout_constraintTop_toTopOf="@+id/tw_tool"
+            tools:text="@string/amount" />
+
+        <TextView
+            android:id="@+id/tw_sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/tw_receiver"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tw_amount_transaction"
+            app:layout_constraintTop_toTopOf="@+id/tw_tool"
+            tools:text="@string/sender" />
+
+        <TextView
+            android:id="@+id/tw_receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tw_sender"
+            app:layout_constraintTop_toTopOf="@+id/tw_tool"
+            tools:text="@string/receiver" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

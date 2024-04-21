@@ -1,25 +1,22 @@
 package ru.bogdan.patseev_diploma.presenter.fragments
 
-import android.os.Build
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
-import ru.bogdan.m17_recyclerview.presentation.recycleView.StorageRecordsAdapter
-import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewCuttingToolsBinding
 import ru.bogdan.patseev_diploma.domain.models.Worker
+import ru.bogdan.patseev_diploma.presenter.recycleViews.StorageRecordsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
 import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithWorker
 
 

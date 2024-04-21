@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/icon"
+            android:id="@+id/icon_tool"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="20dp"
@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@string/code"
-            app:layout_constraintStart_toEndOf="@+id/icon"
-            app:layout_constraintTop_toTopOf="@+id/icon" />
+            app:layout_constraintStart_toEndOf="@+id/icon_tool"
+            app:layout_constraintTop_toTopOf="@+id/icon_tool" />
 
         <TextView
             android:id="@+id/tw_code"
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name"
-            app:layout_constraintBottom_toBottomOf="@+id/icon"
+            app:layout_constraintBottom_toBottomOf="@+id/icon_tool"
             app:layout_constraintStart_toStartOf="@+id/tw_code_label"
             app:layout_constraintTop_toBottomOf="@+id/tw_code_label" />
 
@@ -72,12 +72,12 @@
             android:layout_marginTop="10dp"
             android:text="@string/amount"
             android:textSize="25sp"
-            app:layout_constraintEnd_toStartOf="@+id/tw_amount"
+            app:layout_constraintEnd_toStartOf="@+id/tw_amount_transaction"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/icon" />
+            app:layout_constraintTop_toBottomOf="@+id/icon_tool" />
 
         <TextView
-            android:id="@+id/tw_amount"
+            android:id="@+id/tw_amount_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"

@@ -2,35 +2,18 @@ package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarMenu
-import com.google.android.material.navigation.NavigationBarView
-import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
-import ru.bogdan.patseev_diploma.databinding.FragmentStorageWorkerBinding
 import ru.bogdan.patseev_diploma.databinding.FragmentWorkerBinding
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithWorker
-import ru.bogdan.patseev_diploma.presenter.viewModels.WorkerFragmentViewModel
+import ru.bogdan.patseev_diploma.domain.models.Worker
+import ru.bogdan.patseev_diploma.util.toNormalName
+
 
 class WorkerFragment : Fragment() {
     private var _binding: FragmentWorkerBinding? = null
     private val binding get() = _binding!!
-
-
-
-
 
 
     override fun onCreateView(
@@ -43,6 +26,12 @@ class WorkerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView(binding, (requireActivity().application as MyApplication).worker)
+        setListener(binding)
+    }
+
+    //set listener for bottom bar menu
+    private fun setListener(binding: FragmentWorkerBinding){
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.wealth -> {
@@ -71,6 +60,13 @@ class WorkerFragment : Fragment() {
         }
     }
 
+    private fun initView(binding: FragmentWorkerBinding, worker: Worker){
+        binding.twName.text = worker.firstName
+        binding.twSurname.text = worker.secondName
+        binding.twPatronymic.text = worker.patronymic
+        binding.twDepartment.text = worker.department.toNormalName()
+        binding.twJoinDate.text = worker.joinDate.toString()
+    }
 
     override fun onDestroy() {
         super.onDestroy()

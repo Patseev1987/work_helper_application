@@ -1,4 +1,4 @@
-package ru.bogdan.m17_recyclerview.presentation.recycleView
+package ru.bogdan.patseev_diploma.presenter.recycleViews
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord

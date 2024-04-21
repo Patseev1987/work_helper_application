@@ -12,7 +12,7 @@
     <string name="help">Help</string>
     <string name="profile">Profile</string>
     <string name="wealth">Wealth</string>
-    <string name="search_with_qr_code">Search with QR-CODE</string>
+    <string name="search_with_qr_code">Identify</string>
     <string name="column">Column:</string>
     <string name="self">Self:</string>
     <string name="row">Row:</string>
@@ -34,6 +34,15 @@
     <string name="measuring_tools">Measuring tools</string>
     <string name="helper_tools">Helper tools</string>
     <string name="amount">Amount:</string>
-    <string name="storage_weatlth">Storage weatlth</string>
+    <string name="storage_weatlth">Storage</string>
+    <string name="notes">Notes</string>
+    <string name="name_label">Name:</string>
+    <string name="surname">Surname:</string>
+    <string name="patronymic">Patronymic:</string>
+    <string name="department">Department:</string>
+    <string name="work_since">Work since:</string>
+    <string name="tool">Tool:</string>
+    <string name="sender">Sender:</string>
+    <string name="receiver">Receiver:</string>
 
 </resources>

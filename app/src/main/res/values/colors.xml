@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="myColorPrimary">#4EC5A1</color>
     <color name="myColorOnPrimary">#666363</color>
+    <color name="take_tool_from_storage">#8BC34A</color>
+    <color name="give_tool_back_to_storage">#FFC107</color>
 </resources>

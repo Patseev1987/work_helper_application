@@ -1,37 +1,22 @@
 package ru.bogdan.patseev_diploma.util
 
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import ru.bogdan.patseev_diploma.domain.models.Tool
-import ru.bogdan.patseev_diploma.domain.models.Transaction
-import ru.bogdan.patseev_diploma.domain.models.Worker
-import java.time.LocalDate
-import java.time.LocalDateTime
+import ru.bogdan.patseev_diploma.domain.models.enums.Department
 
 
-fun Fragment.transaction(
-    id: Long,
-    from: Worker,
-    destination: Worker,
-    date: LocalDate,
-    tool: Tool,
-    amount: Int,
-    note: String? = null
-): Transaction {
-    return Transaction( id, from, destination, date, tool, amount, note)
+fun Department.toNormalName():String{
+  return  when (this) {
+       Department.DEPARTMENT_19 -> {"Цех №19"}
+        Department.MAIN_STORAGE -> {"Главный склад"}
+        Department.DEPARTMENT_65 -> {"Управление Главного технолога"}
+        Department.DEPARTMENT_15 -> {"Цех №15"}
+        Department.DEPARTMENT_41 -> {"Цех №41"}
+        Department.DEPARTMENT_17 -> {"Цех №17"}
+        Department.DEPARTMENT_28 -> {"Цех №28"}
+        Department.SHARPENING -> {"Заточка инструмента"}
+        Department.STORAGE_DECOMMISSIONED_TOOLS -> {"Склад списанного инструмента"}
+    }
 }
 
-fun ViewModel.transaction(
-    id: Long,
-    from: Worker,
-    destination: Worker,
-    date: LocalDate,
-    tool: Tool,
-    amount: Int,
-    note: String? = null
-): Transaction {
-    return Transaction( id, from, destination, date, tool, amount, note)
-}
 
 
 
