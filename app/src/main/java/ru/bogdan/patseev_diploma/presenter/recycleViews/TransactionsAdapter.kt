@@ -25,7 +25,8 @@ class TransactionsAdapter(private val onClickListener: ((Transaction) -> Unit)? 
         private val iwIcon = itemView.findViewById<ImageView>(R.id.icon_transaction)
 
         fun bind(transaction: Transaction, onClickListener: ((Transaction) -> Unit)? = null) {
-            twTool.text = transaction.tool.code
+            val newCode = transaction.tool.code.replace("-","\n")
+            twTool.text = newCode
             twAmount.text = transaction.amount.toString()
             twSender.text = transaction.sender.secondName
             twReceiver.text = transaction.receiver.secondName

@@ -14,14 +14,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="8dp">
 
         <ImageView
             android:id="@+id/icon_transaction"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:contentDescription="@string/tool_icon"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -33,17 +33,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tool"
-            app:layout_constraintEnd_toEndOf="@+id/tw_tool_transaction"
-            app:layout_constraintStart_toStartOf="@+id/tw_tool_transaction"
-            app:layout_constraintTop_toTopOf="@+id/icon_transaction" />
+            app:layout_constraintBottom_toTopOf="@+id/tw_tool_transaction"
+            app:layout_constraintEnd_toStartOf="@+id/tw_amount_label_transaction"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/icon_transaction"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tw_amount_label_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/amount"
-            app:layout_constraintEnd_toEndOf="@+id/tw_amount_transaction"
-            app:layout_constraintStart_toStartOf="@+id/tw_amount_transaction"
+            app:layout_constraintEnd_toStartOf="@+id/tw_sender_label"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tw_tool_label"
             app:layout_constraintTop_toTopOf="@+id/tw_tool_label" />
 
         <TextView
@@ -51,28 +54,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sender"
-            app:layout_constraintEnd_toEndOf="@+id/tw_sender"
-            app:layout_constraintStart_toStartOf="@+id/tw_sender"
-            app:layout_constraintTop_toTopOf="@+id/tw_tool_label" />
+            app:layout_constraintEnd_toStartOf="@+id/tw_receiver_label"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tw_amount_label_transaction"
+            app:layout_constraintTop_toTopOf="@+id/tw_amount_label_transaction" />
 
         <TextView
             android:id="@+id/tw_receiver_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/receiver"
-            app:layout_constraintEnd_toEndOf="@+id/tw_receiver"
-            app:layout_constraintStart_toStartOf="@+id/tw_receiver"
-            app:layout_constraintTop_toTopOf="@id/tw_tool_label" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tw_sender_label"
+            app:layout_constraintTop_toTopOf="@+id/tw_sender_label" />
 
         <TextView
             android:id="@+id/tw_tool_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tw_amount_transaction"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/icon_transaction"
             app:layout_constraintTop_toBottomOf="@+id/tw_tool_label"
-            android:layout_marginTop="8dp"
             tools:text="@string/tool" />
 
         <TextView
