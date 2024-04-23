@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
@@ -87,7 +86,7 @@ class WorkerFragment : Fragment() {
         }
     }
 
-
+    // observe stateFlow
     private fun observeViewModel(
         binding: FragmentWorkerBinding,
         viewModel: WorkerFragmentViewModel
@@ -97,7 +96,6 @@ class WorkerFragment : Fragment() {
                 viewModel.state.collect {
                     when (it) {
                         is WorkerFragmentState.ResultsTransaction -> {
-                            Log.d("apiService",it.transactions.toString())
                             val adapter = TransactionsAdapter()
                             binding.workerTransactions.adapter = adapter
                           adapter.submitList(it.transactions)

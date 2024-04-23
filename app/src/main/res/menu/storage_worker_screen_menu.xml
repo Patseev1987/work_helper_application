@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-tools:showIn="navigation_view">
-    <item android:title="@string/actions_with_tool"
-    android:enabled="false"/>
-    <group
-            android:id="@+id/group1">
-        <item
-                android:id="@+id/takeToolFragment"
-                android:title="@string/take_tool_back_to_storage"
-                android:checked="true"/>
-        <item
-                android:id="@+id/giveToolFragment"
-                android:title="@string/give_tool_from_storage"/>
-        <item
-                android:id="@+id/sendToolFragment"
-                android:title="@string/send_tool_to_sharpen"/>
-        <item
-                android:id="@+id/writeOffToolFragment"
-                android:title="@string/write_off_tool"/>
-    </group>
-
-    <item android:title="@string/actions_for_search_tool"
-    android:enabled="false"/>
-
-    <group
-            android:id="@+id/group2">
-        <item
-                android:id="@+id/item4"
-                android:title="@string/search_in_database"
-                android:checked="true"/>
-        <item
-                android:id="@+id/cameraFragment"
-                android:title="@string/search_with_qr_code_2"/>
-    </group>
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:enabled="false"
+        android:title="@string/actions_with_tool">
+        <menu>
+            <item
+                android:id="@+id/item_take_tool"
+                android:icon="@drawable/baseline_give_tool_back"
+                android:title="@string/take_tool_back_to_storage" />
+            <item
+                android:id="@+id/item_give_tool"
+                android:icon="@drawable/baseline_take_tool_to"
+                android:title="@string/give_tool_from_storage" />
+            <item
+                android:id="@+id/item_sharpen"
+                android:icon="@drawable/baseline_sharpen"
+                android:title="@string/send_tool_to_sharpen" />
+            <item
+                android:id="@+id/item_write_off"
+                android:icon="@drawable/baseline_write_off"
+                android:title="@string/write_off_tool" />
+        </menu>
+    </item>
+    <item
+        android:enabled="false"
+        android:title="@string/actions_for_search_tool">
+        <menu>
+            <item
+                android:id="@+id/item_camera"
+                android:icon="@drawable/baseline_qr_code"
+                android:title="@string/search_with_qr_code_2" />
+            <item
+                android:id="@+id/item_search_by_code"
+                android:icon="@drawable/baseline_search_by_code"
+                android:title="@string/search_tool_by_code"/>
+        </menu>
+    </item>
+    <item
+        android:enabled="false"
+        android:title="@string/action_with_worker_in_department">
+        <menu>
+            <item
+                android:id="@+id/item_workers"
+                android:icon="@drawable/baseline_people"
+                android:title="@string/list_of_workers_in_department"/>
+        </menu>
+    </item>
 </menu>

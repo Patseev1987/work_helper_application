@@ -44,5 +44,16 @@
     <string name="tool">Tool:</string>
     <string name="sender">Sender:</string>
     <string name="receiver">Receiver:</string>
+    <string name="search_tool_by_code">search tool by code</string>
+    <string name="action_with_worker_in_department">action with worker in department</string>
+    <string name="list_of_workers_in_department">List of workers in department</string>
+    <string name="create_transaction">Create transaction:</string>
+    <string name="set_amount">set amount</string>
+    <string name="set_tool">Set tool</string>
+    <string name="set_sender">Set sender</string>
+    <string name="set_receiver">Set receiver</string>
+    <string name="commit">Commit</string>
+    <string name="choose_worker">Choose worker</string>
+    <string name="enter_worker_surname">Enter worker surname</string>
 
 </resources>

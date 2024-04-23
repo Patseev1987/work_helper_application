@@ -9,6 +9,7 @@ import ru.bogdan.patseev_diploma.data.web.mappers.toWorker
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 import ru.bogdan.patseev_diploma.domain.models.Transaction
 import ru.bogdan.patseev_diploma.domain.models.Worker
+import ru.bogdan.patseev_diploma.domain.models.enums.Department
 
 class ApiHelperImpl(
     private val apiService: ApiService,
@@ -31,6 +32,12 @@ class ApiHelperImpl(
             emit( apiService.loadTransactionsByWorkerId(workerId)
                 .map{ it.toTransaction()})
         }
+    }
+
+
+    suspend fun loadWorkersByDepartment(department: Department):List<Worker>{
+        return apiService.loadWorkersByDepartment(department)
+            .map { it.toWorker() }
     }
 
 

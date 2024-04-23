@@ -1,14 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".presenter.fragments.TransactionFragment">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presenter.fragments.TransactionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+<TextView
+    android:id="@+id/tw_create_transaction_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/create_transaction"
+    android:textSize="25sp"
+    android:textStyle="italic"
+    android:fontFamily="sans-serif-black"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="10dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
     <TextView
+        android:id="@+id/tw_tool_label_transaction_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tool"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/tw_create_transaction_title"
+        app:layout_constraintStart_toStartOf="@+id/iw_icon_transaction_fragment"
+        app:layout_constraintEnd_toEndOf="@+id/iw_icon_transaction_fragment" />
+    <ImageView
+        android:id="@+id/iw_icon_transaction_fragment"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:src="@drawable/baseline_people"
+        android:contentDescription="@string/tool_icon"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tw_tool_label_transaction_fragment"
+        app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/tw_tool_code_transaction_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text = "1111-1111"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/iw_icon_transaction_fragment"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/iw_icon_transaction_fragment"
+            app:layout_constraintEnd_toEndOf="@+id/iw_icon_transaction_fragment"/>
+
+    <TextView
+        android:id="@+id/tw_sender_label_transaction_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sender"
+        android:layout_marginTop="26dp"
+        app:layout_constraintTop_toBottomOf="@+id/tw_tool_code_transaction_fragment"
+        app:layout_constraintStart_toStartOf="@+id/iw_icon_transaction_fragment"
+        app:layout_constraintEnd_toEndOf="@+id/iw_icon_transaction_fragment"/>
+
+    <TextView
+        android:id="@+id/tw_sender_transaction_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/sender"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tw_sender_label_transaction_fragment"
+        app:layout_constraintStart_toStartOf="@+id/iw_icon_transaction_fragment"
+        app:layout_constraintEnd_toEndOf="@+id/iw_icon_transaction_fragment"/>
+
+    <TextView
+        android:id="@+id/tw_receiver_label_transaction_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/receiver"
+        android:layout_marginTop="26dp"
+        app:layout_constraintTop_toBottomOf="@+id/tw_sender_transaction_fragment"
+        app:layout_constraintStart_toStartOf="@+id/iw_icon_transaction_fragment"
+        app:layout_constraintEnd_toEndOf="@+id/iw_icon_transaction_fragment"/>
+
+    <TextView
+        android:id="@+id/tw_receiver_transaction_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/receiver"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tw_receiver_label_transaction_fragment"
+        app:layout_constraintStart_toStartOf="@+id/iw_icon_transaction_fragment"
+        app:layout_constraintEnd_toEndOf="@+id/iw_icon_transaction_fragment"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/in_layout_transaction_fragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        android:hint="@string/set_amount"
+        app:layout_constraintTop_toBottomOf="@+id/tw_receiver_transaction_fragment"
+        android:layout_marginTop="26dp"
+        app:layout_constraintEnd_toEndOf="@+id/b_commit_transaction_fragment"
+        app:layout_constraintStart_toStartOf="@+id/b_commit_transaction_fragment">
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            android:inputType="number"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-</FrameLayout>
+
+    <Button
+        android:id="@+id/b_set_tool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/b_set_receiver"
+        app:layout_constraintEnd_toEndOf="@+id/b_set_receiver"
+        android:text="@string/set_tool"
+        app:layout_constraintTop_toTopOf="@+id/tw_tool_label_transaction_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/tw_tool_code_transaction_fragment"/>
+
+    <Button
+        android:id="@+id/b_set_sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_sender"
+        app:layout_constraintStart_toStartOf="@+id/b_set_receiver"
+        app:layout_constraintEnd_toEndOf="@+id/b_set_receiver"
+        app:layout_constraintTop_toTopOf="@+id/tw_sender_label_transaction_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/tw_sender_transaction_fragment"/>
+
+    <Button
+        android:id="@+id/b_set_receiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/iw_icon_transaction_fragment"
+        android:layout_marginStart="80dp"
+        android:text="@string/set_receiver"
+        app:layout_constraintTop_toTopOf="@+id/tw_receiver_label_transaction_fragment"
+        app:layout_constraintBottom_toBottomOf="@+id/tw_receiver_transaction_fragment"/>
+
+    <Button
+        android:id="@+id/b_commit_transaction_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:text="@string/commit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="50dp"/>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,22 +28,15 @@
         <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
         <action android:id="@+id/action_storageWorkerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
         <action android:id="@+id/action_storageWorkerFragment_to_helpFragment2" app:destination="@id/helpFragment2"/>
-        <action android:id="@+id/action_storageWorkerFragment_to_takeToolFragment"
-                app:destination="@id/takeToolFragment" app:popUpTo="@id/takeToolFragment"
-        />
-        <action android:id="@+id/action_storageWorkerFragment_to_giveToolFragment"
-                app:destination="@id/giveToolFragment" app:popUpTo="@id/storageWorkerFragment"
-        />
-        <action android:id="@+id/action_storageWorkerFragment_to_sendToolFragment"
-                app:destination="@id/sendToolFragment" app:popUpTo="@id/storageWorkerFragment"/>
-        <action android:id="@+id/action_storageWorkerFragment_to_writeOffToolFragment"
-                app:destination="@id/writeOffToolFragment" app:popUpTo="@id/storageWorkerFragment"/>
         <action
             android:id="@+id/action_storageWorkerFragment_to_tabLayoutFragment"
             app:destination="@id/tabLayoutFragment" />
         <action
-            android:id="@+id/action_storageWorkerFragment_to_QRCodeFragment"
-            app:destination="@id/QRCodeFragment" />
+            android:id="@+id/action_storageWorkerFragment_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
+        <action
+            android:id="@+id/action_storageWorkerFragment_to_recycleViewWithWorkersFragment"
+            app:destination="@id/recycleViewWithWorkersFragment" />
     </fragment>
     <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
@@ -59,18 +52,6 @@
     </fragment>
     <fragment android:id="@+id/helpFragment2" android:name="ru.bogdan.patseev_diploma.presenter.fragments.HelpFragment"
               android:label="fragment_help" tools:layout="@layout/fragment_help"/>
-    <fragment android:id="@+id/giveToolFragment"
-              android:name="ru.bogdan.patseev_diploma.presenter.ationsWithToolFragments.GiveToolFragment"
-              android:label="fragment_give_tool" tools:layout="@layout/fragment_give_tool"/>
-    <fragment android:id="@+id/sendToolFragment"
-              android:name="ru.bogdan.patseev_diploma.presenter.ationsWithToolFragments.SendToolFragment"
-              android:label="fragment_send_tool" tools:layout="@layout/fragment_send_tool"/>
-    <fragment android:id="@+id/takeToolFragment"
-              android:name="ru.bogdan.patseev_diploma.presenter.ationsWithToolFragments.TakeToolFragment"
-              android:label="fragment_take_tool" tools:layout="@layout/fragment_take_tool"/>
-    <fragment android:id="@+id/writeOffToolFragment"
-              android:name="ru.bogdan.patseev_diploma.presenter.ationsWithToolFragments.WriteOffToolFragment"
-              android:label="fragment_write_off_tool" tools:layout="@layout/fragment_write_off_tool"/>
 
     <fragment
         android:id="@+id/tabLayoutFragment"
@@ -99,17 +80,28 @@
             android:name="worker"
             app:argType="ru.bogdan.patseev_diploma.domain.models.Worker" />
     </fragment>
-    <dialog
-        android:id="@+id/dialogForQRCode"
-        android:name="ru.bogdan.patseev_diploma.presenter.DialogForQRCode"
-        android:label="DialogForQRCode" />
     <fragment
-        android:id="@+id/QRCodeFragment"
-        android:name="ru.bogdan.patseev_diploma.presenter.fragments.QRCodeFragment"
-        android:label="fragment_q_r_code"
-        tools:layout="@layout/fragment_q_r_code" >
-        <action
-            android:id="@+id/action_QRCodeFragment_to_dialogForQRCode"
-            app:destination="@id/dialogForQRCode" />
+        android:id="@+id/transactionFragment"
+        android:name="ru.bogdan.patseev_diploma.presenter.fragments.TransactionFragment"
+        android:label="fragment_transaction"
+        tools:layout="@layout/fragment_transaction" >
+        <argument
+            android:name="tool"
+            app:argType="ru.bogdan.patseev_diploma.domain.models.Tool"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="sender"
+            app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="receiver"
+            app:argType="ru.bogdan.patseev_diploma.domain.models.Worker" />
     </fragment>
+    <fragment
+        android:id="@+id/recycleViewWithWorkersFragment"
+        android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewWithWorkersFragment"
+        android:label="fragment_recycle_view_with_workers"
+        tools:layout="@layout/fragment_recycle_view_with_workers" />
 </navigation>

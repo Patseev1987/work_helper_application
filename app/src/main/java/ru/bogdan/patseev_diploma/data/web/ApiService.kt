@@ -28,5 +28,10 @@ interface ApiService {
     suspend fun loadStorageWorkerByDepartment(
         @Query("department") department: Department
     ):WorkerWEB
+
+    @GET("workers_by_department")
+    suspend fun loadWorkersByDepartment(
+        @Query("department") department: Department
+    ):List<WorkerWEB>
 }
 
