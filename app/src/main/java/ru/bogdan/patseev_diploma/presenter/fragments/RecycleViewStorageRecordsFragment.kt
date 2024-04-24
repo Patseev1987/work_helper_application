@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
-import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewCuttingToolsBinding
+import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewToolsBinding
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.presenter.recycleViews.StorageRecordsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
@@ -23,7 +23,7 @@ import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithWorker
 
 
 class RecycleViewStorageRecordsFragment : Fragment() {
-    private var _binding: FragmentRecycleViewCuttingToolsBinding? = null
+    private var _binding: FragmentRecycleViewToolsBinding? = null
     private val binding get() = _binding!!
 
     private var position: Int = 0
@@ -52,7 +52,7 @@ class RecycleViewStorageRecordsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRecycleViewCuttingToolsBinding.inflate(inflater, container, false)
+        _binding = FragmentRecycleViewToolsBinding.inflate(inflater, container, false)
         return binding.root
     }
     private lateinit var viewModelFactory:ViewModelFactoryWithWorker
@@ -71,7 +71,7 @@ class RecycleViewStorageRecordsFragment : Fragment() {
 
 
     private fun observeViewModel(
-        binding: FragmentRecycleViewCuttingToolsBinding,
+        binding: FragmentRecycleViewToolsBinding,
         viewViewModel: RecycleViewViewModel
     ){
         lifecycleScope.launch {
@@ -84,7 +84,7 @@ class RecycleViewStorageRecordsFragment : Fragment() {
                         is RecycleViewState.Result -> {
                             binding.progressBar.visibility = View.GONE
                             adapter.submitList(viewModel.getList(state.records,position))
-                            binding.cuttingTools.adapter = adapter
+                            binding.toolsRecycleViewTools.adapter = adapter
                         }
                     }
                 }

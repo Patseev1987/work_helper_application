@@ -105,6 +105,7 @@
         app:layout_constraintEnd_toEndOf="@+id/b_commit_transaction_fragment"
         app:layout_constraintStart_toStartOf="@+id/b_commit_transaction_fragment">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/in_edit_text_transaction"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number"/>
@@ -150,6 +151,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="50dp"/>
 
+    <ProgressBar
+        android:id="@+id/progress_bar_transaction_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
 

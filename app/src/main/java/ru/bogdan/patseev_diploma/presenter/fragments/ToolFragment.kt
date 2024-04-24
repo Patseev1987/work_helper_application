@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewCuttingToolsBinding
+import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewToolsBinding
 import ru.bogdan.patseev_diploma.databinding.FragmentToolBinding
 import ru.bogdan.patseev_diploma.domain.models.Tool
 

@@ -7,9 +7,11 @@ import ru.bogdan.patseev_diploma.data.web.mappers.toStorageRecord
 import ru.bogdan.patseev_diploma.data.web.mappers.toTransaction
 import ru.bogdan.patseev_diploma.data.web.mappers.toWorker
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
-import ru.bogdan.patseev_diploma.domain.models.Transaction
+import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
+import java.time.LocalDate
+import ru.bogdan.patseev_diploma.domain.models.Transaction as Transaction1
 
 class ApiHelperImpl(
     private val apiService: ApiService,
@@ -27,7 +29,7 @@ class ApiHelperImpl(
         }
     }
 
-    fun loadTransactionsByWorkerId(workerId:Long):Flow<List<Transaction>>{
+    fun loadTransactionsByWorkerId(workerId:Long):Flow<List<Transaction1>>{
         return flow {
             emit( apiService.loadTransactionsByWorkerId(workerId)
                 .map{ it.toTransaction()})
@@ -40,6 +42,10 @@ class ApiHelperImpl(
             .map { it.toWorker() }
     }
 
+   suspend fun loadStorageWorkerByDepartment(department: Department):Worker{
+       return apiService.loadStorageWorkerByDepartment(department).toWorker()
+   }
+
 
 
     override suspend fun checkLogin(login: String, password: String): Flow<Worker> {
@@ -47,6 +53,17 @@ class ApiHelperImpl(
 
             emit(apiService.checkLogin(login, password).toWorker())
         }
+    }
+
+    override suspend fun createTransaction(sender: Worker, receiver: Worker, tool: Tool, amount: Int) {
+        val transaction = Transaction1(
+            sender=sender,
+            receiver = receiver,
+            tool = tool,
+            amount = amount,
+            date = LocalDate.now()
+        )
+        apiService.createTransaction(transaction)
     }
 
     suspend fun updateStorageRecords() {

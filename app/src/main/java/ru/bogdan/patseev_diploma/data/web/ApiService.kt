@@ -1,6 +1,8 @@
 package ru.bogdan.m17_recyclerview.data
 
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.bogdan.patseev_diploma.data.web.pojo.StorageRecordWEB
@@ -33,5 +35,9 @@ interface ApiService {
     suspend fun loadWorkersByDepartment(
         @Query("department") department: Department
     ):List<WorkerWEB>
+
+
+    @POST("transaction/create")
+    suspend fun createTransaction(@Body transaction: Transaction)
 }
 

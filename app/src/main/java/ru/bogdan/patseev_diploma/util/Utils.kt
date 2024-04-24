@@ -13,7 +13,7 @@ fun Department.toNormalName():String{
         Department.DEPARTMENT_17 -> {"Цех №17"}
         Department.DEPARTMENT_28 -> {"Цех №28"}
         Department.SHARPENING -> {"Заточка инструмента"}
-        Department.STORAGE_DECOMMISSIONED_TOOLS -> {"Склад списанного инструмента"}
+        Department.STORAGE_OF_DECOMMISSIONED_TOOLS -> {"Склад списанного инструмента"}
     }
 }
 

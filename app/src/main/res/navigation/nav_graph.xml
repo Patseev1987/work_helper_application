@@ -75,7 +75,7 @@
         android:id="@+id/recycleViewCuttingToolsFragment"
         android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewStorageRecordsFragment"
         android:label="fragment_recycle_view_cutting_tools"
-        tools:layout="@layout/fragment_recycle_view_cutting_tools" >
+        tools:layout="@layout/fragment_recycle_view_tools" >
         <argument
             android:name="worker"
             app:argType="ru.bogdan.patseev_diploma.domain.models.Worker" />
@@ -97,11 +97,17 @@
             android:defaultValue="@null" />
         <argument
             android:name="receiver"
-            app:argType="ru.bogdan.patseev_diploma.domain.models.Worker" />
+            app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/recycleViewWithWorkersFragment"
         android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewWithWorkersFragment"
         android:label="fragment_recycle_view_with_workers"
-        tools:layout="@layout/fragment_recycle_view_with_workers" />
+        tools:layout="@layout/fragment_recycle_view_with_workers" >
+        <argument
+            android:name="mode"
+            app:argType="integer" />
+    </fragment>
 </navigation>
