@@ -103,6 +103,9 @@
         <action
             android:id="@+id/action_transactionFragment_to_toolsFragmentForSearchFragment"
             app:destination="@id/toolsFragmentForSearchFragment" />
+        <action
+            android:id="@+id/action_transactionFragment_to_recycleViewWithWorkersFragment"
+            app:destination="@id/recycleViewWithWorkersFragment" />
     </fragment>
     <fragment
         android:id="@+id/recycleViewWithWorkersFragment"
@@ -112,6 +115,10 @@
         <argument
             android:name="mode"
             app:argType="integer" />
+        <argument
+            android:name="workersMode"
+            app:argType="integer"
+            android:defaultValue="101" />
     </fragment>
     <fragment
         android:id="@+id/toolsFragmentForSearchFragment"

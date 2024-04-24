@@ -1,5 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.FlowPreview
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -22,7 +24,7 @@ import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
 class ToolsSearchFragmentViewModel:ViewModel() {
     private val apiHelper = ApiHelperImpl(ApiFactory.apiService)
 
-    private val _state:MutableStateFlow<FragmentSearchToolsState> = MutableStateFlow(FragmentSearchToolsState.Loading)
+    private val _state:MutableStateFlow<FragmentSearchToolsState> = MutableStateFlow(FragmentSearchToolsState.Waiting)
     val state = _state.asStateFlow()
 
     val searchString: MutableStateFlow<String> = MutableStateFlow("")
@@ -31,6 +33,9 @@ class ToolsSearchFragmentViewModel:ViewModel() {
         viewModelScope.launch {
             searchString.debounce(500)
                 .filter { it.length > 3 }
+                .onCompletion {
+                    FragmentSearchToolsState.Waiting
+                }
                 .collect{
                     loadTools(it)
                 }
@@ -42,6 +47,7 @@ class ToolsSearchFragmentViewModel:ViewModel() {
         viewModelScope.launch {
             _state.value = FragmentSearchToolsState.Loading
             val tools = apiHelper.loadToolsFrSearch(code)
+            Log.d("Tools",tools.toString())
             _state.value = FragmentSearchToolsState.Result(tools)
         }
     }

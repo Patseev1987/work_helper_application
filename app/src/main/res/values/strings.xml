@@ -56,5 +56,6 @@
     <string name="choose_worker">Choose worker</string>
     <string name="enter_worker_surname">Enter worker surname</string>
     <string name="enter_part_of_code">Enter part of code</string>
+    <string name="enter_the_number">enter the number</string>
 
 </resources>

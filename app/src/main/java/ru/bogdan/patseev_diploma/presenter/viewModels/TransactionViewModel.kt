@@ -31,24 +31,34 @@ class TransactionViewModel : ViewModel() {
     fun setReceiver(newReceiver: Worker) {
         receiver = newReceiver
         _state.value = TransactionState.ReceiverState(newReceiver)
+        checkParam()
     }
 
     fun setSender(newSender: Worker) {
         sender = newSender
+        _state.value = TransactionState.SenderState(newSender)
+        checkParam()
     }
 
     fun setTool(newTool: Tool) {
         tool = newTool
+        _state.value = TransactionState.ToolState(newTool)
+        checkParam()
     }
 
-    fun test() {
+    fun checkParam() {
         viewModelScope.launch {
+            delay(1)
             sender?.let {
                 _state.value = TransactionState.SenderState(it)
             }
-            delay(100)
+            delay(1)
             receiver?.let {
                 _state.value = TransactionState.ReceiverState(it)
+            }
+            delay(1)
+            tool?.let {
+                _state.value = TransactionState.ToolState(it)
             }
         }
     }
