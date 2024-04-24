@@ -22,16 +22,18 @@ import ru.bogdan.patseev_diploma.util.toNormalName
 
 
 class StorageWorkerFragment : Fragment() {
-    private var _binding:FragmentStorageWorkerBinding? = null
+    private var _binding: FragmentStorageWorkerBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModelFactory:ViewModelFactoryWithApplication
+    private lateinit var viewModelFactory: ViewModelFactoryWithApplication
     private val viewModel by lazy {
-        ViewModelProvider(this,viewModelFactory)[StorageWorkerViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[StorageWorkerViewModel::class.java]
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModelFactory = ViewModelFactoryWithApplication(requireActivity().application as MyApplication)
+        viewModelFactory =
+            ViewModelFactoryWithApplication(requireActivity().application as MyApplication)
     }
 
     override fun onCreateView(
@@ -46,24 +48,27 @@ class StorageWorkerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setOnClickListener(binding)
         initViews(binding)
-        observeViewModel(binding,viewModel)
+        observeViewModel(binding, viewModel)
     }
 
 
     private fun setOnClickListener(binding: FragmentStorageWorkerBinding) {
         binding.navigateView.setNavigationItemSelectedListener {
-            when (it.itemId){
+            when (it.itemId) {
                 R.id.item_camera -> {
                     findNavController().navigate(R.id.action_storageWorkerFragment_to_cameraFragment)
                 }
+
                 R.id.item_give_tool -> {
                     val receiver = (this.requireActivity().application as MyApplication).worker
-                    val action = StorageWorkerFragmentDirections.actionStorageWorkerFragmentToTransactionFragment(receiver = receiver)
+                    val action = StorageWorkerFragmentDirections
+                        .actionStorageWorkerFragmentToTransactionFragment(receiver = receiver)
                     findNavController().navigate(action)
                 }
+
                 R.id.item_sharpen -> {
                     val receiver = viewModel.sharpen
-                    val sender =(this.requireActivity().application as MyApplication).worker
+                    val sender = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToTransactionFragment(
                             receiver = receiver,
@@ -71,9 +76,10 @@ class StorageWorkerFragment : Fragment() {
                         )
                     findNavController().navigate(action)
                 }
+
                 R.id.item_storage_of_decommissioned_tools -> {
                     val receiver = viewModel.storageOfDecommissionedTools
-                    val sender =(this.requireActivity().application as MyApplication).worker
+                    val sender = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToTransactionFragment(
                             receiver = receiver,
@@ -81,27 +87,35 @@ class StorageWorkerFragment : Fragment() {
                         )
                     findNavController().navigate(action)
                 }
+
                 R.id.item_take_tool -> {
                     val sender = (this.requireActivity().application as MyApplication).worker
-                    val action = StorageWorkerFragmentDirections.actionStorageWorkerFragmentToTransactionFragment(sender = sender)
+                    val action = StorageWorkerFragmentDirections
+                        .actionStorageWorkerFragmentToTransactionFragment(sender = sender)
                     findNavController().navigate(action)
 
                 }
+
                 R.id.item_workers -> {
-                    findNavController().navigate(R.id.action_storageWorkerFragment_to_recycleViewWithWorkersFragment)
+                    val action = StorageWorkerFragmentDirections
+                        .actionStorageWorkerFragmentToRecycleViewWithWorkersFragment(
+                            RecycleViewWithWorkersFragment.STORAGE_WORKER_MODE
+                        )
+                    findNavController().navigate(action)
                 }
             }
             true
         }
     }
 
-    private fun initViews(binding: FragmentStorageWorkerBinding){
+    private fun initViews(binding: FragmentStorageWorkerBinding) {
         val worker = (this.requireActivity().application as MyApplication).worker
 
         binding.twNameStorageWorker.text = worker.firstName
         binding.twDepartmentStorageWorker.text = worker.department.toNormalName()
 
     }
+
     private fun observeViewModel(
         binding: FragmentStorageWorkerBinding,
         viewModel: StorageWorkerViewModel
@@ -116,6 +130,7 @@ class StorageWorkerFragment : Fragment() {
                             adapter.submitList(it.transactions)
                             binding.progressBarStorageWorkerFragment.visibility = View.GONE
                         }
+
                         is StorageWorkerFragmentState.Loading -> {
                             binding.progressBarStorageWorkerFragment.visibility = View.VISIBLE
                         }

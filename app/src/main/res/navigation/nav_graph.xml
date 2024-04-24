@@ -119,6 +119,9 @@
             android:name="workersMode"
             app:argType="integer"
             android:defaultValue="101" />
+        <action
+            android:id="@+id/action_recycleViewWithWorkersFragment_to_tabLayoutFragment"
+            app:destination="@id/tabLayoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/toolsFragmentForSearchFragment"

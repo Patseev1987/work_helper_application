@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
@@ -88,7 +89,10 @@ class RecycleViewWithWorkersFragment : Fragment() {
                                     }
 
                                     STORAGE_WORKER_MODE -> {
-
+                                        val worker = it
+                                        val action = RecycleViewWithWorkersFragmentDirections
+                                            .actionRecycleViewWithWorkersFragmentToTabLayoutFragment(worker)
+                                        findNavController().navigate(action)
                                     }
                                     else -> throw RuntimeException("Unknown mode")
                                 }
