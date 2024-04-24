@@ -100,6 +100,9 @@
             app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_transactionFragment_to_toolsFragmentForSearchFragment"
+            app:destination="@id/toolsFragmentForSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/recycleViewWithWorkersFragment"
@@ -110,4 +113,9 @@
             android:name="mode"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/toolsFragmentForSearchFragment"
+        android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolsFragmentForSearchFragment"
+        android:label="fragment_tools_for_search"
+        tools:layout="@layout/fragment_tools_for_search" />
 </navigation>

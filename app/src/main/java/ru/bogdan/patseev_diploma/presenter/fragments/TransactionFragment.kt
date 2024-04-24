@@ -11,8 +11,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
+import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentTransactionBinding
 import ru.bogdan.patseev_diploma.presenter.states.TransactionState
 import ru.bogdan.patseev_diploma.presenter.viewModels.TransactionViewModel
@@ -45,8 +47,10 @@ class TransactionFragment : Fragment() {
             viewModel.doTransaction(
                 binding.inEditTextTransaction.text.toString().toInt()
             )
+        }
 
-
+        binding.bSetTool.setOnClickListener{
+            findNavController().navigate(R.id.action_transactionFragment_to_toolsFragmentForSearchFragment)
         }
     }
 

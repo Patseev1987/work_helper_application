@@ -4,6 +4,7 @@ package ru.bogdan.m17_recyclerview.data
 import android.util.Log
 import kotlinx.coroutines.flow.*
 import ru.bogdan.patseev_diploma.data.web.mappers.toStorageRecord
+import ru.bogdan.patseev_diploma.data.web.mappers.toTool
 import ru.bogdan.patseev_diploma.data.web.mappers.toTransaction
 import ru.bogdan.patseev_diploma.data.web.mappers.toWorker
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
@@ -66,6 +67,10 @@ class ApiHelperImpl(
         apiService.createTransaction(transaction)
     }
 
+
+    suspend fun loadToolsFrSearch(code:String):List<Tool>{
+        return apiService.loadToolsForSearch(code).map{it.toTool()}
+    }
     suspend fun updateStorageRecords() {
         updateFlow.emit(Unit)
     }

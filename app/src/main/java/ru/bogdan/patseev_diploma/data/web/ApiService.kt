@@ -6,6 +6,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.bogdan.patseev_diploma.data.web.pojo.StorageRecordWEB
+import ru.bogdan.patseev_diploma.data.web.pojo.ToolWEB
 import ru.bogdan.patseev_diploma.data.web.pojo.TransactionWEB
 import ru.bogdan.patseev_diploma.data.web.pojo.WorkerWEB
 import ru.bogdan.patseev_diploma.domain.models.Transaction
@@ -39,5 +40,10 @@ interface ApiService {
 
     @POST("transaction/create")
     suspend fun createTransaction(@Body transaction: Transaction)
+
+    @GET("tools/code")
+    suspend fun loadToolsForSearch(@Query("code") code:String):List<ToolWEB>
+
+
 }
 
