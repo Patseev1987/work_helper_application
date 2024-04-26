@@ -1,4 +1,4 @@
-package ru.bogdan.m18_permissions.data.database
+package ru.bogdan.patseev_diploma.data.dataBase
 
 import android.app.Application
 import androidx.room.Database

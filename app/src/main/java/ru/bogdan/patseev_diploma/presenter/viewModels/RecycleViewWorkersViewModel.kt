@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import ru.bogdan.m17_recyclerview.data.ApiFactory
-import ru.bogdan.m17_recyclerview.data.ApiHelperImpl
+import ru.bogdan.patseev_diploma.data.web.ApiFactory
+import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewWorkerState

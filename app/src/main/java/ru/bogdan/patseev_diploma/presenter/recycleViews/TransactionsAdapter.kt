@@ -23,6 +23,7 @@ class TransactionsAdapter(private val onClickListener: ((Transaction) -> Unit)? 
         private val twSender = itemView.findViewById<TextView>(R.id.tw_sender)
         private val twReceiver = itemView.findViewById<TextView>(R.id.tw_receiver)
         private val iwIcon = itemView.findViewById<ImageView>(R.id.icon_transaction)
+        private val twDate = itemView.findViewById<TextView>(R.id.tw_transaction_date)
 
         fun bind(transaction: Transaction, onClickListener: ((Transaction) -> Unit)? = null) {
             val newCode = transaction.tool.code.replace("-","\n")
@@ -30,6 +31,7 @@ class TransactionsAdapter(private val onClickListener: ((Transaction) -> Unit)? 
             twAmount.text = transaction.amount.toString()
             twSender.text = transaction.sender.secondName
             twReceiver.text = transaction.receiver.secondName
+            twDate.text = transaction.date.toString()
 
             Glide.with(itemView)
                 .load(transaction.tool.icon)

@@ -11,62 +11,77 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/tw_department_label_storage_worker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="sans-serif-black"
             android:text="@string/department"
             android:textSize="25sp"
-            android:fontFamily="sans-serif-black"
-            android:layout_marginTop="30dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tw_department_storage_worker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Department:"
-            android:textSize="25sp"
-            android:fontFamily="monospace"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/tw_department_label_storage_worker"
+            android:fontFamily="monospace"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/tw_department_label_storage_worker"
+            tools:text="Department:" />
+
         <TextView
             android:id="@+id/tw_name_storage_worker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Storage"
-            android:textSize="25sp"
-            android:fontFamily="monospace"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/tw_department_storage_worker"
+            android:fontFamily="monospace"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/tw_department_storage_worker"
+            tools:text="Storage" />
+
+        <TextView
+            android:id="@+id/tw_transactions_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/last_transactions"
+            android:textSize="25sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@+id/storage_worker_transactions"
+            app:layout_constraintTop_toBottomOf="@+id/tw_name_storage_worker" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/storage_worker_transactions"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintVertical_weight="1"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-android:layout_marginVertical="16dp"
             android:layout_marginHorizontal="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/tw_name_storage_worker"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_marginVertical="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tw_transactions_label"
+            app:layout_constraintVertical_weight="1" />
 
         <ProgressBar
             android:id="@+id/progress_bar_storage_worker_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            tools:visibility="visible"
-            app:layout_constraintStart_toStartOf="@+id/storage_worker_transactions"
+            app:layout_constraintBottom_toBottomOf="@+id/storage_worker_transactions"
             app:layout_constraintEnd_toEndOf="@+id/storage_worker_transactions"
+            app:layout_constraintStart_toStartOf="@+id/storage_worker_transactions"
             app:layout_constraintTop_toTopOf="@+id/storage_worker_transactions"
-            app:layout_constraintBottom_toBottomOf="@+id/storage_worker_transactions"/>
+            tools:visibility="visible" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

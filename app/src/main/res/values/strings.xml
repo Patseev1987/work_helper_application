@@ -57,5 +57,16 @@
     <string name="enter_worker_surname">Enter worker surname</string>
     <string name="enter_part_of_code">Enter part of code</string>
     <string name="enter_the_number">enter the number</string>
+    <string name="in_sharpen">In sharpen</string>
+    <string name="return_from_sharpen">Return from sharpen</string>
+    <string name="decommissioned_tools">Decommissioned tools</string>
+    <string name="important_information">Important information</string>
+    <string name="you_don_t_set_the_sender">You don\'t set the sender</string>
+    <string name="you_don_t_set_the_receiver">You don\'t set the receiver</string>
+    <string name="you_don_t_set_the_tool">You don\'t set the tool</string>
+    <string name="doesn_t_have">%1$s doesn\'t have %2$s</string>
+    <string name="have_only">"%1$s have only "</string>
+    <string name="last_transactions">Last transactions:</string>
+    <string name="transactions">Transactions</string>
 
 </resources>

@@ -66,7 +66,7 @@ class StorageWorkerFragment : Fragment() {
                     findNavController().navigate(action)
                 }
 
-                R.id.item_sharpen -> {
+                R.id.item_to_sharpen -> {
                     val receiver = viewModel.sharpen
                     val sender = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections

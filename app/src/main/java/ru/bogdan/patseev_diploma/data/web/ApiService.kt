@@ -1,4 +1,4 @@
-package ru.bogdan.m17_recyclerview.data
+package ru.bogdan.patseev_diploma.data.web
 
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,10 +15,13 @@ import ru.bogdan.patseev_diploma.domain.models.enums.Department
 
 interface ApiService {
     @GET("records/{workerId}")
-   suspend fun loadStorageRecordsByWorkerId(@Path("workerId") workerId:Long ):List<StorageRecordWEB>
+    suspend fun loadStorageRecordsByWorkerId(@Path("workerId") workerId: Long): List<StorageRecordWEB>
 
-   @GET("transaction/{workerId}")
-   suspend fun loadTransactionsByWorkerId(@Path("workerId") workerId:Long ):List<TransactionWEB>
+    @GET("transactions/worker")
+    suspend fun loadTransactionsByWorkerId(
+        @Query("workerId") workerId: Long,
+        @Query("page") page:Int = 0
+    ): List<TransactionWEB>
 
 
     @GET("check_login")
@@ -30,20 +33,42 @@ interface ApiService {
     @GET("storage_worker_by_department")
     suspend fun loadStorageWorkerByDepartment(
         @Query("department") department: Department
-    ):WorkerWEB
+    ): WorkerWEB
 
     @GET("workers_by_department")
     suspend fun loadWorkersByDepartment(
         @Query("department") department: Department
-    ):List<WorkerWEB>
+    ): List<WorkerWEB>
 
 
     @POST("transaction/create")
-    suspend fun createTransaction(@Body transaction: Transaction)
+    suspend fun createTransaction(@Body transaction: TransactionWEB):TransactionWEB
 
     @GET("tools/code")
-    suspend fun loadToolsForSearch(@Query("code") code:String):List<ToolWEB>
+    suspend fun loadToolsForSearch(@Query("code") code: String): List<ToolWEB>
 
+    @GET("records/amount")
+    suspend fun loadAmountByWorkerAndTool(
+        @Query("workerId") workerId: Long,
+        @Query("toolCode") toolCode:String
+        ): Int
+
+    @GET("transactions/decommissionedTools")
+    suspend fun loadTransactionsWithDecommissionedTools(
+        @Query("senderDepartment") senderDepartment:Department,
+        @Query("page") page:Int = 0
+    ):List<TransactionWEB>
+    @GET("transactions/toSharpen")
+    suspend fun loadTransactionsWithToolToSharpen(
+        @Query("senderDepartment") senderDepartment:Department,
+        @Query("page") page:Int = 0
+    ):List<TransactionWEB>
+
+    @GET("transactions/fromSharpen")
+    suspend fun loadTransactionsWithToolFromSharpen(
+        @Query("receiverDepartment") receiverDepartment:Department,
+        @Query("page") page:Int = 0
+    ):List<TransactionWEB>
 
 }
 

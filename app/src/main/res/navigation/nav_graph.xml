@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_storageWorkerFragment_to_recycleViewWithWorkersFragment"
             app:destination="@id/recycleViewWithWorkersFragment" />
+        <action
+            android:id="@+id/action_storageWorkerFragment_to_recycleViewTransactionFragment"
+            app:destination="@id/recycleViewTransactionFragment" />
     </fragment>
     <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
@@ -128,4 +131,14 @@
         android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolsFragmentForSearchFragment"
         android:label="fragment_tools_for_search"
         tools:layout="@layout/fragment_tools_for_search" />
+    <fragment
+        android:id="@+id/recycleViewTransactionFragment"
+        android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewTransactionFragment"
+        android:label="fragment_recycle_view_transaction"
+        tools:layout="@layout/fragment_recycle_view_transaction" >
+        <argument
+            android:name="mode"
+            app:argType="integer"
+            android:defaultValue="201" />
+    </fragment>
 </navigation>

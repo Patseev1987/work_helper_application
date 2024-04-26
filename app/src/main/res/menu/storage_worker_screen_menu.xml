@@ -15,8 +15,12 @@
                 android:icon="@drawable/baseline_take_tool_to"
                 android:title="@string/give_tool_from_storage" />
             <item
-                android:id="@+id/item_sharpen"
+                android:id="@+id/item_to_sharpen"
                 android:icon="@drawable/baseline_sharpen"
+                android:title="@string/send_tool_to_sharpen" />
+            <item
+                android:id="@+id/item_from_sharpen"
+                android:icon="@drawable/baseline_from_sharpen"
                 android:title="@string/send_tool_to_sharpen" />
             <item
                 android:id="@+id/item_storage_of_decommissioned_tools"
@@ -46,6 +50,25 @@
                 android:id="@+id/item_workers"
                 android:icon="@drawable/baseline_people"
                 android:title="@string/list_of_workers_in_department"/>
+        </menu>
+    </item>
+    <item
+        android:enabled="false"
+        android:title="@string/important_information">
+        <menu>
+            <item
+                android:id="@+id/item_list_of_tools_in_sharpen"
+                android:icon="@drawable/baseline_format_list_to_sharpen"
+                android:title="@string/in_sharpen"/>
+            <item
+                android:id="@+id/item_list_of_tools_return_rom_sharpen"
+                android:icon="@drawable/baseline_checklist_from_sharpen"
+                android:title="@string/return_from_sharpen"/>
+            <item
+                android:id="@+id/item_list_of_decommissioned_tools"
+                android:icon="@drawable/baseline_decommissioned_tools"
+                android:title="@string/decommissioned_tools"/>
+
         </menu>
     </item>
 </menu>

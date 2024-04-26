@@ -19,8 +19,10 @@ class ViewModelFactoryWithApplication(
             return WorkerFragmentViewModel(application) as T
         }else if (modelClass.isAssignableFrom(StorageWorkerViewModel::class.java)) {
             return StorageWorkerViewModel(application) as T
-        }else if (modelClass.isAssignableFrom(RecycleViewWorkersViewModel::class.java)){
+        }else if (modelClass.isAssignableFrom(RecycleViewWorkersViewModel::class.java)) {
             return RecycleViewWorkersViewModel(application) as T
+        }else if (modelClass.isAssignableFrom(TransactionViewModel::class.java)){
+            return TransactionViewModel(application) as T
         } else {
             throw RuntimeException("Unknown ViewModel-> $modelClass")
         }

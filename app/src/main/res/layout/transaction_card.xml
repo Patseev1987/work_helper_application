@@ -26,6 +26,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:src="@drawable/ic_launcher_background" />
 
         <TextView
@@ -111,6 +112,18 @@
             app:layout_constraintTop_toTopOf="@+id/tw_tool_transaction"
             tools:text="@string/receiver" />
 
+        <TextView
+            android:id="@+id/tw_transaction_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintHorizontal_weight="1"
+            tools:text="2004-12-12"
+            android:textSize="16sp"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@+id/icon_transaction"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tw_receiver"
+            android:layout_marginTop="10dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

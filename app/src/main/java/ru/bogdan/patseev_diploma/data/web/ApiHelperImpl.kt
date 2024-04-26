@@ -1,18 +1,19 @@
-package ru.bogdan.m17_recyclerview.data
+package ru.bogdan.patseev_diploma.data.web
 
 
-import android.util.Log
+
 import kotlinx.coroutines.flow.*
 import ru.bogdan.patseev_diploma.data.web.mappers.toStorageRecord
 import ru.bogdan.patseev_diploma.data.web.mappers.toTool
 import ru.bogdan.patseev_diploma.data.web.mappers.toTransaction
+import ru.bogdan.patseev_diploma.data.web.mappers.toTransactionWEB
 import ru.bogdan.patseev_diploma.data.web.mappers.toWorker
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 import ru.bogdan.patseev_diploma.domain.models.Tool
+import ru.bogdan.patseev_diploma.domain.models.Transaction
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import java.time.LocalDate
-import ru.bogdan.patseev_diploma.domain.models.Transaction as Transaction1
 
 class ApiHelperImpl(
     private val apiService: ApiService,
@@ -30,7 +31,7 @@ class ApiHelperImpl(
         }
     }
 
-    fun loadTransactionsByWorkerId(workerId:Long):Flow<List<Transaction1>>{
+    fun loadTransactionsByWorkerId(workerId:Long):Flow<List<Transaction>>{
         return flow {
             emit( apiService.loadTransactionsByWorkerId(workerId)
                 .map{ it.toTransaction()})
@@ -56,23 +57,57 @@ class ApiHelperImpl(
         }
     }
 
-    override suspend fun createTransaction(sender: Worker, receiver: Worker, tool: Tool, amount: Int) {
-        val transaction = Transaction1(
+    override suspend fun createTransaction(
+        sender: Worker,
+        receiver: Worker,
+        tool: Tool,
+        amount: Int
+    ):Transaction {
+        val transaction = Transaction(
             sender=sender,
             receiver = receiver,
             tool = tool,
             amount = amount,
             date = LocalDate.now()
         )
-        apiService.createTransaction(transaction)
+       val commitTransaction = apiService.createTransaction(transaction.toTransactionWEB())
+        return commitTransaction.toTransaction()
     }
 
-
+    suspend fun loadAmountByWorkerAndTool(worker:Worker, tool:Tool):Int{
+        return apiService.loadAmountByWorkerAndTool(
+            worker.id,
+            tool.code
+        )
+    }
     suspend fun loadToolsFrSearch(code:String):List<Tool>{
         return apiService.loadToolsForSearch(code).map{it.toTool()}
     }
-    suspend fun updateStorageRecords() {
-        updateFlow.emit(Unit)
+
+     fun loadTransactionsWithDecommissionedTools(senderDepartment:Department, page:Int = 0):Flow<List<Transaction>>{
+        return flow{
+           emit (
+               apiService.loadTransactionsWithDecommissionedTools(senderDepartment,page)
+               .map { it.toTransaction() }
+           )
+        }
     }
 
+    fun loadTransactionsWithToolFromSharpen(receiverDepartment:Department, page:Int = 0):Flow<List<Transaction>>{
+        return flow{
+            emit (
+                apiService.loadTransactionsWithToolFromSharpen(receiverDepartment,page)
+                    .map { it.toTransaction() }
+            )
+        }
+    }
+
+     fun loadTransactionsWithToolToSharpen(senderDepartment:Department, page:Int = 0):Flow<List<Transaction>>{
+        return flow{
+            emit(
+                apiService.loadTransactionsWithToolToSharpen(senderDepartment,page)
+                    .map { it.toTransaction() }
+            )
+        }
+    }
 }

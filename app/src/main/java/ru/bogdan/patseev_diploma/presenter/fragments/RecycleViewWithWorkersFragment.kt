@@ -69,11 +69,11 @@ class RecycleViewWithWorkersFragment : Fragment() {
 
                         is RecycleViewWorkerState.Result -> {
                             val adapter = WorkersAdapter {
-                                val kkk = when (mode) {
+                                when (mode) {
                                     SENDER_MODE -> {
                                         val sender = it
                                         setFragmentResult(
-                                            TransactionFragment.REQUEST_KEY_SENDER ,
+                                            TransactionFragment.REQUEST_KEY_SENDER,
                                             bundleOf(TransactionFragment.BUNDLE_KEY_SENDER to sender)
                                         )
                                         requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -82,7 +82,7 @@ class RecycleViewWithWorkersFragment : Fragment() {
                                     RECEIVER_MODE -> {
                                         val receiver = it
                                         setFragmentResult(
-                                            TransactionFragment.REQUEST_KEY_RECEIVER ,
+                                            TransactionFragment.REQUEST_KEY_RECEIVER,
                                             bundleOf(TransactionFragment.BUNDLE_KEY_RECEIVER to receiver)
                                         )
                                         requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -91,9 +91,12 @@ class RecycleViewWithWorkersFragment : Fragment() {
                                     STORAGE_WORKER_MODE -> {
                                         val worker = it
                                         val action = RecycleViewWithWorkersFragmentDirections
-                                            .actionRecycleViewWithWorkersFragmentToTabLayoutFragment(worker)
+                                            .actionRecycleViewWithWorkersFragmentToTabLayoutFragment(
+                                                worker
+                                            )
                                         findNavController().navigate(action)
                                     }
+
                                     else -> throw RuntimeException("Unknown mode")
                                 }
                             }
