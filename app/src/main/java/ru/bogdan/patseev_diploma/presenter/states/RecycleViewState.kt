@@ -6,4 +6,5 @@ sealed class RecycleViewState {
     object Loading:RecycleViewState()
     data class Result(val records:List<StorageRecord>):RecycleViewState()
 
+
 }

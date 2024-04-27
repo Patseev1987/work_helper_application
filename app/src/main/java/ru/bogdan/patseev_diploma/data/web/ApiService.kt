@@ -11,11 +11,16 @@ import ru.bogdan.patseev_diploma.data.web.pojo.TransactionWEB
 import ru.bogdan.patseev_diploma.data.web.pojo.WorkerWEB
 import ru.bogdan.patseev_diploma.domain.models.Transaction
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
+import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 
 
 interface ApiService {
-    @GET("records/{workerId}")
-    suspend fun loadStorageRecordsByWorkerId(@Path("workerId") workerId: Long): List<StorageRecordWEB>
+    @GET("records/workerId")
+    suspend fun loadStorageRecordsByWorkerId(
+        @Query("workerId") workerId: Long,
+        @Query("toolType") toolType:ToolType,
+        @Query("toolCode") toolCode:String
+    ): List<StorageRecordWEB>
 
     @GET("transactions/worker")
     suspend fun loadTransactionsByWorkerId(

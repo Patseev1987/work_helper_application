@@ -2,6 +2,7 @@ package ru.bogdan.patseev_diploma.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +23,7 @@ class LoginViewModel(private val application: MyApplication) : ViewModel() {
 
 
     fun checkLogin(login: String, password: String) {
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO){
             try {
                 _state.value = LoginState.Loading
                 val worker = apiService.checkLogin(login, password).toWorker()

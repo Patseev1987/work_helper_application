@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +17,7 @@ import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewToolsBinding
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.presenter.recycleViews.StorageRecordsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
-import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewViewModel
+import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewStorageRecordsViewModel
 import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithWorker
 
 
@@ -58,21 +59,32 @@ class RecycleViewStorageRecordsFragment : Fragment() {
     private lateinit var viewModelFactory:ViewModelFactoryWithWorker
 
     private val viewModel by lazy {
-        ViewModelProvider(this,viewModelFactory)[RecycleViewViewModel::class.java]
+        ViewModelProvider(this,viewModelFactory)[RecycleViewStorageRecordsViewModel::class.java]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel(binding, viewModel)
+        viewModel.loadTools(position)
+        setTextChangeListener(binding,viewModel)
         }
 
 
 
 
 
+    private fun setTextChangeListener(
+        binding: FragmentRecycleViewToolsBinding,
+        viewViewModel: RecycleViewStorageRecordsViewModel
+    ){
+        binding.inEditTextRecycleViewTool.doAfterTextChanged {
+            viewViewModel.updateToolsWithFilter(position, it.toString())
+        }
+    }
+
     private fun observeViewModel(
         binding: FragmentRecycleViewToolsBinding,
-        viewViewModel: RecycleViewViewModel
+        viewViewModel: RecycleViewStorageRecordsViewModel
     ){
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED){
@@ -82,9 +94,9 @@ class RecycleViewStorageRecordsFragment : Fragment() {
                             binding.progressBar.visibility = View.VISIBLE
                         }
                         is RecycleViewState.Result -> {
-                            binding.progressBar.visibility = View.GONE
-                            adapter.submitList(viewModel.getList(state.records,position))
+                            adapter.submitList(state.records)
                             binding.toolsRecycleViewTools.adapter = adapter
+                            binding.progressBar.visibility = View.GONE
                         }
                     }
                 }

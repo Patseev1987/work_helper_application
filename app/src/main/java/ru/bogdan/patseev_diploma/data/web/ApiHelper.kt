@@ -6,11 +6,12 @@ import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Transaction
 import ru.bogdan.patseev_diploma.domain.models.Worker
+import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 
 
 interface ApiHelper {
 
-    fun loadStorageRecordByWorkerId(workerId:Long):Flow<List<StorageRecord>>
+   suspend fun loadStorageRecordByWorkerId(workerId: Long, toolType: ToolType, toolCode:String = ""):List<StorageRecord>
 
 
     suspend fun checkLogin(login:String, password:String):Flow<Worker>

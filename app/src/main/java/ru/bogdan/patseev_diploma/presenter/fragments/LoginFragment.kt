@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.databinding.FragmentLoginBinding

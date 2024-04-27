@@ -13,6 +13,7 @@ import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Transaction
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
+import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 import java.time.LocalDate
 
 class ApiHelperImpl(
@@ -20,12 +21,16 @@ class ApiHelperImpl(
 ) : ApiHelper {
 
     private val updateTransactionsFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
-    override fun loadStorageRecordByWorkerId(workerId: Long): Flow<List<StorageRecord>> {
-        return flow {
-            emit(apiService.loadStorageRecordsByWorkerId(workerId)
-                .map { it.toStorageRecord() })
+
+    override suspend fun loadStorageRecordByWorkerId(
+        workerId: Long,
+        toolType: ToolType,
+        toolCode: String
+    ): List<StorageRecord> {
+        return apiService.loadStorageRecordsByWorkerId(workerId,toolType,toolCode)
+                .map { it.toStorageRecord() }
         }
-    }
+
 
     fun loadTransactionsByWorkerId(workerId:Long):Flow<List<Transaction>>{
         return flow {
@@ -113,4 +118,5 @@ class ApiHelperImpl(
    suspend fun updateTransactions(){
         updateTransactionsFlow.emit(Unit)
     }
+
 }
