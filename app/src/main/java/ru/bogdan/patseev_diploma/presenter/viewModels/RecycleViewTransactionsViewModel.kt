@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.stateIn
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
+import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewTransactionFragment
 import ru.bogdan.patseev_diploma.presenter.states.RecycleVIewTransactionState
 import java.lang.RuntimeException
@@ -28,7 +29,8 @@ class RecycleViewTransactionsViewModel(
                     .loadTransactionsWithDecommissionedTools(application.worker.department)
                     .onStart { RecycleVIewTransactionState.Loading }
                     .map {
-                        RecycleVIewTransactionState.Result(it) as RecycleVIewTransactionState
+                        RecycleVIewTransactionState.Result(it,
+                            getMessageForTitle(mode)) as RecycleVIewTransactionState
                     }.stateIn(
                         scope = viewModelScope,
                         started = SharingStarted.Lazily,
@@ -41,7 +43,8 @@ class RecycleViewTransactionsViewModel(
                     .loadTransactionsWithToolFromSharpen(application.worker.department)
                     .onStart { RecycleVIewTransactionState.Loading }
                     .map {
-                        RecycleVIewTransactionState.Result(it) as RecycleVIewTransactionState
+                        RecycleVIewTransactionState.Result(it,
+                            getMessageForTitle(mode)) as RecycleVIewTransactionState
                     }.stateIn(
                         scope = viewModelScope,
                         started = SharingStarted.Lazily,
@@ -53,7 +56,8 @@ class RecycleViewTransactionsViewModel(
                     .loadTransactionsWithToolToSharpen(application.worker.department)
                     .onStart { RecycleVIewTransactionState.Loading }
                     .map {
-                        RecycleVIewTransactionState.Result(it) as RecycleVIewTransactionState
+                        RecycleVIewTransactionState.Result(it,
+                            getMessageForTitle(mode)) as RecycleVIewTransactionState
                     }.stateIn(
                         scope = viewModelScope,
                         started = SharingStarted.Lazily,
@@ -63,4 +67,19 @@ class RecycleViewTransactionsViewModel(
             else -> throw RuntimeException("Unknown mode for RecycleViewTransactionFragment")
         }
 
+
+    private fun getMessageForTitle(mode:Int):String{
+        return when (mode) {
+            RecycleViewTransactionFragment.TO_SHARPEN_MODE -> application
+                .getString(R.string.transactions_with_tools_to_sharpen)
+
+            RecycleViewTransactionFragment.FROM_SHARPEN_MODE -> application
+                .getString(R.string.transaction_with_tools_from_sharpen)
+
+            RecycleViewTransactionFragment.DECOMMISSIONED_TOOLS_MODE -> application
+                .getString(R.string.transactions_with_decommissioned_tools)
+
+            else -> throw RuntimeException("Unknown mode")
+        }
+    }
 }

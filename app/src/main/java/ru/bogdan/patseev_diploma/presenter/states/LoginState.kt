@@ -7,4 +7,5 @@ sealed class LoginState {
     object Waiting:LoginState()
     object Loading:LoginState()
     data class LoginResult(val worker: Worker): LoginState()
+    data class ConnectionProblem(val message:String):LoginState()
 }

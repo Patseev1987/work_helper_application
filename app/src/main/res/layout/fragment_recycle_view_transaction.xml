@@ -13,10 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/tools_recycle_view_transactions"
-        app:layout_constraintEnd_toEndOf="@+id/tools_recycle_view_transactions"
-        app:layout_constraintStart_toStartOf="@+id/tools_recycle_view_transactions"
-        app:layout_constraintTop_toTopOf="@+id/tools_recycle_view_transactions"
+        app:layout_constraintBottom_toBottomOf="@+id/recycle_view_transactions"
+        app:layout_constraintEnd_toEndOf="@+id/recycle_view_transactions"
+        app:layout_constraintStart_toStartOf="@+id/recycle_view_transactions"
+        app:layout_constraintTop_toTopOf="@+id/recycle_view_transactions"
         tools:visibility="visible" />
 
     <TextView
@@ -47,7 +47,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tools_recycle_view_transactions"
+        android:id="@+id/recycle_view_transactions"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintVertical_weight="1"

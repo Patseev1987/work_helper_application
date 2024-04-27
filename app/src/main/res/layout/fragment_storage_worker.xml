@@ -83,6 +83,20 @@
             app:layout_constraintTop_toTopOf="@+id/storage_worker_transactions"
             tools:visibility="visible" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/update_transactions_storage_worker_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:maxImageSize="48dp"
+            android:src="@drawable/baseline_update_transactions"
+            android:contentDescription="@string/update_transactions"
+            android:backgroundTint="@color/float_button"
+            app:rippleColor="@color/myColorPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/storage_worker_transactions"
+            app:layout_constraintBottom_toBottomOf="@+id/storage_worker_transactions"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

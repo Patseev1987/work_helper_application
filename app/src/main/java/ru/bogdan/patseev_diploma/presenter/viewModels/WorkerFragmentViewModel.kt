@@ -1,6 +1,5 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -8,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
@@ -28,4 +28,10 @@ class WorkerFragmentViewModel(private val application: MyApplication) : ViewMode
             started = SharingStarted.Lazily,
             initialValue = WorkerFragmentState.Loading
         )
+
+    fun updateTransactions(){
+        viewModelScope.launch {
+            apiHelperImpl.updateTransactions()
+        }
+    }
 }

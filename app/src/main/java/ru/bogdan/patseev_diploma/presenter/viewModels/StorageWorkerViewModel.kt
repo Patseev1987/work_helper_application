@@ -47,5 +47,10 @@ class StorageWorkerViewModel(private val application: MyApplication) : ViewModel
             initialValue = StorageWorkerFragmentState.Loading
         )
 
+    fun updateTransactions(){
+        viewModelScope.launch {
+            apiHelperImpl.updateTransactions()
+        }
+    }
 
 }

@@ -51,11 +51,15 @@ class WorkerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView(binding, (requireActivity().application as MyApplication).worker)
         observeViewModel(binding,viewModel)
-        setListener(binding)
+        setListeners(binding,viewModel)
     }
 
     //set listener for bottom bar menu
-    private fun setListener(binding: FragmentWorkerBinding) {
+    private fun setListeners(binding: FragmentWorkerBinding,viewModel: WorkerFragmentViewModel) {
+        binding.updateTransactionsWorkerFragment.setOnClickListener{
+            viewModel.updateTransactions()
+        }
+
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.wealth -> {

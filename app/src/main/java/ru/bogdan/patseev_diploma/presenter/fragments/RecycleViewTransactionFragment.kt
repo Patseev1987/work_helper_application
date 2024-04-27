@@ -9,13 +9,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewTransactionBinding
+import ru.bogdan.patseev_diploma.presenter.recycleViews.TransactionsAdapter
+import ru.bogdan.patseev_diploma.presenter.states.RecycleVIewTransactionState
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewTransactionsViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
 import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithMode
 
 class RecycleViewTransactionFragment : Fragment() {
@@ -50,7 +50,7 @@ class RecycleViewTransactionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        observeState(binding,viewModel)
     }
 
     override fun onDestroy() {
@@ -68,8 +68,18 @@ class RecycleViewTransactionFragment : Fragment() {
     ){
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED){
-                viewModel.state.collectLatest{
-
+                viewModel.state.collectLatest{state ->
+                        when (state) {
+                            is RecycleVIewTransactionState.Loading -> {
+                                binding.progressBarRecycleViewTransactions.visibility = View.VISIBLE
+                            }
+                            is RecycleVIewTransactionState.Result -> {
+                                binding.twRecycleViewTransactionsLabel.text  = state.message
+                                val adapter = TransactionsAdapter()
+                                binding.recycleViewTransactions.adapter = adapter
+                                adapter.submitList(state.transactions)
+                            }
+                        }
                 }
             }
         }

@@ -46,20 +46,27 @@ class StorageWorkerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnClickListener(binding)
+        setOnClickListeners(binding, viewModel)
         initViews(binding)
         observeViewModel(binding, viewModel)
     }
 
 
-    private fun setOnClickListener(binding: FragmentStorageWorkerBinding) {
+    private fun setOnClickListeners(
+        binding: FragmentStorageWorkerBinding,
+        viewModel: StorageWorkerViewModel
+    ) {
+        binding.updateTransactionsStorageWorkerFragment.setOnClickListener {
+            viewModel.updateTransactions()
+        }
+
         binding.navigateView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.item_camera -> {
                     findNavController().navigate(R.id.action_storageWorkerFragment_to_cameraFragment)
                 }
 
-                R.id.item_give_tool -> {
+                R.id.item_take_tool -> {
                     val receiver = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToTransactionFragment(receiver = receiver)
@@ -88,7 +95,7 @@ class StorageWorkerFragment : Fragment() {
                     findNavController().navigate(action)
                 }
 
-                R.id.item_take_tool -> {
+                R.id.item_give_tool -> {
                     val sender = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToTransactionFragment(sender = sender)
@@ -100,6 +107,30 @@ class StorageWorkerFragment : Fragment() {
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToRecycleViewWithWorkersFragment(
                             RecycleViewWithWorkersFragment.STORAGE_WORKER_MODE
+                        )
+                    findNavController().navigate(action)
+                }
+
+                R.id.item_list_of_decommissioned_tools -> {
+                    val action = StorageWorkerFragmentDirections
+                        .actionStorageWorkerFragmentToRecycleViewTransactionFragment(
+                            RecycleViewTransactionFragment.DECOMMISSIONED_TOOLS_MODE
+                        )
+                    findNavController().navigate(action)
+                }
+
+                R.id.item_list_of_tools_return_from_sharpen -> {
+                    val action = StorageWorkerFragmentDirections
+                        .actionStorageWorkerFragmentToRecycleViewTransactionFragment(
+                            RecycleViewTransactionFragment.FROM_SHARPEN_MODE
+                        )
+                    findNavController().navigate(action)
+                }
+
+                R.id.item_list_of_tools_in_sharpen -> {
+                    val action = StorageWorkerFragmentDirections
+                        .actionStorageWorkerFragmentToRecycleViewTransactionFragment(
+                            RecycleViewTransactionFragment.TO_SHARPEN_MODE
                         )
                     findNavController().navigate(action)
                 }

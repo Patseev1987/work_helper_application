@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -83,6 +84,14 @@ class LoginFragment : Fragment() {
                         }
                         is LoginState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
+                        }
+                        is LoginState.ConnectionProblem -> {
+                            Toast.makeText(
+                                this@LoginFragment.context,
+                                it.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            binding.progressBar.visibility = View.GONE
                         }
                     }
                 }

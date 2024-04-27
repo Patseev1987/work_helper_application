@@ -19,15 +19,11 @@ class ApiHelperImpl(
     private val apiService: ApiService,
 ) : ApiHelper {
 
-    private val updateFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
+    private val updateTransactionsFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
     override fun loadStorageRecordByWorkerId(workerId: Long): Flow<List<StorageRecord>> {
         return flow {
             emit(apiService.loadStorageRecordsByWorkerId(workerId)
                 .map { it.toStorageRecord() })
-            updateFlow.collect {
-                emit(apiService.loadStorageRecordsByWorkerId(workerId)
-                    .map { it.toStorageRecord() })
-            }
         }
     }
 
@@ -35,6 +31,10 @@ class ApiHelperImpl(
         return flow {
             emit( apiService.loadTransactionsByWorkerId(workerId)
                 .map{ it.toTransaction()})
+            updateTransactionsFlow.collect{
+                emit( apiService.loadTransactionsByWorkerId(workerId)
+                    .map{ it.toTransaction()})
+            }
         }
     }
 
@@ -52,7 +52,6 @@ class ApiHelperImpl(
 
     override suspend fun checkLogin(login: String, password: String): Flow<Worker> {
         return flow {
-
             emit(apiService.checkLogin(login, password).toWorker())
         }
     }
@@ -109,5 +108,9 @@ class ApiHelperImpl(
                     .map { it.toTransaction() }
             )
         }
+    }
+
+   suspend fun updateTransactions(){
+        updateTransactionsFlow.emit(Unit)
     }
 }
