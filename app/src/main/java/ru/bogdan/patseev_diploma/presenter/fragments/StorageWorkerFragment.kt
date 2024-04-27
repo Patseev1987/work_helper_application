@@ -141,7 +141,6 @@ class StorageWorkerFragment : Fragment() {
 
     private fun initViews(binding: FragmentStorageWorkerBinding) {
         val worker = (this.requireActivity().application as MyApplication).worker
-
         binding.twNameStorageWorker.text = worker.firstName
         binding.twDepartmentStorageWorker.text = worker.department.toNormalName()
 

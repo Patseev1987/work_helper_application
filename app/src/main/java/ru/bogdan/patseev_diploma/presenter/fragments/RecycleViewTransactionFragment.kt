@@ -51,6 +51,7 @@ class RecycleViewTransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeState(binding,viewModel)
+        viewModel.loadTransactions(mode)
     }
 
     override fun onDestroy() {
@@ -64,7 +65,7 @@ class RecycleViewTransactionFragment : Fragment() {
 
     private fun observeState(
         binding: FragmentRecycleViewTransactionBinding,
-        viewTransactionsViewModel: RecycleViewTransactionsViewModel
+        viewModel: RecycleViewTransactionsViewModel
     ){
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED){
@@ -78,6 +79,7 @@ class RecycleViewTransactionFragment : Fragment() {
                                 val adapter = TransactionsAdapter()
                                 binding.recycleViewTransactions.adapter = adapter
                                 adapter.submitList(state.transactions)
+                                binding.progressBarRecycleViewTransactions.visibility = View.GONE
                             }
                         }
                 }

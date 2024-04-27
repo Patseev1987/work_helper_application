@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
@@ -22,7 +23,7 @@ class RecycleViewStorageRecordsViewModel(
 
     private val apiHelper = ApiHelperImpl(ApiFactory.apiService)
 
-     val searchString: MutableStateFlow<String> = MutableStateFlow(BLANK_TOOL_CODE)
+    private val searchString: MutableStateFlow<String> = MutableStateFlow(BLANK_TOOL_CODE)
 
     private val _state: MutableStateFlow<RecycleViewState> =
         MutableStateFlow(RecycleViewState.Loading)
@@ -30,7 +31,7 @@ class RecycleViewStorageRecordsViewModel(
     val state = _state.asStateFlow()
 
    fun loadTools(position: Int, toolCode: String = BLANK_TOOL_CODE) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
           _state.value = RecycleViewState.Result(
               apiHelper.loadStorageRecordByWorkerId(worker.id, position.getToolType(), toolCode)
           )
@@ -43,6 +44,7 @@ class RecycleViewStorageRecordsViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             searchString.debounce(500)
                 .collect { toolCode ->
+                    _state.value = RecycleViewState.Loading
                     loadTools(position, toolCode)
                 }
         }

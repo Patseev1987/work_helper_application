@@ -1,7 +1,6 @@
 package ru.bogdan.patseev_diploma.data.web
 
 
-
 import kotlinx.coroutines.flow.*
 import ru.bogdan.patseev_diploma.data.web.mappers.toStorageRecord
 import ru.bogdan.patseev_diploma.data.web.mappers.toTool
@@ -27,32 +26,31 @@ class ApiHelperImpl(
         toolType: ToolType,
         toolCode: String
     ): List<StorageRecord> {
-        return apiService.loadStorageRecordsByWorkerId(workerId,toolType,toolCode)
-                .map { it.toStorageRecord() }
-        }
+        return apiService.loadStorageRecordsByWorkerId(workerId, toolType, toolCode)
+            .map { it.toStorageRecord() }
+    }
 
 
-    fun loadTransactionsByWorkerId(workerId:Long):Flow<List<Transaction>>{
+    fun loadTransactionsByWorkerId(workerId: Long): Flow<List<Transaction>> {
         return flow {
-            emit( apiService.loadTransactionsByWorkerId(workerId)
-                .map{ it.toTransaction()})
-            updateTransactionsFlow.collect{
-                emit( apiService.loadTransactionsByWorkerId(workerId)
-                    .map{ it.toTransaction()})
+            emit(apiService.loadTransactionsByWorkerId(workerId)
+                .map { it.toTransaction() })
+            updateTransactionsFlow.collect {
+                emit(apiService.loadTransactionsByWorkerId(workerId)
+                    .map { it.toTransaction() })
             }
         }
     }
 
 
-    suspend fun loadWorkersByDepartment(department: Department):List<Worker>{
+    suspend fun loadWorkersByDepartment(department: Department): List<Worker> {
         return apiService.loadWorkersByDepartment(department)
             .map { it.toWorker() }
     }
 
-   suspend fun loadStorageWorkerByDepartment(department: Department):Worker{
-       return apiService.loadStorageWorkerByDepartment(department).toWorker()
-   }
-
+    suspend fun loadStorageWorkerByDepartment(department: Department): Worker {
+        return apiService.loadStorageWorkerByDepartment(department).toWorker()
+    }
 
 
     override suspend fun checkLogin(login: String, password: String): Flow<Worker> {
@@ -66,56 +64,57 @@ class ApiHelperImpl(
         receiver: Worker,
         tool: Tool,
         amount: Int
-    ):Transaction {
+    ): Transaction {
         val transaction = Transaction(
-            sender=sender,
+            sender = sender,
             receiver = receiver,
             tool = tool,
             amount = amount,
             date = LocalDate.now()
         )
-       val commitTransaction = apiService.createTransaction(transaction.toTransactionWEB())
+        val commitTransaction = apiService.createTransaction(transaction.toTransactionWEB())
         return commitTransaction.toTransaction()
     }
 
-    suspend fun loadAmountByWorkerAndTool(worker:Worker, tool:Tool):Int{
+    suspend fun loadAmountByWorkerAndTool(worker: Worker, tool: Tool): Int {
         return apiService.loadAmountByWorkerAndTool(
             worker.id,
             tool.code
         )
     }
-    suspend fun loadToolsFrSearch(code:String):List<Tool>{
-        return apiService.loadToolsForSearch(code).map{it.toTool()}
+
+    suspend fun loadToolsFrSearch(code: String): List<Tool> {
+        return apiService.loadToolsForSearch(code).map { it.toTool() }
     }
 
-     fun loadTransactionsWithDecommissionedTools(senderDepartment:Department, page:Int = 0):Flow<List<Transaction>>{
-        return flow{
-           emit (
-               apiService.loadTransactionsWithDecommissionedTools(senderDepartment,page)
-               .map { it.toTransaction() }
-           )
-        }
+    suspend fun loadTransactionsWithDecommissionedTools(
+        senderDepartment: Department,
+        page: Int = 0,
+        toolCode:String = ""
+    ): List<Transaction> {
+        return apiService.loadTransactionsWithDecommissionedTools(senderDepartment, page, toolCode)
+            .map { it.toTransaction() }
     }
 
-    fun loadTransactionsWithToolFromSharpen(receiverDepartment:Department, page:Int = 0):Flow<List<Transaction>>{
-        return flow{
-            emit (
-                apiService.loadTransactionsWithToolFromSharpen(receiverDepartment,page)
-                    .map { it.toTransaction() }
-            )
-        }
+    suspend fun loadTransactionsWithToolFromSharpen(
+        receiverDepartment: Department,
+        page: Int = 0,
+        toolCode:String = ""
+    ): List<Transaction> {
+        return apiService.loadTransactionsWithToolFromSharpen(receiverDepartment, page, toolCode)
+            .map { it.toTransaction() }
     }
 
-     fun loadTransactionsWithToolToSharpen(senderDepartment:Department, page:Int = 0):Flow<List<Transaction>>{
-        return flow{
-            emit(
-                apiService.loadTransactionsWithToolToSharpen(senderDepartment,page)
-                    .map { it.toTransaction() }
-            )
-        }
+    suspend fun loadTransactionsWithToolToSharpen(
+        senderDepartment: Department,
+        page: Int = 0,
+        toolCode:String = ""
+    ): List<Transaction> {
+        return apiService.loadTransactionsWithToolToSharpen(senderDepartment, page, toolCode)
+            .map { it.toTransaction() }
     }
 
-   suspend fun updateTransactions(){
+    suspend fun updateTransactions() {
         updateTransactionsFlow.emit(Unit)
     }
 
