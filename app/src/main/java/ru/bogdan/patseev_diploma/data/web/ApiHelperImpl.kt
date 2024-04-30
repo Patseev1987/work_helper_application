@@ -31,7 +31,7 @@ class ApiHelperImpl(
     }
 
 
-    fun loadTransactionsByWorkerId(workerId: Long): Flow<List<Transaction>> {
+   override fun loadTransactionsByWorkerId(workerId: Long): Flow<List<Transaction>> {
         return flow {
             emit(apiService.loadTransactionsByWorkerId(workerId)
                 .map { it.toTransaction() })
@@ -43,17 +43,17 @@ class ApiHelperImpl(
     }
 
 
-    suspend fun loadWorkersByDepartment(department: Department): List<Worker> {
+    override suspend fun loadWorkersByDepartment(department: Department): List<Worker> {
         return apiService.loadWorkersByDepartment(department)
             .map { it.toWorker() }
     }
 
-    suspend fun loadStorageWorkerByDepartment(department: Department): Worker {
+    override suspend fun loadStorageWorkerByDepartment(department: Department): Worker {
         return apiService.loadStorageWorkerByDepartment(department).toWorker()
     }
 
 
-    override suspend fun checkLogin(login: String, password: String): Flow<Worker> {
+    override fun checkLogin(login: String, password: String): Flow<Worker> {
         return flow {
             emit(apiService.checkLogin(login, password).toWorker())
         }
@@ -76,21 +76,21 @@ class ApiHelperImpl(
         return commitTransaction.toTransaction()
     }
 
-    suspend fun loadAmountByWorkerAndTool(worker: Worker, tool: Tool): Int {
+    override suspend fun loadAmountByWorkerAndTool(worker: Worker, tool: Tool): Int {
         return apiService.loadAmountByWorkerAndTool(
             worker.id,
             tool.code
         )
     }
 
-    suspend fun loadToolsForSearch(code: String): List<Tool> {
+   override suspend fun loadToolsForSearch(code: String): List<Tool> {
         return apiService.loadToolsForSearch(code).map { it.toTool() }
     }
 
-    suspend fun loadTransactionsWithAnotherDepartment(
+   override suspend fun loadTransactionsWithAnotherDepartment(
         anotherDepartment: Department,
-        page: Int = 0,
-        toolCode:String = BLANK_TOOL_CODE
+        page: Int,
+        toolCode:String
     ): List<Transaction> {
         return apiService.loadTransactionsWithAnotherDepartment(anotherDepartment, page, toolCode)
             .map { it.toTransaction() }
@@ -100,8 +100,5 @@ class ApiHelperImpl(
         updateTransactionsFlow.emit(Unit)
     }
 
-    companion object{
-        private const val BLANK_TOOL_CODE = ""
-    }
 
 }
