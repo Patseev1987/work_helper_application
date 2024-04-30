@@ -1,6 +1,9 @@
 package ru.bogdan.patseev_diploma.di
 
+import android.app.Application
+import dagger.BindsInstance
 import dagger.Component
+import dagger.Component.Factory
 import ru.bogdan.patseev_diploma.presenter.fragments.CameraFragment
 import ru.bogdan.patseev_diploma.presenter.fragments.LoginFragment
 import ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewStorageRecordsFragment
@@ -14,7 +17,7 @@ import ru.bogdan.patseev_diploma.presenter.fragments.ToolsForSearchFragment
 import ru.bogdan.patseev_diploma.presenter.fragments.TransactionFragment
 import ru.bogdan.patseev_diploma.presenter.fragments.WorkerFragment
 
-@Component(modules = [DataModule::class])
+@Component(modules = [DataModule::class,ViewModelsModule::class])
 interface ApplicationComponent {
     fun inject(cameraFragment: CameraFragment)
     fun inject(loginFragment: LoginFragment)
@@ -28,4 +31,10 @@ interface ApplicationComponent {
     fun inject(toolsForSearchFragment: ToolsForSearchFragment)
     fun inject(transactionFragment: TransactionFragment)
     fun inject(workerFragment: WorkerFragment)
+
+
+    @Factory
+    interface ComponentFactory {
+        fun create(@BindsInstance application: Application): ApplicationComponent
+    }
 }

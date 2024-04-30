@@ -43,7 +43,11 @@ class RecycleViewStorageRecordsFragment : Fragment() {
         }
     }
 
+    private lateinit var viewModelFactory:ViewModelFactoryWithWorker
 
+    private val viewModel by lazy {
+        ViewModelProvider(this,viewModelFactory)[RecycleViewStorageRecordsViewModel::class.java]
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         position = arguments?.getInt(POSITION) ?: -1
@@ -57,11 +61,7 @@ class RecycleViewStorageRecordsFragment : Fragment() {
         _binding = FragmentRecycleViewToolsBinding.inflate(inflater, container, false)
         return binding.root
     }
-    private lateinit var viewModelFactory:ViewModelFactoryWithWorker
 
-    private val viewModel by lazy {
-        ViewModelProvider(this,viewModelFactory)[RecycleViewStorageRecordsViewModel::class.java]
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -110,7 +110,7 @@ class RecycleViewStorageRecordsFragment : Fragment() {
 
     companion object {
         private const val POSITION = "position"
-        private const val WORKER = "worker"
+        const val WORKER = "worker"
 
         @JvmStatic
         fun newInstance(position: Int, worker: Worker) =

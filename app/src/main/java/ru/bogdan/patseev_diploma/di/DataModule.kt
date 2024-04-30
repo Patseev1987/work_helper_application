@@ -1,6 +1,5 @@
 package ru.bogdan.patseev_diploma.di
 
-import androidx.fragment.app.Fragment
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
