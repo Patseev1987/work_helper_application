@@ -143,19 +143,21 @@ class TransactionFragment : Fragment() {
                         is TransactionState.ReceiverState -> {
                             binding.twReceiverTransactionFragment.text = it.receiver.secondName
                             binding.progressBarTransactionFragment.visibility = View.GONE
+                            binding.bSetReceiver.isEnabled = false
                         }
                         is TransactionState.SenderState -> {
                             binding.twSenderTransactionFragment.text = it.sender.secondName
                             binding.progressBarTransactionFragment.visibility = View.GONE
+                            binding.bSetSender.isEnabled = false
                         }
                         is TransactionState.ToolState -> {
                             binding.twToolCodeTransactionFragment.text = it.tool.code
-
                             Glide.with(this@TransactionFragment)
                                 .load(it.tool.icon)
                                 .circleCrop()
                                 .into(binding.iwIconTransactionFragment)
                             binding.progressBarTransactionFragment.visibility = View.GONE
+                            binding.bSetTool.isEnabled = false
                         }
                         is TransactionState.Loading ->{
                             binding.progressBarTransactionFragment.visibility = View.VISIBLE
@@ -169,6 +171,7 @@ class TransactionFragment : Fragment() {
             TransactionFragmentArgs.fromBundle(requireArguments()).apply{
                 receiver?.let {receiver ->
                     viewModel.setReceiver(receiver)
+
                 }
                 sender?.let{sender ->
                     viewModel.setSender(sender)
