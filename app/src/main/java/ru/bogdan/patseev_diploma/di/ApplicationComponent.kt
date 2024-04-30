@@ -14,7 +14,7 @@ import ru.bogdan.patseev_diploma.presenter.fragments.ToolsForSearchFragment
 import ru.bogdan.patseev_diploma.presenter.fragments.TransactionFragment
 import ru.bogdan.patseev_diploma.presenter.fragments.WorkerFragment
 
-@Component
+@Component(modules = [DataModule::class])
 interface ApplicationComponent {
     fun inject(cameraFragment: CameraFragment)
     fun inject(loginFragment: LoginFragment)

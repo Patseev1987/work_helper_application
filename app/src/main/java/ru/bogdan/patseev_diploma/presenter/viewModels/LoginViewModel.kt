@@ -15,8 +15,9 @@ import ru.bogdan.patseev_diploma.data.web.mappers.toWorker
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import java.net.ConnectException
+import javax.inject.Inject
 
-class LoginViewModel(private val application: MyApplication) : ViewModel() {
+class LoginViewModel @Inject constructor(private val application: MyApplication) : ViewModel() {
 
     private val _state: MutableStateFlow<LoginState> = MutableStateFlow(LoginState.Waiting)
     val state: StateFlow<LoginState> = _state.asStateFlow()

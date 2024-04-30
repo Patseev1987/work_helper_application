@@ -14,8 +14,9 @@ import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 import java.time.LocalDate
+import javax.inject.Inject
 
-class ApiHelperImpl(
+class ApiHelperImpl @Inject constructor(
     private val apiService: ApiService,
 ) : ApiHelper {
 

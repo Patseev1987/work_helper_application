@@ -14,9 +14,10 @@ import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
+import javax.inject.Inject
 
 
-class RecycleViewStorageRecordsViewModel(
+class RecycleViewStorageRecordsViewModel @Inject constructor(
     private val worker: Worker
 ) : ViewModel() {
 

@@ -12,10 +12,11 @@ import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.presenter.states.FragmentSearchToolsState
+import javax.inject.Inject
 
 
 @OptIn(FlowPreview::class)
-class ToolsSearchFragmentViewModel:ViewModel() {
+class ToolsSearchFragmentViewModel @Inject constructor():ViewModel() {
     private val apiHelper = ApiHelperImpl(ApiFactory.apiService)
 
     private val _state:MutableStateFlow<FragmentSearchToolsState> = MutableStateFlow(FragmentSearchToolsState.Waiting)

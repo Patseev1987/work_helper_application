@@ -12,9 +12,10 @@ import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewWorkerState
+import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
-class RecycleViewWorkersViewModel(private val application: MyApplication):ViewModel() {
+class RecycleViewWorkersViewModel @Inject constructor(private val application: MyApplication):ViewModel() {
 
     val searchString: MutableStateFlow<String> = MutableStateFlow("")
 

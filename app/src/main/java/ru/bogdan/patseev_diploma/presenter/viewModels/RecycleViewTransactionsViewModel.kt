@@ -15,8 +15,9 @@ import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.presenter.states.RecycleVIewTransactionState
 import java.lang.RuntimeException
+import javax.inject.Inject
 
-class RecycleViewTransactionsViewModel(
+class RecycleViewTransactionsViewModel @Inject constructor(
     private val application: MyApplication,
 ) : ViewModel() {
 

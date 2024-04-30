@@ -14,8 +14,9 @@ import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.presenter.states.TransactionState
+import javax.inject.Inject
 
-class TransactionViewModel(private val application: MyApplication) : ViewModel() {
+class TransactionViewModel @Inject constructor(private val application: MyApplication) : ViewModel() {
     private var sender: Worker? = null
     private var receiver: Worker? = null
     private var tool: Tool? = null

@@ -14,8 +14,9 @@ import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.presenter.states.CameraFragmentState
 import java.lang.RuntimeException
+import javax.inject.Inject
 
-class CameraFragmentViewModel : ViewModel() {
+class CameraFragmentViewModel @Inject constructor(): ViewModel() {
     private val apiHelperImpl = ApiHelperImpl(ApiFactory.apiService)
 
     private val _state: MutableStateFlow<CameraFragmentState> =

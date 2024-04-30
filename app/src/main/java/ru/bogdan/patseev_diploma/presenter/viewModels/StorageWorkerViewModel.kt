@@ -15,9 +15,10 @@ import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.presenter.states.StorageWorkerFragmentState
 import java.lang.RuntimeException
+import javax.inject.Inject
 
 
-class StorageWorkerViewModel(private val application: MyApplication) : ViewModel() {
+class StorageWorkerViewModel @Inject constructor(private val application: MyApplication) : ViewModel() {
 
     private val apiHelperImpl = ApiHelperImpl(ApiFactory.apiService)
 
