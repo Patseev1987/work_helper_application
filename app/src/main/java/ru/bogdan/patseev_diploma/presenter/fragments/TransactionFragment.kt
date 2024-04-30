@@ -1,5 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -62,6 +63,7 @@ class TransactionFragment : Fragment() {
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -89,10 +91,7 @@ class TransactionFragment : Fragment() {
                     return@setOnClickListener
                 }
             )
-            lifecycleScope.launch {
-                delay(1000)
-                requireActivity().onBackPressedDispatcher.onBackPressed()
-            }
+
         }
 
         binding.bSetTool.setOnClickListener{
@@ -138,6 +137,8 @@ class TransactionFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             binding.progressBarTransactionFragment.visibility = View.GONE
+                                delay(1000)
+                                requireActivity().onBackPressedDispatcher.onBackPressed()
                         }
                         is TransactionState.ReceiverState -> {
                             binding.twReceiverTransactionFragment.text = it.receiver.secondName
