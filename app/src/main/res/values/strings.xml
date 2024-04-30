@@ -77,5 +77,6 @@
     <string name="get_from_main_storage">get from main storage</string>
     <string name="get_from_sharpening">get from sharpening</string>
     <string name="give_tool">Give tool</string>
+    <string name="you_should_enter_4_number_of_tool_code">You should enter 4 number of tool code</string>
 
 </resources>
