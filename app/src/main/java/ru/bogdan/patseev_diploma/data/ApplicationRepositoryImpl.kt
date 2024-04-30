@@ -22,7 +22,7 @@ class ApplicationRepositoryImpl @Inject constructor(
         return apiHelper.loadStorageRecordByWorkerId(workerId, toolType, toolCode)
     }
 
-    override fun checkLogin(login: String, password: String): Flow<Worker> {
+    override suspend fun checkLogin(login: String, password: String): Worker {
         return apiHelper.checkLogin(login, password)
     }
 
@@ -63,5 +63,7 @@ class ApplicationRepositoryImpl @Inject constructor(
         return apiHelper.loadTransactionsWithAnotherDepartment(anotherDepartment, page, toolCode)
     }
 
-
+    override suspend fun updateTransactions() {
+        apiHelper.updateTransactions()
+    }
 }

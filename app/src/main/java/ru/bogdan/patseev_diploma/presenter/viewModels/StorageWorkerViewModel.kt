@@ -13,14 +13,20 @@ import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
+import ru.bogdan.patseev_diploma.domain.useCases.LoadStorageWorkerByDepartmentUseCase
+import ru.bogdan.patseev_diploma.domain.useCases.LoadTransactionsByWorkerIdUseCase
+import ru.bogdan.patseev_diploma.domain.useCases.UpdateTransactionUseCase
 import ru.bogdan.patseev_diploma.presenter.states.StorageWorkerFragmentState
 import java.lang.RuntimeException
 import javax.inject.Inject
 
 
-class StorageWorkerViewModel @Inject constructor(private val application: MyApplication) : ViewModel() {
-
-    private val apiHelperImpl = ApiHelperImpl(ApiFactory.apiService)
+class StorageWorkerViewModel @Inject constructor(
+    private val application: MyApplication,
+    private val loadStorageWorkerByDepartmentUseCase: LoadStorageWorkerByDepartmentUseCase,
+    private val loadTransactionsByWorkerIdUseCase: LoadTransactionsByWorkerIdUseCase,
+    private val updateTransactionUseCase: UpdateTransactionUseCase
+) : ViewModel() {
 
     private var _sharpen: Worker? = null
     val sharpen: Worker get() = _sharpen ?: throw RuntimeException("_sharpen = null")
@@ -31,14 +37,15 @@ class StorageWorkerViewModel @Inject constructor(private val application: MyAppl
 
     init {
         viewModelScope.launch {
-            _sharpen = apiHelperImpl.loadStorageWorkerByDepartment(Department.SHARPENING)
+            _sharpen = loadStorageWorkerByDepartmentUseCase(Department.SHARPENING)
             _storageOfDecommissionedTools =
-                apiHelperImpl.loadStorageWorkerByDepartment(Department.STORAGE_OF_DECOMMISSIONED_TOOLS)
+                loadStorageWorkerByDepartmentUseCase(Department.STORAGE_OF_DECOMMISSIONED_TOOLS)
         }
     }
 
-    val state: StateFlow<StorageWorkerFragmentState> = apiHelperImpl
-        .loadTransactionsByWorkerId(application.worker.id)
+    val state: StateFlow<StorageWorkerFragmentState> = loadTransactionsByWorkerIdUseCase(
+        application.worker.id
+    )
         .onStart { StorageWorkerFragmentState.Loading }
         .map {
             StorageWorkerFragmentState.ResultsTransaction(it) as StorageWorkerFragmentState
@@ -48,9 +55,9 @@ class StorageWorkerViewModel @Inject constructor(private val application: MyAppl
             initialValue = StorageWorkerFragmentState.Loading
         )
 
-    fun updateTransactions(){
+    fun updateTransactions() {
         viewModelScope.launch {
-            apiHelperImpl.updateTransactions()
+            updateTransactionUseCase()
         }
     }
 

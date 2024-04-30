@@ -23,24 +23,26 @@ import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.presenter.states.TransactionState
 import ru.bogdan.patseev_diploma.presenter.viewModels.TransactionViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
 import java.lang.RuntimeException
+import javax.inject.Inject
 
 class TransactionFragment : Fragment() {
     private var _binding:FragmentTransactionBinding? = null
     private val binding get() = _binding !!
-
-    private lateinit var viewModelFactory:ViewModelFactoryWithApplication
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by lazy {
         ViewModelProvider(this,viewModelFactory)[TransactionViewModel::class.java]
+    }
+    private val component by lazy {
+        (this.activity?.application as MyApplication).component
     }
     @Suppress("DEPRECATION")
     // min SDK lower than 33 (TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModelFactory = ViewModelFactoryWithApplication(
-            requireActivity().application as MyApplication
-        )
+        component.inject(this)
         parseArgs(viewModel)
         setFragmentResultListener(REQUEST_KEY_TOOL) { _, bundle ->
             val tool = bundle.getParcelable<Tool>(BUNDLE_KEY_TOOL)

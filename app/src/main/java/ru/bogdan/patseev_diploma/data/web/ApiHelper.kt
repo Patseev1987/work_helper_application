@@ -26,7 +26,7 @@ interface ApiHelper {
         toolCode: String = ""
     ): List<StorageRecord>
 
-    fun checkLogin(login: String, password: String): Flow<Worker>
+   suspend fun checkLogin(login: String, password: String): Worker
     suspend fun createTransaction(
         sender: Worker,
         receiver: Worker,
@@ -49,5 +49,5 @@ interface ApiHelper {
         page: Int = 0,
         toolCode: String = ""
     ): List<Transaction>
-
+    suspend fun updateTransactions()
 }

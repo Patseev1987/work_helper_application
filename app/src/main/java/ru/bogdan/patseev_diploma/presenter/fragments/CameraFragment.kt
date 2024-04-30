@@ -33,8 +33,10 @@ import ru.bogdan.patseev_diploma.databinding.FragmentCameraBinding
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.presenter.states.CameraFragmentState
 import ru.bogdan.patseev_diploma.presenter.viewModels.CameraFragmentViewModel
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
 import java.lang.RuntimeException
 import java.util.concurrent.Executor
+import javax.inject.Inject
 
 class CameraFragment : Fragment() {
 
@@ -50,6 +52,8 @@ class CameraFragment : Fragment() {
             }
         }
     }
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private var imageCapture: ImageCapture? = null
 
@@ -58,12 +62,17 @@ class CameraFragment : Fragment() {
     private lateinit var imageAnalyzer: ImageAnalysis
 
     private val viewModel by lazy {
-        ViewModelProvider(this)[CameraFragmentViewModel::class.java]
+        ViewModelProvider(this,viewModelFactory)[CameraFragmentViewModel::class.java]
+    }
+
+    private val component by lazy {
+        (this.activity?.application as MyApplication).component
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         executor = this.requireContext().mainExecutor
+        component.inject(this)
     }
 
     override fun onCreateView(

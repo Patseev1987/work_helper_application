@@ -13,27 +13,31 @@ import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.mappers.toWorker
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
+import ru.bogdan.patseev_diploma.domain.useCases.CheckLoginUseCase
+import ru.bogdan.patseev_diploma.domain.useCases.LoadStorageWorkerByDepartmentUseCase
 import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import java.net.ConnectException
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(private val application: MyApplication) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val application: MyApplication,
+    private val checkLoginUseCase: CheckLoginUseCase,
+    private val loadStorageWorkerByDepartmentUseCase: LoadStorageWorkerByDepartmentUseCase
+) : ViewModel() {
 
     private val _state: MutableStateFlow<LoginState> = MutableStateFlow(LoginState.Waiting)
     val state: StateFlow<LoginState> = _state.asStateFlow()
-    private val apiService = ApiFactory.apiService
-
 
     fun checkLogin(login: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _state.value = LoginState.Loading
-                val worker = apiService.checkLogin(login, password).toWorker()
+                val worker = checkLoginUseCase(login, password)
                 if (worker.login.isNotEmpty()) {
                     application.setWorker(worker)
                     if (worker.type != WorkerType.STORAGE_WORKER) {
                         val storageWorker =
-                            apiService.loadStorageWorkerByDepartment(worker.department).toWorker()
+                            loadStorageWorkerByDepartmentUseCase(worker.department)
                         application.setStorageWorker(storageWorker);
                     }
                     _state.value = LoginState.LoginResult(worker)

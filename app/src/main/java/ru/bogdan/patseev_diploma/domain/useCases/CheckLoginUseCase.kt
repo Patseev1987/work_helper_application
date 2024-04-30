@@ -6,7 +6,7 @@ import javax.inject.Inject
 class CheckLoginUseCase @Inject constructor(
     private val repository: ApplicationRepository
 ) {
-    operator fun invoke(
+   suspend operator fun invoke(
         login: String,
         password: String
     ) = repository.checkLogin(login, password)

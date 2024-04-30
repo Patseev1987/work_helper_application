@@ -14,20 +14,32 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
+import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentToolsForSearchBinding
 import ru.bogdan.patseev_diploma.presenter.recycleViews.ToolsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.FragmentSearchToolsState
 import ru.bogdan.patseev_diploma.presenter.viewModels.ToolsSearchFragmentViewModel
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
+import javax.inject.Inject
 
 class ToolsForSearchFragment : Fragment() {
     private var _binding:FragmentToolsForSearchBinding? = null
     private val binding get() = _binding!!
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel by lazy {
-        ViewModelProvider(this)[ToolsSearchFragmentViewModel::class.java]
+        ViewModelProvider(this,viewModelFactory)[ToolsSearchFragmentViewModel::class.java]
+    }
+    private val component by lazy {
+        (this.activity?.application as MyApplication).component
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        component.inject(this)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

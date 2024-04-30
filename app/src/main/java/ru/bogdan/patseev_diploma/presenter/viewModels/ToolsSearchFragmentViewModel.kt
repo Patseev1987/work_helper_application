@@ -11,37 +11,40 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
+import ru.bogdan.patseev_diploma.domain.useCases.LoadToolsForSearchUseCase
 import ru.bogdan.patseev_diploma.presenter.states.FragmentSearchToolsState
 import javax.inject.Inject
 
 
 @OptIn(FlowPreview::class)
-class ToolsSearchFragmentViewModel @Inject constructor():ViewModel() {
-    private val apiHelper = ApiHelperImpl(ApiFactory.apiService)
+class ToolsSearchFragmentViewModel @Inject constructor(
+    private val loadToolsForSearchUseCase: LoadToolsForSearchUseCase
+) : ViewModel() {
 
-    private val _state:MutableStateFlow<FragmentSearchToolsState> = MutableStateFlow(FragmentSearchToolsState.Waiting)
+    private val _state: MutableStateFlow<FragmentSearchToolsState> =
+        MutableStateFlow(FragmentSearchToolsState.Waiting)
     val state = _state.asStateFlow()
 
     val searchString: MutableStateFlow<String> = MutableStateFlow(BLANK_TOOL_CODE)
 
-    init{
+    init {
         viewModelScope.launch {
             searchString.debounce(500)
                 .filter { it.length > 3 }
                 .onCompletion {
                     FragmentSearchToolsState.Waiting
                 }
-                .collect{
+                .collect {
                     loadTools(it)
                 }
         }
 
     }
 
-    private fun loadTools(code:String){
+    private fun loadTools(code: String) {
         viewModelScope.launch {
             _state.value = FragmentSearchToolsState.Loading
-            val tools = apiHelper.loadToolsForSearch(code)
+            val tools = loadToolsForSearchUseCase(code)
             _state.value = FragmentSearchToolsState.Result(tools)
         }
     }

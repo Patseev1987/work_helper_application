@@ -2,7 +2,6 @@ package ru.bogdan.patseev_diploma.presenter.fragments
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +13,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
+import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewToolsBinding
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.presenter.recycleViews.StorageRecordsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewStorageRecordsViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithWorker
-
-
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
+import javax.inject.Inject
 
 
 class RecycleViewStorageRecordsFragment : Fragment() {
@@ -34,6 +33,8 @@ class RecycleViewStorageRecordsFragment : Fragment() {
     private val worker:Worker by lazy {
         requireArguments().getParcelable(WORKER)!!
     }
+
+
     private val adapter by lazy {
         StorageRecordsAdapter { storageRecord ->
             val tool = storageRecord.tool
@@ -43,15 +44,21 @@ class RecycleViewStorageRecordsFragment : Fragment() {
         }
     }
 
-    private lateinit var viewModelFactory:ViewModelFactoryWithWorker
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel by lazy {
         ViewModelProvider(this,viewModelFactory)[RecycleViewStorageRecordsViewModel::class.java]
     }
+
+    private val component by lazy {
+        (this.activity?.application as MyApplication).component
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         position = arguments?.getInt(POSITION) ?: -1
-        viewModelFactory = ViewModelFactoryWithWorker(worker)
+       component.inject(this)
+        viewModel.setWorker(worker)
     }
 
     override fun onCreateView(
@@ -68,6 +75,7 @@ class RecycleViewStorageRecordsFragment : Fragment() {
         observeViewModel(binding, viewModel)
         viewModel.loadTools(position)
         setTextChangeListener(binding,viewModel)
+        println(worker.toString())
         }
 
     private fun setTextChangeListener(

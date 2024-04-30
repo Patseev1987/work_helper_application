@@ -54,10 +54,8 @@ class ApiHelperImpl @Inject constructor(
     }
 
 
-    override fun checkLogin(login: String, password: String): Flow<Worker> {
-        return flow {
-            emit(apiService.checkLogin(login, password).toWorker())
-        }
+    override suspend fun checkLogin(login: String, password: String): Worker {
+        return apiService.checkLogin(login, password).toWorker()
     }
 
     override suspend fun createTransaction(
@@ -97,7 +95,7 @@ class ApiHelperImpl @Inject constructor(
             .map { it.toTransaction() }
     }
 
-    suspend fun updateTransactions() {
+    override suspend fun updateTransactions() {
         updateTransactionsFlow.emit(Unit)
     }
 

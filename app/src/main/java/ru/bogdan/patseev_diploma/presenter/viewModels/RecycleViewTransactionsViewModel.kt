@@ -13,15 +13,15 @@ import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
+import ru.bogdan.patseev_diploma.domain.useCases.LoadTransactionsWithAnotherDepartmentUseCase
 import ru.bogdan.patseev_diploma.presenter.states.RecycleVIewTransactionState
 import java.lang.RuntimeException
 import javax.inject.Inject
 
 class RecycleViewTransactionsViewModel @Inject constructor(
     private val application: MyApplication,
+    private val loadTransactionsWithAnotherDepartmentUseCase: LoadTransactionsWithAnotherDepartmentUseCase
 ) : ViewModel() {
-
-    private val apiHelperImpl = ApiHelperImpl(ApiFactory.apiService)
 
     private val searchString: MutableStateFlow<String> =
         MutableStateFlow(BLANK_TOOL_CODE)
@@ -34,8 +34,10 @@ class RecycleViewTransactionsViewModel @Inject constructor(
     fun loadTransactions(anotherDepartment: Department, toolCode: String = BLANK_TOOL_CODE) {
         viewModelScope.launch(Dispatchers.IO) {
             _state.value = RecycleVIewTransactionState.Result(
-                apiHelperImpl
-                    .loadTransactionsWithAnotherDepartment(anotherDepartment, toolCode =  toolCode),
+                loadTransactionsWithAnotherDepartmentUseCase(
+                    anotherDepartment,
+                    toolCode = toolCode
+                ),
                 anotherDepartment.getMessageForTitle()
             )
         }
@@ -57,17 +59,16 @@ class RecycleViewTransactionsViewModel @Inject constructor(
     }
 
     @OptIn(FlowPreview::class)
-    fun updateTransactionWithFilter(anotherDepartment: Department, code:String) {
+    fun updateTransactionWithFilter(anotherDepartment: Department, code: String) {
         searchString.value = code
         viewModelScope.launch(Dispatchers.IO) {
             searchString.debounce(500)
                 .collect { toolCode ->
                     _state.value = RecycleVIewTransactionState.Loading
-                    loadTransactions(anotherDepartment,toolCode)
+                    loadTransactions(anotherDepartment, toolCode)
                 }
         }
     }
-
 
 
     companion object {

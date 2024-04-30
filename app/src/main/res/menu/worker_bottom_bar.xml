@@ -17,8 +17,4 @@
         android:icon="@drawable/baseline_search_24"
         android:title="@string/search_with_qr_code" />
 
-    <item
-        android:id="@+id/notes_fragment"
-        android:icon="@drawable/baseline_edit_note_24"
-        android:title="@string/notes" />
 </menu>

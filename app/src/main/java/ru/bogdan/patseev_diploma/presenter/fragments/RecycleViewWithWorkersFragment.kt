@@ -13,32 +13,32 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewWithWorkersBinding
 import ru.bogdan.patseev_diploma.presenter.recycleViews.WorkersAdapter
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewWorkerState
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewWorkersViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
 import java.lang.RuntimeException
+import javax.inject.Inject
 
 class RecycleViewWithWorkersFragment : Fragment() {
     private var _binding: FragmentRecycleViewWithWorkersBinding? = null
     private val binding get() = _binding!!
     private var mode = UNKNOWN_MODE
-
-    private lateinit var viewModelFactory: ViewModelFactoryWithApplication
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[RecycleViewWorkersViewModel::class.java]
     }
-
+    private val component by lazy {
+        (this.activity?.application as MyApplication).component
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModelFactory = ViewModelFactoryWithApplication(
-            requireActivity().application as MyApplication
-        )
         parseArguments()
+        component.inject(this)
     }
 
     override fun onCreateView(

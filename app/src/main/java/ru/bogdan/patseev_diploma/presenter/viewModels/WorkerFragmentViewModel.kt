@@ -11,18 +11,22 @@ import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
+import ru.bogdan.patseev_diploma.domain.useCases.UpdateTransactionUseCase
 import ru.bogdan.patseev_diploma.presenter.states.WorkerFragmentState
 import javax.inject.Inject
 
 
-class WorkerFragmentViewModel @Inject constructor(private val application: MyApplication) : ViewModel() {
+class WorkerFragmentViewModel @Inject constructor(
+    private val application: MyApplication,
+    private val updateTransactionUseCase: UpdateTransactionUseCase
+) : ViewModel() {
 
     private val apiHelperImpl = ApiHelperImpl(ApiFactory.apiService)
 
     val state: StateFlow<WorkerFragmentState> = apiHelperImpl
         .loadTransactionsByWorkerId(application.worker.id)
         .onStart { WorkerFragmentState.Loading }
-        .map{
+        .map {
             WorkerFragmentState.ResultsTransaction(it) as WorkerFragmentState
         }.stateIn(
             scope = viewModelScope,
@@ -30,9 +34,9 @@ class WorkerFragmentViewModel @Inject constructor(private val application: MyApp
             initialValue = WorkerFragmentState.Loading
         )
 
-    fun updateTransactions(){
+    fun updateTransactions() {
         viewModelScope.launch {
-            apiHelperImpl.updateTransactions()
+            updateTransactionUseCase()
         }
     }
 }

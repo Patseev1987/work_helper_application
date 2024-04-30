@@ -18,23 +18,25 @@ import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.presenter.recycleViews.TransactionsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.StorageWorkerFragmentState
 import ru.bogdan.patseev_diploma.presenter.viewModels.StorageWorkerViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
 import ru.bogdan.patseev_diploma.util.toNormalName
+import javax.inject.Inject
 
 
 class StorageWorkerFragment : Fragment() {
     private var _binding: FragmentStorageWorkerBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var viewModelFactory: ViewModelFactoryWithApplication
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[StorageWorkerViewModel::class.java]
     }
-
+    private val component by lazy {
+        (this.activity?.application as MyApplication).component
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModelFactory =
-            ViewModelFactoryWithApplication(requireActivity().application as MyApplication)
+        component.inject(this)
     }
 
     override fun onCreateView(

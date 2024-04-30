@@ -1,7 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -16,26 +15,28 @@ import ru.bogdan.patseev_diploma.databinding.FragmentWorkerBinding
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.presenter.recycleViews.TransactionsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.WorkerFragmentState
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
 import ru.bogdan.patseev_diploma.presenter.viewModels.WorkerFragmentViewModel
 import ru.bogdan.patseev_diploma.util.toNormalName
+import javax.inject.Inject
 
 
 class WorkerFragment : Fragment() {
     private var _binding: FragmentWorkerBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var viewModelFactory: ViewModelFactoryWithApplication
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[WorkerFragmentViewModel::class.java]
     }
+    private val component by lazy {
+        (this.activity?.application as MyApplication).component
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModelFactory = ViewModelFactoryWithApplication(
-            requireActivity().application as MyApplication
-        )
+        component.inject(this)
     }
 
 

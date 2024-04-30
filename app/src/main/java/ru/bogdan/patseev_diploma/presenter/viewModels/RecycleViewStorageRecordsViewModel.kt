@@ -4,25 +4,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import ru.bogdan.patseev_diploma.data.web.ApiFactory
-import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.domain.models.Worker
+import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
+import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
+import ru.bogdan.patseev_diploma.domain.useCases.LoadStorageRecordByWorkerIdUseCase
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
+import java.time.LocalDate
 import javax.inject.Inject
 
 
 class RecycleViewStorageRecordsViewModel @Inject constructor(
-    private val worker: Worker
+    private val loadStorageRecordByWorkerIdUseCase: LoadStorageRecordByWorkerIdUseCase
 ) : ViewModel() {
-
-
-    private val apiHelper = ApiHelperImpl(ApiFactory.apiService)
 
     private val searchString: MutableStateFlow<String> = MutableStateFlow(BLANK_TOOL_CODE)
 
@@ -31,16 +29,18 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
 
     val state = _state.asStateFlow()
 
-   fun loadTools(position: Int, toolCode: String = BLANK_TOOL_CODE) {
+    private var worker:Worker = Worker(0,"","","", LocalDate.now(),Department.DEPARTMENT_19,WorkerType.WORKER,"","")
+
+    fun loadTools(position: Int, toolCode: String = BLANK_TOOL_CODE) {
         viewModelScope.launch(Dispatchers.IO) {
-          _state.value = RecycleViewState.Result(
-              apiHelper.loadStorageRecordByWorkerId(worker.id, position.getToolType(), toolCode)
-          )
+            _state.value = RecycleViewState.Result(
+                loadStorageRecordByWorkerIdUseCase(worker.id, position.getToolType(), toolCode)
+            )
         }
     }
 
     @OptIn(FlowPreview::class)
-    fun updateToolsWithFilter(position: Int, toolCode:String) {
+    fun updateToolsWithFilter(position: Int, toolCode: String) {
         searchString.value = toolCode
         viewModelScope.launch(Dispatchers.IO) {
             searchString.debounce(500)
@@ -58,6 +58,10 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
             HELPERS_POSITION -> ToolType.HELPERS
             else -> throw RuntimeException("unknown tool type")
         }
+    }
+
+    fun setWorker(worker: Worker){
+        this.worker = worker
     }
 
     companion object {

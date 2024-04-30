@@ -11,35 +11,42 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
+import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentLoginBinding
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.viewModels.LoginViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
+import javax.inject.Inject
 
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModelFactory: ViewModelFactoryWithApplication
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this,viewModelFactory)[LoginViewModel::class.java]
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModelFactory = ViewModelFactoryWithApplication(requireActivity().application as MyApplication)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    private val component by lazy {
+        (this.activity?.application as MyApplication).component
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        component.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,8 +67,8 @@ class LoginFragment : Fragment() {
                     when (it) {
                         is LoginState.Error -> {
                             binding.progressBar.visibility = View.GONE
-                            binding.ilLogin.error = "wrong login or password"
-                            binding.ilPassword.error = "wrong login or password"
+                            binding.ilLogin.error = getString(R.string.wrong_login_or_password)
+                            binding.ilPassword.error = getString(R.string.wrong_login_or_password)
                         }
 
                         is LoginState.Waiting -> {
@@ -104,6 +111,5 @@ class LoginFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 
 }

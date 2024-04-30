@@ -13,14 +13,19 @@ import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Worker
+import ru.bogdan.patseev_diploma.domain.useCases.CreateTransactionUseCase
+import ru.bogdan.patseev_diploma.domain.useCases.LoadAmountByWorkerAndToolUseCase
 import ru.bogdan.patseev_diploma.presenter.states.TransactionState
 import javax.inject.Inject
 
-class TransactionViewModel @Inject constructor(private val application: MyApplication) : ViewModel() {
+class TransactionViewModel @Inject constructor(
+    private val application: MyApplication,
+    private val loadAmountByWorkerAndToolUseCase: LoadAmountByWorkerAndToolUseCase,
+    private val createTransactionUseCase: CreateTransactionUseCase
+) : ViewModel() {
     private var sender: Worker? = null
     private var receiver: Worker? = null
     private var tool: Tool? = null
-    private val apiHelperImpl = ApiHelperImpl(ApiFactory.apiService)
     private val _state: MutableStateFlow<TransactionState> =
         MutableStateFlow(TransactionState.Waiting)
     val state = _state.asStateFlow()
@@ -96,7 +101,7 @@ class TransactionViewModel @Inject constructor(private val application: MyApplic
                     return@launch
                 }
             }
-            val amountToolFromSender = apiHelperImpl.loadAmountByWorkerAndTool(sender!!, tool!!)
+            val amountToolFromSender = loadAmountByWorkerAndToolUseCase(sender!!, tool!!)
             if (amountToolFromSender == -1) {
                 _state.value = TransactionState.Error(
                     application.getString(
@@ -114,7 +119,7 @@ class TransactionViewModel @Inject constructor(private val application: MyApplic
                     )
                     return@launch
                 } else {
-                    apiHelperImpl.createTransaction(sender!!, receiver!!, tool!!, amount)
+                    createTransactionUseCase(sender!!, receiver!!, tool!!, amount)
                     _state.value = TransactionState.Result(sender!!, receiver!!, tool!!, amount)
                 }
             }

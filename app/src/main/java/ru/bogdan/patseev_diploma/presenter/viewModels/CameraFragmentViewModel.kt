@@ -18,7 +18,7 @@ import java.lang.RuntimeException
 import javax.inject.Inject
 
 class CameraFragmentViewModel @Inject constructor(
-    private val loadToolsForSearchUseCase: LoadToolsForSearchUseCase
+    private val loadToolsForSearchUseCase: LoadToolsForSearchUseCase,
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<CameraFragmentState> =
@@ -36,8 +36,7 @@ class CameraFragmentViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     private fun checkToolCode(inputString: String): Boolean {
-        val toolCodeRegex = """[a-zA-Z0-9]{3,8}-[a-zA-Z0-9]{4,10}""".toRegex()
-        return inputString.matches(toolCodeRegex)
+        return inputString.matches(REGEX)
     }
 
     fun getTool(inputString: String, worker: Worker) {
@@ -60,5 +59,6 @@ class CameraFragmentViewModel @Inject constructor(
 
     companion object {
         private const val UNKNOWN_CODE = "unknown code"
+        private val REGEX = """[a-zA-Z0-9]{3,8}-[a-zA-Z0-9]{4,10}""".toRegex()
     }
 }

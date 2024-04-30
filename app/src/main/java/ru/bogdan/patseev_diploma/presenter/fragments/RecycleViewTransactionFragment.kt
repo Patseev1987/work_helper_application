@@ -18,7 +18,8 @@ import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.presenter.recycleViews.TransactionsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.RecycleVIewTransactionState
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewTransactionsViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
+import javax.inject.Inject
 
 class RecycleViewTransactionFragment : Fragment() {
     private var _binding: FragmentRecycleViewTransactionBinding? = null
@@ -26,17 +27,21 @@ class RecycleViewTransactionFragment : Fragment() {
 
     private var anotherDepartment = Department.DEPARTMENT_19
 
-    private lateinit var viewModelFactory:ViewModelFactoryWithApplication
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     private val viewModel:RecycleViewTransactionsViewModel by lazy {
         ViewModelProvider(this,viewModelFactory)[RecycleViewTransactionsViewModel::class.java]
+    }
+
+    private val component by lazy {
+        (this.activity?.application as MyApplication).component
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseMode()
-        viewModelFactory = ViewModelFactoryWithApplication(
-            requireActivity().application as MyApplication
-        )
+        component.inject(this)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
