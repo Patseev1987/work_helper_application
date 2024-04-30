@@ -6,8 +6,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Place(
-    val shelf:String,
-    val column:String,
-    val row:String,
+    val shelf: String,
+    val column: String,
+    val row: String,
 ) : Parcelable {
 }

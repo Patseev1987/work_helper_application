@@ -18,14 +18,14 @@ interface ApiService {
     @GET("records/workerId")
     suspend fun loadStorageRecordsByWorkerId(
         @Query("workerId") workerId: Long,
-        @Query("toolType") toolType:ToolType,
-        @Query("toolCode") toolCode:String
+        @Query("toolType") toolType: ToolType,
+        @Query("toolCode") toolCode: String
     ): List<StorageRecordWEB>
 
     @GET("transactions/worker")
     suspend fun loadTransactionsByWorkerId(
         @Query("workerId") workerId: Long,
-        @Query("page") page:Int = 0
+        @Query("page") page: Int = 0
     ): List<TransactionWEB>
 
 
@@ -47,7 +47,7 @@ interface ApiService {
 
 
     @POST("transaction/create")
-    suspend fun createTransaction(@Body transaction: TransactionWEB):TransactionWEB
+    suspend fun createTransaction(@Body transaction: TransactionWEB): TransactionWEB
 
     @GET("tools/code")
     suspend fun loadToolsForSearch(@Query("code") code: String): List<ToolWEB>
@@ -55,15 +55,15 @@ interface ApiService {
     @GET("records/amount")
     suspend fun loadAmountByWorkerAndTool(
         @Query("workerId") workerId: Long,
-        @Query("toolCode") toolCode:String
-        ): Int
+        @Query("toolCode") toolCode: String
+    ): Int
 
     @GET("transactions/actionWithAnotherDepartments")
     suspend fun loadTransactionsWithAnotherDepartment(
-        @Query("anotherDepartment") anotherDepartment:Department,
-        @Query("page") page:Int = 0,
-        @Query("toolCode") toolCode:String
-    ):List<TransactionWEB>
+        @Query("anotherDepartment") anotherDepartment: Department,
+        @Query("page") page: Int = 0,
+        @Query("toolCode") toolCode: String
+    ): List<TransactionWEB>
 
 }
 

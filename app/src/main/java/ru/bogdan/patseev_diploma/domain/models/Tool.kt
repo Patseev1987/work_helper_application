@@ -8,13 +8,13 @@ import java.time.LocalDateTime
 
 @Parcelize
 data class Tool(
-   val code:String,
-   val name: String,
-   val description: String,
-   val notes: String? = null,
-   val icon: String? = null,
-   val place: Place,
-   val type: ToolType,
-): Parcelable {
+    val code: String,
+    val name: String,
+    val description: String,
+    val notes: String? = null,
+    val icon: String? = null,
+    val place: Place,
+    val type: ToolType,
+) : Parcelable {
 
 }

@@ -100,7 +100,7 @@ fun StorageRecord.toStorageRecordWEB(): StorageRecordWEB {
     )
 }
 
-fun TransactionWEB.toTransaction():Transaction{
+fun TransactionWEB.toTransaction(): Transaction {
     return Transaction(
         id = this.id,
         sender = this.sender.toWorker(),
@@ -111,7 +111,7 @@ fun TransactionWEB.toTransaction():Transaction{
     )
 }
 
-fun Transaction.toTransactionWEB():TransactionWEB {
+fun Transaction.toTransactionWEB(): TransactionWEB {
     return TransactionWEB(
         id = this.id,
         sender = this.sender.toWorkerWEB(),

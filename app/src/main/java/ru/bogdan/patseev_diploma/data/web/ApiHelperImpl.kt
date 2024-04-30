@@ -31,7 +31,7 @@ class ApiHelperImpl(
     }
 
 
-   override fun loadTransactionsByWorkerId(workerId: Long): Flow<List<Transaction>> {
+    override fun loadTransactionsByWorkerId(workerId: Long): Flow<List<Transaction>> {
         return flow {
             emit(apiService.loadTransactionsByWorkerId(workerId)
                 .map { it.toTransaction() })
@@ -83,14 +83,14 @@ class ApiHelperImpl(
         )
     }
 
-   override suspend fun loadToolsForSearch(code: String): List<Tool> {
+    override suspend fun loadToolsForSearch(code: String): List<Tool> {
         return apiService.loadToolsForSearch(code).map { it.toTool() }
     }
 
-   override suspend fun loadTransactionsWithAnotherDepartment(
+    override suspend fun loadTransactionsWithAnotherDepartment(
         anotherDepartment: Department,
         page: Int,
-        toolCode:String
+        toolCode: String
     ): List<Transaction> {
         return apiService.loadTransactionsWithAnotherDepartment(anotherDepartment, page, toolCode)
             .map { it.toTransaction() }

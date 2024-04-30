@@ -5,10 +5,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class StorageRecord(
-    val id:Long,
-    val worker:Worker,
+    val id: Long,
+    val worker: Worker,
     val tool: Tool,
-    val amount:Int
-):Parcelable {
+    val amount: Int
+) : Parcelable {
 
 }

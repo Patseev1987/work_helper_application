@@ -9,18 +9,21 @@ import ru.bogdan.patseev_diploma.domain.models.Transaction
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
+import javax.inject.Inject
 
-class ApplicationRepositoryImpl(private val apiHelper: ApiHelper):ApplicationRepository{
+class ApplicationRepositoryImpl @Inject constructor(
+    private val apiHelper: ApiHelper
+) : ApplicationRepository {
     override suspend fun loadStorageRecordByWorkerId(
         workerId: Long,
         toolType: ToolType,
         toolCode: String
     ): List<StorageRecord> {
-        return apiHelper.loadStorageRecordByWorkerId(workerId,toolType,toolCode)
+        return apiHelper.loadStorageRecordByWorkerId(workerId, toolType, toolCode)
     }
 
     override fun checkLogin(login: String, password: String): Flow<Worker> {
-        return apiHelper.checkLogin(login,password)
+        return apiHelper.checkLogin(login, password)
     }
 
     override suspend fun createTransaction(
@@ -29,7 +32,7 @@ class ApplicationRepositoryImpl(private val apiHelper: ApiHelper):ApplicationRep
         tool: Tool,
         amount: Int
     ): Transaction {
-        return apiHelper.createTransaction(sender,receiver,tool,amount)
+        return apiHelper.createTransaction(sender, receiver, tool, amount)
     }
 
     override fun loadTransactionsByWorkerId(workerId: Long): Flow<List<Transaction>> {
@@ -45,7 +48,7 @@ class ApplicationRepositoryImpl(private val apiHelper: ApiHelper):ApplicationRep
     }
 
     override suspend fun loadAmountByWorkerAndTool(worker: Worker, tool: Tool): Int {
-        return apiHelper.loadAmountByWorkerAndTool(worker,tool)
+        return apiHelper.loadAmountByWorkerAndTool(worker, tool)
     }
 
     override suspend fun loadToolsForSearch(code: String): List<Tool> {
@@ -57,6 +60,8 @@ class ApplicationRepositoryImpl(private val apiHelper: ApiHelper):ApplicationRep
         page: Int,
         toolCode: String
     ): List<Transaction> {
-      return  apiHelper.loadTransactionsWithAnotherDepartment(anotherDepartment,page,toolCode)
+        return apiHelper.loadTransactionsWithAnotherDepartment(anotherDepartment, page, toolCode)
     }
+
+
 }
