@@ -15,7 +15,6 @@ data class Tool(
    val icon: String? = null,
    val place: Place,
    val type: ToolType,
-   val controlDate: LocalDate? = null
 ): Parcelable {
 
 }

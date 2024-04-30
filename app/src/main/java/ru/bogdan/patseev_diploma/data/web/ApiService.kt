@@ -58,22 +58,9 @@ interface ApiService {
         @Query("toolCode") toolCode:String
         ): Int
 
-    @GET("transactions/decommissionedTools")
-    suspend fun loadTransactionsWithDecommissionedTools(
-        @Query("senderDepartment") senderDepartment:Department,
-        @Query("page") page:Int = 0,
-        @Query("toolCode") toolCode:String
-    ):List<TransactionWEB>
-    @GET("transactions/toSharpen")
-    suspend fun loadTransactionsWithToolToSharpen(
-        @Query("senderDepartment") senderDepartment:Department,
-        @Query("page") page:Int = 0,
-        @Query("toolCode") toolCode:String
-    ):List<TransactionWEB>
-
-    @GET("transactions/fromSharpen")
-    suspend fun loadTransactionsWithToolFromSharpen(
-        @Query("receiverDepartment") receiverDepartment:Department,
+    @GET("transactions/actionWithAnotherDepartments")
+    suspend fun loadTransactionsWithAnotherDepartment(
+        @Query("anotherDepartment") anotherDepartment:Department,
         @Query("page") page:Int = 0,
         @Query("toolCode") toolCode:String
     ):List<TransactionWEB>

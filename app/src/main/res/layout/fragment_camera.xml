@@ -35,12 +35,12 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/_b_take_tool"
+        android:id="@+id/b_take_tool"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:textSize="20sp"
-        android:text="Take tool back"
+        android:text="@string/take_tool_back"
         app:layout_constraintHorizontal_weight="1"
         android:layout_margin="4dp"
         android:visibility="gone"
@@ -56,12 +56,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:textSize="20sp"
-        android:text="Give tool"
+        android:text="@string/give_tool"
         android:layout_margin="4dp"
         android:visibility="gone"
         tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/_b_take_tool" />
+        app:layout_constraintStart_toEndOf="@+id/b_take_tool" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

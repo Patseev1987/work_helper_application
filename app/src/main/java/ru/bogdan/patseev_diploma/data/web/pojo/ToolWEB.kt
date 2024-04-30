@@ -9,8 +9,6 @@ data class ToolWEB(
     val additionalInfo: String?,
     @SerializedName("code")
     val code: String,
-    @SerializedName("controlDate")
-    val controlDate: String?,
     @SerializedName("description")
     val description: String,
     @SerializedName("icon")

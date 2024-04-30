@@ -13,7 +13,6 @@ interface ApiHelper {
 
    suspend fun loadStorageRecordByWorkerId(workerId: Long, toolType: ToolType, toolCode:String = ""):List<StorageRecord>
 
-
     suspend fun checkLogin(login:String, password:String):Flow<Worker>
     suspend fun createTransaction(sender: Worker, receiver: Worker, tool: Tool, amount: Int):Transaction
 }

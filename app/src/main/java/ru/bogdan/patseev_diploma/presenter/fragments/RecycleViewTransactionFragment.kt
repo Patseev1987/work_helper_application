@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -13,18 +14,19 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.databinding.FragmentRecycleViewTransactionBinding
+import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.presenter.recycleViews.TransactionsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.RecycleVIewTransactionState
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewTransactionsViewModel
-import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithMode
+import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactoryWithApplication
 
 class RecycleViewTransactionFragment : Fragment() {
     private var _binding: FragmentRecycleViewTransactionBinding? = null
     private val binding get() = _binding!!
 
-    private var mode = UNKNOWN_MODE
+    private var anotherDepartment = Department.DEPARTMENT_19
 
-    private lateinit var viewModelFactory:ViewModelFactoryWithMode
+    private lateinit var viewModelFactory:ViewModelFactoryWithApplication
     private val viewModel:RecycleViewTransactionsViewModel by lazy {
         ViewModelProvider(this,viewModelFactory)[RecycleViewTransactionsViewModel::class.java]
     }
@@ -32,8 +34,8 @@ class RecycleViewTransactionFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseMode()
-        viewModelFactory = ViewModelFactoryWithMode(
-            requireActivity().application as MyApplication, mode
+        viewModelFactory = ViewModelFactoryWithApplication(
+            requireActivity().application as MyApplication
         )
     }
     override fun onCreateView(
@@ -51,7 +53,8 @@ class RecycleViewTransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeState(binding,viewModel)
-        viewModel.loadTransactions(mode)
+        viewModel.loadTransactions(anotherDepartment)
+        setOnChangeText(binding,viewModel)
     }
 
     override fun onDestroy() {
@@ -59,7 +62,14 @@ class RecycleViewTransactionFragment : Fragment() {
         _binding = null
     }
 
-
+    private fun setOnChangeText(
+        binding: FragmentRecycleViewTransactionBinding,
+        viewModel: RecycleViewTransactionsViewModel
+    ){
+        binding.inEditTextRecycleViewTransactions.doAfterTextChanged {
+            viewModel.updateTransactionWithFilter(anotherDepartment,it.toString())
+        }
+    }
 
 
 
@@ -88,14 +98,7 @@ class RecycleViewTransactionFragment : Fragment() {
     }
 
     private fun parseMode(){
-      mode = RecycleViewTransactionFragmentArgs.fromBundle(requireArguments()).mode
+      anotherDepartment = RecycleViewTransactionFragmentArgs.fromBundle(requireArguments()).anotherDepartment
     }
 
-
-    companion object{
-        const val TO_SHARPEN_MODE = 201
-        const val DECOMMISSIONED_TOOLS_MODE = 202
-        const val FROM_SHARPEN_MODE = 203
-        private const val UNKNOWN_MODE = -1
-    }
 }

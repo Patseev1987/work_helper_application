@@ -15,19 +15,21 @@
               android:label="fragment_user" tools:layout="@layout/fragment_worker">
         <action android:id="@+id/action_workerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
         <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
-        <action android:id="@+id/action_workerFragment_to_helpFragment2" app:destination="@id/helpFragment2"/>
         <action
             android:id="@+id/action_workerFragment_to_tabLayoutFragment"
             app:destination="@id/tabLayoutFragment" />
     </fragment>
     <fragment android:id="@+id/cameraFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.CameraFragment"
-              android:label="fragment_camera" tools:layout="@layout/fragment_camera"/>
+              android:label="fragment_camera" tools:layout="@layout/fragment_camera">
+        <action
+            android:id="@+id/action_cameraFragment_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
+    </fragment>
     <fragment android:id="@+id/storageWorkerFragment"
               android:name="ru.bogdan.patseev_diploma.presenter.fragments.StorageWorkerFragment"
               android:label="fragment_storage_worker" tools:layout="@layout/fragment_storage_worker">
         <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
         <action android:id="@+id/action_storageWorkerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
-        <action android:id="@+id/action_storageWorkerFragment_to_helpFragment2" app:destination="@id/helpFragment2"/>
         <action
             android:id="@+id/action_storageWorkerFragment_to_tabLayoutFragment"
             app:destination="@id/tabLayoutFragment" />
@@ -53,8 +55,6 @@
             android:name="tool"
             app:argType="ru.bogdan.patseev_diploma.domain.models.Tool" />
     </fragment>
-    <fragment android:id="@+id/helpFragment2" android:name="ru.bogdan.patseev_diploma.presenter.fragments.HelpFragment"
-              android:label="fragment_help" tools:layout="@layout/fragment_help"/>
 
     <fragment
         android:id="@+id/tabLayoutFragment"
@@ -128,7 +128,7 @@
     </fragment>
     <fragment
         android:id="@+id/toolsFragmentForSearchFragment"
-        android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolsFragmentForSearchFragment"
+        android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolsForSearchFragment"
         android:label="fragment_tools_for_search"
         tools:layout="@layout/fragment_tools_for_search" />
     <fragment
@@ -137,8 +137,8 @@
         android:label="fragment_recycle_view_transaction"
         tools:layout="@layout/fragment_recycle_view_transaction" >
         <argument
-            android:name="mode"
-            app:argType="integer"
-            android:defaultValue="201" />
+            android:name="anotherDepartment"
+            app:argType="ru.bogdan.patseev_diploma.domain.models.enums.Department"
+            android:defaultValue="STORAGE_OF_DECOMMISSIONED_TOOLS" />
     </fragment>
 </navigation>

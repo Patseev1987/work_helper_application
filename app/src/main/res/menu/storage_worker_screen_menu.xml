@@ -21,7 +21,7 @@
             <item
                 android:id="@+id/item_from_sharpen"
                 android:icon="@drawable/baseline_from_sharpen"
-                android:title="@string/send_tool_to_sharpen" />
+                android:title="@string/get_from_sharpening" />
             <item
                 android:id="@+id/item_storage_of_decommissioned_tools"
                 android:icon="@drawable/baseline_write_off"
@@ -36,10 +36,6 @@
                 android:id="@+id/item_camera"
                 android:icon="@drawable/baseline_qr_code"
                 android:title="@string/search_with_qr_code_2" />
-            <item
-                android:id="@+id/item_search_by_code"
-                android:icon="@drawable/baseline_search_by_code"
-                android:title="@string/search_tool_by_code"/>
         </menu>
     </item>
     <item
@@ -57,13 +53,13 @@
         android:title="@string/important_information">
         <menu>
             <item
-                android:id="@+id/item_list_of_tools_in_sharpen"
+                android:id="@+id/item_list_of_tools_from_main_storage"
                 android:icon="@drawable/baseline_format_list_to_sharpen"
-                android:title="@string/in_sharpen"/>
+                android:title="@string/from_main_storage"/>
             <item
-                android:id="@+id/item_list_of_tools_return_from_sharpen"
+                android:id="@+id/item_list_of_tools_sharpen"
                 android:icon="@drawable/baseline_checklist_from_sharpen"
-                android:title="@string/return_from_sharpen"/>
+                android:title="@string/sharpening"/>
             <item
                 android:id="@+id/item_list_of_decommissioned_tools"
                 android:icon="@drawable/baseline_decommissioned_tools"

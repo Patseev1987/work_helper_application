@@ -12,17 +12,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentToolsForSearchBinding
-import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.presenter.recycleViews.ToolsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.FragmentSearchToolsState
-import ru.bogdan.patseev_diploma.presenter.states.TransactionState
 import ru.bogdan.patseev_diploma.presenter.viewModels.ToolsSearchFragmentViewModel
 
-class ToolsFragmentForSearchFragment : Fragment() {
+class ToolsForSearchFragment : Fragment() {
     private var _binding:FragmentToolsForSearchBinding? = null
     private val binding get() = _binding!!
 
@@ -73,6 +69,7 @@ class ToolsFragmentForSearchFragment : Fragment() {
                         }
                         is FragmentSearchToolsState.Waiting -> {
                             binding.progressBarSearchTools.visibility = View.GONE
+
                         }
                     }
                 }

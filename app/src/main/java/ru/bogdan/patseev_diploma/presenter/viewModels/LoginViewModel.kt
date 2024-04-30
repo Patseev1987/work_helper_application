@@ -1,5 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ class LoginViewModel(private val application: MyApplication) : ViewModel() {
 
 
     fun checkLogin(login: String, password: String) {
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 _state.value = LoginState.Loading
                 val worker = apiService.checkLogin(login, password).toWorker()

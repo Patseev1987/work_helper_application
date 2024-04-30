@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +15,25 @@ import androidx.annotation.OptIn
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentCameraBinding
+import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
+import ru.bogdan.patseev_diploma.presenter.states.CameraFragmentState
 import ru.bogdan.patseev_diploma.presenter.viewModels.CameraFragmentViewModel
+import java.lang.RuntimeException
 import java.util.concurrent.Executor
 
 class CameraFragment : Fragment() {
@@ -34,12 +46,7 @@ class CameraFragment : Fragment() {
             if (map.values.all { it }) {
                 startCamera(binding, executor)
             } else {
-                Toast.makeText(
-                    this.requireContext(),
-                    "Permissions is not granted",
-                    Toast.LENGTH_SHORT
-                ).show()
-                this@CameraFragment.requireActivity().onBackPressed()
+                this@CameraFragment.requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
     }
@@ -70,7 +77,9 @@ class CameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-      //  setOnTouchListener(binding)
+        setOnclickListeners(binding,viewModel)
+        observeState(binding,viewModel)
+
     }
 
     private fun checkPermissions() {
@@ -79,11 +88,6 @@ class CameraFragment : Fragment() {
                     == PackageManager.PERMISSION_GRANTED)
         }
         if (isAlLGranted) {
-            Toast.makeText(
-                this.requireContext(),
-                "Permission is granted",
-                Toast.LENGTH_SHORT
-            ).show()
             startCamera(binding, executor)
         } else {
             launcher.launch(REQUEST_PERMISSIONS)
@@ -111,27 +115,18 @@ class CameraFragment : Fragment() {
 
             var imageAnalysis = ImageAnalysis.Analyzer { imageProxy ->
                 val image = imageProxy.image ?: return@Analyzer
-                var toolInfo = mapOf<String,String>()
-                val inputImage = InputImage.fromMediaImage(imageProxy.image!!, imageProxy.imageInfo.rotationDegrees)
+
+                val inputImage = InputImage.fromMediaImage(
+                    imageProxy.image!!,
+                    imageProxy.imageInfo.rotationDegrees
+                )
                 barcodeScanner.process(inputImage).addOnSuccessListener { barcodes ->
-                    barcodes.firstOrNull()?.let {
-                        it.rawValue?.let{json ->
-                        toolInfo = viewModel.getInformationAboutTool(json)
-                        }
-                        binding.twInformation.text = String.format(
-                          getString( R.string.search_string_template),
-                            toolInfo[CameraFragmentViewModel.CODE],
-                            toolInfo[CameraFragmentViewModel.NAME],
-                            toolInfo[CameraFragmentViewModel.SHELF],
-                            toolInfo[CameraFragmentViewModel.COLUMN],
-                            toolInfo[CameraFragmentViewModel.ROW]
-                            )
-                    }
+                    onSuccessQRCode(barcodes, viewModel)
                 }.addOnCompleteListener {
                     imageProxy.close()
                 }
             }
-            imageAnalyzer.setAnalyzer(executor,imageAnalysis)
+            imageAnalyzer.setAnalyzer(executor, imageAnalysis)
 
             cameraProvider.unbindAll()
             cameraProvider.bindToLifecycle(
@@ -144,40 +139,95 @@ class CameraFragment : Fragment() {
         }, executor)
     }
 
-//    @SuppressLint("ClickableViewAccessibility")
-//    private fun setOnTouchListener(binding: FragmentCameraBinding){
-//        binding.cardView.setOnTouchListener { v, event ->
-//            val action = event.action
-//
-//            when(action){
-//                MotionEvent.ACTION_MOVE -> {
-//                    v.x += event.x -(v.width/2)
-//                    v.y += event.y -(v.height/2)
-//                }
-//                MotionEvent.ACTION_UP -> {
-//                    checkConditionsPosition(v,binding)
-//                }
-//                else -> {
-//                }
-//            }
-//            true
-//        }
-//    }
-//
-//    private fun checkConditionsPosition(view: View,binding: FragmentCameraBinding){
-//        if (view.x < 0 ){
-//            view.x = 0f;
-//        }
-//        if (view.y < 0){
-//            view.y = 0f;
-//        }
-//        if( view.x > binding.cameraViewFinder.width-view.width){
-//            view.x = (binding.cameraViewFinder.width-view.width).toFloat()
-//        }
-//        if( view.y > binding.cameraViewFinder.height-view.height){
-//            view.y = (binding.cameraViewFinder.height-view.height).toFloat()
-//        }
-//    }
+    private fun onSuccessQRCode(
+        barcodes: List<Barcode>,
+        viewModel: CameraFragmentViewModel,
+    ) {
+        barcodes.firstOrNull()?.let {
+            it.rawValue?.let { inputString ->
+                    viewModel.getTool(inputString,
+                        (requireActivity().application as MyApplication).worker)
+            }
+        }
+    }
+
+    private fun showButtons(binding: FragmentCameraBinding){
+            binding.bGiveTool.visibility = View.VISIBLE
+            binding.bTakeTool.visibility = View.VISIBLE
+    }
+
+    private fun goneButtons(binding: FragmentCameraBinding){
+        binding.bGiveTool.visibility = View.GONE
+        binding.bTakeTool.visibility = View.GONE
+    }
+
+    private fun setOnclickListeners(
+        binding: FragmentCameraBinding,
+        viewModel: CameraFragmentViewModel
+    ){
+        binding.bGiveTool.setOnClickListener{
+            try {
+                val action = CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
+                    tool = viewModel.tool,
+                    sender = (this@CameraFragment.requireActivity().application as MyApplication).worker
+                )
+                findNavController().navigate(action)
+            }catch (e:RuntimeException){
+                Toast.makeText(this@CameraFragment.context,
+                    e.message,Toast.LENGTH_SHORT).show()
+                goneButtons(binding)
+            }
+        }
+        binding.bTakeTool.setOnClickListener{
+            try {
+                val action = CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
+                    tool = viewModel.tool,
+                    receiver = (this@CameraFragment.requireActivity().application as MyApplication).worker
+                )
+                findNavController().navigate(action)
+            }catch (e:RuntimeException){
+                Toast.makeText(this@CameraFragment.context,
+                    e.message,Toast.LENGTH_SHORT).show()
+                goneButtons(binding)
+            }
+        }
+    }
+
+
+    private fun observeState(binding: FragmentCameraBinding,viewModel: CameraFragmentViewModel){
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED){
+                viewModel.state.collectLatest { state ->
+                    when (state){
+                        is CameraFragmentState.Waiting -> {
+                            goneButtons(binding)
+                        }
+
+                        is CameraFragmentState.Error -> {
+                            Toast.makeText(this@CameraFragment.context,
+                                state.msg,Toast.LENGTH_SHORT).show()
+                            goneButtons(binding)
+                            binding.twInformation.text = ""
+                        }
+
+                        is CameraFragmentState.Result -> {
+                            if (state.isShowButtons){
+                                showButtons(binding)
+                            }
+                            binding.twInformation.text = String.format(
+                                getString(R.string.search_string_template),
+                                state.tool.code,
+                                state.tool.name,
+                                state.tool.place.shelf,
+                                state.tool.place.column,
+                                state.tool.place.row
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
     override fun onDestroy() {
@@ -194,5 +244,4 @@ class CameraFragment : Fragment() {
             }
         }.toTypedArray()
     }
-
 }

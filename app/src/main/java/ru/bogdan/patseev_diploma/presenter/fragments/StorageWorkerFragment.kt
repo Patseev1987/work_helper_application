@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentStorageWorkerBinding
+import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.presenter.recycleViews.TransactionsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.StorageWorkerFragmentState
 import ru.bogdan.patseev_diploma.presenter.viewModels.StorageWorkerViewModel
@@ -84,6 +85,17 @@ class StorageWorkerFragment : Fragment() {
                     findNavController().navigate(action)
                 }
 
+                R.id.item_from_sharpen -> {
+                    val sender = viewModel.sharpen
+                    val receiver = (this.requireActivity().application as MyApplication).worker
+                    val action = StorageWorkerFragmentDirections
+                        .actionStorageWorkerFragmentToTransactionFragment(
+                            receiver = receiver,
+                            sender = sender
+                        )
+                    findNavController().navigate(action)
+                }
+
                 R.id.item_storage_of_decommissioned_tools -> {
                     val receiver = viewModel.storageOfDecommissionedTools
                     val sender = (this.requireActivity().application as MyApplication).worker
@@ -100,7 +112,6 @@ class StorageWorkerFragment : Fragment() {
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToTransactionFragment(sender = sender)
                     findNavController().navigate(action)
-
                 }
 
                 R.id.item_workers -> {
@@ -114,26 +125,27 @@ class StorageWorkerFragment : Fragment() {
                 R.id.item_list_of_decommissioned_tools -> {
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToRecycleViewTransactionFragment(
-                            RecycleViewTransactionFragment.DECOMMISSIONED_TOOLS_MODE
+                            Department.STORAGE_OF_DECOMMISSIONED_TOOLS
                         )
                     findNavController().navigate(action)
                 }
 
-                R.id.item_list_of_tools_return_from_sharpen -> {
+                R.id.item_list_of_tools_sharpen -> {
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToRecycleViewTransactionFragment(
-                            RecycleViewTransactionFragment.FROM_SHARPEN_MODE
+                            Department.SHARPENING
                         )
                     findNavController().navigate(action)
                 }
 
-                R.id.item_list_of_tools_in_sharpen -> {
+                R.id.item_list_of_tools_from_main_storage -> {
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToRecycleViewTransactionFragment(
-                            RecycleViewTransactionFragment.TO_SHARPEN_MODE
+                            Department.MAIN_STORAGE
                         )
                     findNavController().navigate(action)
                 }
+
             }
             true
         }

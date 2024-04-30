@@ -1,12 +1,9 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
@@ -24,7 +21,7 @@ class ToolsSearchFragmentViewModel:ViewModel() {
     private val _state:MutableStateFlow<FragmentSearchToolsState> = MutableStateFlow(FragmentSearchToolsState.Waiting)
     val state = _state.asStateFlow()
 
-    val searchString: MutableStateFlow<String> = MutableStateFlow("")
+    val searchString: MutableStateFlow<String> = MutableStateFlow(BLANK_TOOL_CODE)
 
     init{
         viewModelScope.launch {
@@ -43,10 +40,13 @@ class ToolsSearchFragmentViewModel:ViewModel() {
     private fun loadTools(code:String){
         viewModelScope.launch {
             _state.value = FragmentSearchToolsState.Loading
-            val tools = apiHelper.loadToolsFrSearch(code)
-            Log.d("Tools",tools.toString())
+            val tools = apiHelper.loadToolsForSearch(code)
             _state.value = FragmentSearchToolsState.Result(tools)
         }
+    }
+
+    companion object {
+        private const val BLANK_TOOL_CODE = ""
     }
 
 }

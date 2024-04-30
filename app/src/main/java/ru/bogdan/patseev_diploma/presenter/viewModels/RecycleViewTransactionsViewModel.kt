@@ -3,26 +3,21 @@ package ru.bogdan.patseev_diploma.presenter.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
-import ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewTransactionFragment
+import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.presenter.states.RecycleVIewTransactionState
-import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
 import java.lang.RuntimeException
 
 class RecycleViewTransactionsViewModel(
     private val application: MyApplication,
-    private val mode: Int
 ) : ViewModel() {
 
     private val apiHelperImpl = ApiHelperImpl(ApiFactory.apiService)
@@ -35,53 +30,44 @@ class RecycleViewTransactionsViewModel(
 
     val state = _state.asStateFlow()
 
-
-    fun loadTransactions(mode: Int) {
+    fun loadTransactions(anotherDepartment: Department, toolCode: String = BLANK_TOOL_CODE) {
         viewModelScope.launch(Dispatchers.IO) {
-            when (mode) {
-                RecycleViewTransactionFragment.DECOMMISSIONED_TOOLS_MODE -> {
-                    _state.value = RecycleVIewTransactionState.Result(
-                        apiHelperImpl
-                            .loadTransactionsWithDecommissionedTools(application.worker.department),
-                        mode.getMessageForTitle()
-                    )
-                }
-
-                RecycleViewTransactionFragment.FROM_SHARPEN_MODE -> {
-                    _state.value = RecycleVIewTransactionState.Result(
-                        apiHelperImpl
-                            .loadTransactionsWithToolFromSharpen(application.worker.department),
-                        mode.getMessageForTitle()
-                    )
-                }
-
-                RecycleViewTransactionFragment.TO_SHARPEN_MODE -> {
-                    _state.value = RecycleVIewTransactionState.Result(
-                        apiHelperImpl
-                            .loadTransactionsWithToolToSharpen(application.worker.department),
-                        mode.getMessageForTitle()
-                    )
-                }
-
-                else -> throw RuntimeException("Unknown mode for RecycleViewTransactionFragment")
-            }
+            _state.value = RecycleVIewTransactionState.Result(
+                apiHelperImpl
+                    .loadTransactionsWithAnotherDepartment(anotherDepartment, toolCode =  toolCode),
+                anotherDepartment.getMessageForTitle()
+            )
         }
     }
 
-    private fun Int.getMessageForTitle(): String {
-        return when (mode) {
-            RecycleViewTransactionFragment.TO_SHARPEN_MODE -> application
-                .getString(R.string.transactions_with_tools_to_sharpen)
+    private fun Department.getMessageForTitle(): String {
+        return when (this) {
+            Department.SHARPENING -> application
+                .getString(R.string.transactions_with_sharpening)
 
-            RecycleViewTransactionFragment.FROM_SHARPEN_MODE -> application
-                .getString(R.string.transaction_with_tools_from_sharpen)
+            Department.MAIN_STORAGE -> application
+                .getString(R.string.transaction_with_main_storage)
 
-            RecycleViewTransactionFragment.DECOMMISSIONED_TOOLS_MODE -> application
+            Department.STORAGE_OF_DECOMMISSIONED_TOOLS -> application
                 .getString(R.string.transactions_with_decommissioned_tools)
 
-            else -> throw RuntimeException("Unknown mode")
+            else -> throw RuntimeException("Unknown another department")
         }
     }
+
+    @OptIn(FlowPreview::class)
+    fun updateTransactionWithFilter(anotherDepartment: Department, code:String) {
+        searchString.value = code
+        viewModelScope.launch(Dispatchers.IO) {
+            searchString.debounce(500)
+                .collect { toolCode ->
+                    _state.value = RecycleVIewTransactionState.Loading
+                    loadTransactions(anotherDepartment,toolCode)
+                }
+        }
+    }
+
+
 
     companion object {
         private const val BLANK_TOOL_CODE = ""

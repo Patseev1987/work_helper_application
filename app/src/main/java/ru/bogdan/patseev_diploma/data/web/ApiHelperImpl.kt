@@ -83,39 +83,25 @@ class ApiHelperImpl(
         )
     }
 
-    suspend fun loadToolsFrSearch(code: String): List<Tool> {
+    suspend fun loadToolsForSearch(code: String): List<Tool> {
         return apiService.loadToolsForSearch(code).map { it.toTool() }
     }
 
-    suspend fun loadTransactionsWithDecommissionedTools(
-        senderDepartment: Department,
+    suspend fun loadTransactionsWithAnotherDepartment(
+        anotherDepartment: Department,
         page: Int = 0,
-        toolCode:String = ""
+        toolCode:String = BLANK_TOOL_CODE
     ): List<Transaction> {
-        return apiService.loadTransactionsWithDecommissionedTools(senderDepartment, page, toolCode)
-            .map { it.toTransaction() }
-    }
-
-    suspend fun loadTransactionsWithToolFromSharpen(
-        receiverDepartment: Department,
-        page: Int = 0,
-        toolCode:String = ""
-    ): List<Transaction> {
-        return apiService.loadTransactionsWithToolFromSharpen(receiverDepartment, page, toolCode)
-            .map { it.toTransaction() }
-    }
-
-    suspend fun loadTransactionsWithToolToSharpen(
-        senderDepartment: Department,
-        page: Int = 0,
-        toolCode:String = ""
-    ): List<Transaction> {
-        return apiService.loadTransactionsWithToolToSharpen(senderDepartment, page, toolCode)
+        return apiService.loadTransactionsWithAnotherDepartment(anotherDepartment, page, toolCode)
             .map { it.toTransaction() }
     }
 
     suspend fun updateTransactions() {
         updateTransactionsFlow.emit(Unit)
+    }
+
+    companion object{
+        private const val BLANK_TOOL_CODE = ""
     }
 
 }
