@@ -14,8 +14,12 @@ import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.useCases.LoadTransactionsWithAnotherDepartmentUseCase
+import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.RecycleVIewTransactionState
+import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
+import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
 import java.lang.RuntimeException
+import java.net.ConnectException
 import javax.inject.Inject
 
 class RecycleViewTransactionsViewModel @Inject constructor(
@@ -33,13 +37,22 @@ class RecycleViewTransactionsViewModel @Inject constructor(
 
     fun loadTransactions(anotherDepartment: Department, toolCode: String = BLANK_TOOL_CODE) {
         viewModelScope.launch(Dispatchers.IO) {
-            _state.value = RecycleVIewTransactionState.Result(
-                loadTransactionsWithAnotherDepartmentUseCase(
-                    anotherDepartment,
-                    toolCode = toolCode
-                ),
-                anotherDepartment.getMessageForTitle()
-            )
+            try {
+                _state.value = RecycleVIewTransactionState.Result(
+                    loadTransactionsWithAnotherDepartmentUseCase(
+                        anotherDepartment,
+                        toolCode = toolCode
+                    ),
+                    anotherDepartment.getMessageForTitle()
+                )
+            } catch (e: Exception) {
+                _state.value = RecycleVIewTransactionState.ConnectionProblem(
+                    application.getString(
+                        R.string
+                            .server_doesn_t_respond_try_again_a_little_bit_later
+                    )
+                )
+            }
         }
     }
 

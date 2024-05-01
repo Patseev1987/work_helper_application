@@ -90,6 +90,14 @@ class ToolsForSearchFragment : Fragment() {
                             binding.progressBarSearchTools.visibility = View.GONE
 
                         }
+                        is FragmentSearchToolsState.ConnectionProblem ->{
+                            Toast.makeText(
+                                this@ToolsForSearchFragment.context,
+                                state.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            binding.progressBarSearchTools.visibility = View.GONE
+                        }
                     }
                 }
             }

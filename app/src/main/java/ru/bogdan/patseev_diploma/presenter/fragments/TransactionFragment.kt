@@ -164,6 +164,14 @@ class TransactionFragment : Fragment() {
                         is TransactionState.Loading ->{
                             binding.progressBarTransactionFragment.visibility = View.VISIBLE
                         }
+                        is TransactionState.ConnectionProblem -> {
+                            binding.progressBarTransactionFragment.visibility = View.GONE
+                            Toast.makeText(
+                                this@TransactionFragment.context,
+                                it.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }

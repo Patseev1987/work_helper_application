@@ -232,6 +232,13 @@ class CameraFragment : Fragment() {
                                 state.tool.place.row
                             )
                         }
+                        is CameraFragmentState.ConnectionProblem -> {
+                            Toast.makeText(
+                                this@CameraFragment.context,
+                                state.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }

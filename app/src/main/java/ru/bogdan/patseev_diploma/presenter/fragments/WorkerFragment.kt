@@ -2,6 +2,7 @@ package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -108,6 +109,14 @@ class WorkerFragment : Fragment() {
                         }
                         is WorkerFragmentState.Loading -> {
                             binding.progressBarWorkerFragment.visibility = View.VISIBLE
+                        }
+                        is WorkerFragmentState.ConnectionProblem -> {
+                            binding.progressBarWorkerFragment.visibility = View.GONE
+                            Toast.makeText(
+                                this@WorkerFragment.context,
+                                it.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }

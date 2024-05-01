@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -104,6 +105,14 @@ class RecycleViewStorageRecordsFragment : Fragment() {
                         is RecycleViewState.Result -> {
                             adapter.submitList(state.records)
                             binding.toolsRecycleViewTools.adapter = adapter
+                            binding.progressBar.visibility = View.GONE
+                        }
+                        is RecycleViewState.ConnectionProblem -> {
+                            Toast.makeText(
+                                this@RecycleViewStorageRecordsFragment.context,
+                                state.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
                             binding.progressBar.visibility = View.GONE
                         }
                     }

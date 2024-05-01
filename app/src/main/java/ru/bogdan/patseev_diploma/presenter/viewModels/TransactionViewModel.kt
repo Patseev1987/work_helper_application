@@ -15,7 +15,11 @@ import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.useCases.CreateTransactionUseCase
 import ru.bogdan.patseev_diploma.domain.useCases.LoadAmountByWorkerAndToolUseCase
+import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.TransactionState
+import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
+import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import java.net.ConnectException
 import javax.inject.Inject
 
 class TransactionViewModel @Inject constructor(
@@ -101,27 +105,36 @@ class TransactionViewModel @Inject constructor(
                     return@launch
                 }
             }
-            val amountToolFromSender = loadAmountByWorkerAndToolUseCase(sender!!, tool!!)
-            if (amountToolFromSender == -1) {
-                _state.value = TransactionState.Error(
-                    application.getString(
-                        R.string.doesn_t_have,
-                        sender?.secondName,
-                        tool?.code
-                    )
-                )
-                return@launch
-            } else {
-                if (amountToolFromSender < amount) {
+            try {
+                val amountToolFromSender = loadAmountByWorkerAndToolUseCase(sender!!, tool!!)
+                if (amountToolFromSender == -1) {
                     _state.value = TransactionState.Error(
-                        application.getString(R.string.have_only, sender?.secondName) +
-                                "$amountToolFromSender ${tool?.code}"
+                        application.getString(
+                            R.string.doesn_t_have,
+                            sender?.secondName,
+                            tool?.code
+                        )
                     )
                     return@launch
                 } else {
-                    createTransactionUseCase(sender!!, receiver!!, tool!!, amount)
-                    _state.value = TransactionState.Result(sender!!, receiver!!, tool!!, amount)
+                    if (amountToolFromSender < amount) {
+                        _state.value = TransactionState.Error(
+                            application.getString(R.string.have_only, sender?.secondName) +
+                                    "$amountToolFromSender ${tool?.code}"
+                        )
+                        return@launch
+                    } else {
+                        createTransactionUseCase(sender!!, receiver!!, tool!!, amount)
+                        _state.value = TransactionState.Result(sender!!, receiver!!, tool!!, amount)
+                    }
                 }
+            } catch (e: Exception) {
+                _state.value = TransactionState.ConnectionProblem(
+                    application.getString(
+                        R.string
+                            .server_doesn_t_respond_try_again_a_little_bit_later
+                    )
+                )
             }
         }
     }

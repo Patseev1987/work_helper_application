@@ -8,17 +8,24 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import ru.bogdan.patseev_diploma.MyApplication
+import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.domain.useCases.LoadStorageRecordByWorkerIdUseCase
+import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
+import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
+import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import java.net.ConnectException
 import java.time.LocalDate
 import javax.inject.Inject
 
 
 class RecycleViewStorageRecordsViewModel @Inject constructor(
+    private val application: MyApplication,
     private val loadStorageRecordByWorkerIdUseCase: LoadStorageRecordByWorkerIdUseCase
 ) : ViewModel() {
 
@@ -29,13 +36,23 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
 
     val state = _state.asStateFlow()
 
-    private var worker:Worker = Worker(0,"","","", LocalDate.now(),Department.DEPARTMENT_19,WorkerType.WORKER,"","")
+    private var worker: Worker = EMPTY_WORKER
 
     fun loadTools(position: Int, toolCode: String = BLANK_TOOL_CODE) {
         viewModelScope.launch(Dispatchers.IO) {
-            _state.value = RecycleViewState.Result(
-                loadStorageRecordByWorkerIdUseCase(worker.id, position.getToolType(), toolCode)
-            )
+            try {
+                _state.value = RecycleViewState.Result(
+                    loadStorageRecordByWorkerIdUseCase(worker.id, position.getToolType(), toolCode)
+                )
+            } catch (e: Exception) {
+                _state.value = RecycleViewState.ConnectionProblem(
+                    application.getString(
+                        R.string
+                            .server_doesn_t_respond_try_again_a_little_bit_later
+                    )
+                )
+            }
+
         }
     }
 
@@ -60,7 +77,7 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
         }
     }
 
-    fun setWorker(worker: Worker){
+    fun setWorker(worker: Worker) {
         this.worker = worker
     }
 
@@ -69,6 +86,17 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
         private const val MEASURE_POSITION = 1
         private const val HELPERS_POSITION = 2
         private const val BLANK_TOOL_CODE = ""
+        private val EMPTY_WORKER = Worker(
+            0,
+            "",
+            "",
+            "",
+            LocalDate.now(),
+            Department.DEPARTMENT_19,
+            WorkerType.WORKER,
+            "",
+            ""
+        )
     }
 }
 

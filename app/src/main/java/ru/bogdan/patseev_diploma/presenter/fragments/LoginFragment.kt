@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
@@ -25,11 +27,12 @@ import javax.inject.Inject
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel: LoginViewModel by lazy {
-        ViewModelProvider(this,viewModelFactory)[LoginViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -63,46 +66,55 @@ class LoginFragment : Fragment() {
     private fun observeLoginState(binding: FragmentLoginBinding, viewModel: LoginViewModel) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.state.collect {
-                    when (it) {
-                        is LoginState.Error -> {
-                            binding.progressBar.visibility = View.GONE
-                            binding.ilLogin.error = getString(R.string.wrong_login_or_password)
-                            binding.ilPassword.error = getString(R.string.wrong_login_or_password)
-                        }
+                viewModel.state
+                    .collectLatest {
+                        when (it) {
+                            is LoginState.Error -> {
+                                binding.progressBar.visibility = View.GONE
+                                binding.ilLogin.error = getString(R.string.wrong_login_or_password)
+                                binding.ilPassword.error =
+                                    getString(R.string.wrong_login_or_password)
+                            }
 
-                        is LoginState.Waiting -> {
-                            binding.progressBar.visibility = View.GONE
-                        }
+                            is LoginState.Waiting -> {
+                                binding.progressBar.visibility = View.GONE
+                            }
 
-                        is LoginState.LoginResult -> {
-                            binding.progressBar.visibility = View.GONE
-                            when (it.worker.type) {
-                                WorkerType.WORKER -> {
-                                    val action = LoginFragmentDirections.actionLoginFragmentToWorkerFragment(it.worker)
-                                    findNavController().navigate(action)
-                                }
+                            is LoginState.LoginResult -> {
+                                binding.progressBar.visibility = View.GONE
+                                when (it.worker.type) {
+                                    WorkerType.WORKER -> {
+                                        val action =
+                                            LoginFragmentDirections.actionLoginFragmentToWorkerFragment(
+                                                it.worker
+                                            )
+                                        findNavController().navigate(action)
+                                    }
 
-                                WorkerType.STORAGE_WORKER -> {
-                                    val action =
-                                        LoginFragmentDirections.actionLoginFragmentToStorageWorkerFragment(it.worker)
-                                    findNavController().navigate(action)
+                                    WorkerType.STORAGE_WORKER -> {
+                                        val action =
+                                            LoginFragmentDirections.actionLoginFragmentToStorageWorkerFragment(
+                                                it.worker
+                                            )
+                                        findNavController().navigate(action)
+                                    }
                                 }
                             }
-                        }
-                        is LoginState.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
-                        }
-                        is LoginState.ConnectionProblem -> {
-                            Toast.makeText(
-                                this@LoginFragment.context,
-                                it.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            binding.progressBar.visibility = View.GONE
+
+                            is LoginState.Loading -> {
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+
+                            is LoginState.ConnectionProblem -> {
+                                Toast.makeText(
+                                    this@LoginFragment.context,
+                                    it.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                binding.progressBar.visibility = View.GONE
+                            }
                         }
                     }
-                }
             }
         }
     }

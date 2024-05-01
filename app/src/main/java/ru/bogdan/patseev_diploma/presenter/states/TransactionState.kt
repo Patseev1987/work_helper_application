@@ -18,4 +18,6 @@ sealed class TransactionState {
     data class Error(val errorMessage:String):TransactionState()
     object Waiting:TransactionState()
     object Loading:TransactionState()
+
+    data class ConnectionProblem(val message:String):TransactionState()
 }

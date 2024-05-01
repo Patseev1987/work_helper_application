@@ -9,15 +9,23 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
+import ru.bogdan.patseev_diploma.MyApplication
+import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.domain.useCases.LoadToolsForSearchUseCase
 import ru.bogdan.patseev_diploma.presenter.states.FragmentSearchToolsState
+import ru.bogdan.patseev_diploma.presenter.states.LoginState
+import ru.bogdan.patseev_diploma.util.BLANK_TOOL_CODE
+import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
+import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import java.net.ConnectException
 import javax.inject.Inject
 
 
 @OptIn(FlowPreview::class)
 class ToolsSearchFragmentViewModel @Inject constructor(
+    private val application: MyApplication,
     private val loadToolsForSearchUseCase: LoadToolsForSearchUseCase
 ) : ViewModel() {
 
@@ -43,14 +51,20 @@ class ToolsSearchFragmentViewModel @Inject constructor(
 
     private fun loadTools(code: String) {
         viewModelScope.launch {
-            _state.value = FragmentSearchToolsState.Loading
-            val tools = loadToolsForSearchUseCase(code)
-            _state.value = FragmentSearchToolsState.Result(tools)
-        }
-    }
+            try {
+                _state.value = FragmentSearchToolsState.Loading
+                val tools = loadToolsForSearchUseCase(code)
+                _state.value = FragmentSearchToolsState.Result(tools)
+            } catch (e: Exception) {
 
-    companion object {
-        private const val BLANK_TOOL_CODE = ""
+                _state.value = FragmentSearchToolsState.ConnectionProblem(
+                    application.getString(
+                        R.string
+                            .server_doesn_t_respond_try_again_a_little_bit_later
+                    )
+                )
+            }
+        }
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
@@ -103,6 +104,14 @@ class RecycleViewWithWorkersFragment : Fragment() {
                             adapter.submitList(state.workers)
                             binding.workersListRecycleViewWorkers.adapter = adapter
                             binding.progressBarRecycleViewWorkers.visibility = View.GONE
+                        }
+                        is RecycleViewWorkerState.ConnectionProblem -> {
+                            binding.progressBarRecycleViewWorkers.visibility = View.GONE
+                            Toast.makeText(
+                                this@RecycleViewWithWorkersFragment.context,
+                                state.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }

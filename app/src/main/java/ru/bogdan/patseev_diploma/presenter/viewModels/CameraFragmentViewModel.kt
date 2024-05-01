@@ -7,6 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.bogdan.patseev_diploma.MyApplication
+import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.domain.models.Tool
@@ -14,10 +16,15 @@ import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.domain.useCases.LoadToolsForSearchUseCase
 import ru.bogdan.patseev_diploma.presenter.states.CameraFragmentState
+import ru.bogdan.patseev_diploma.presenter.states.LoginState
+import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
+import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
 import java.lang.RuntimeException
+import java.net.ConnectException
 import javax.inject.Inject
 
 class CameraFragmentViewModel @Inject constructor(
+    private val application: MyApplication,
     private val loadToolsForSearchUseCase: LoadToolsForSearchUseCase,
 ) : ViewModel() {
 
@@ -42,11 +49,20 @@ class CameraFragmentViewModel @Inject constructor(
     fun getTool(inputString: String, worker: Worker) {
         if (checkToolCode(inputString)) {
             viewModelScope.launch(Dispatchers.IO) {
-                _state.value = CameraFragmentState.Result(
-                    loadToolsForSearchUseCase(inputString).first(),
-                    showButton(worker)
-                )
-                _tool = loadToolsForSearchUseCase(inputString).first()
+                try {
+                    _state.value = CameraFragmentState.Result(
+                        loadToolsForSearchUseCase(inputString).first(),
+                        showButton(worker)
+                    )
+                    _tool = loadToolsForSearchUseCase(inputString).first()
+                } catch (e: Exception) {
+                    _state.value = CameraFragmentState.ConnectionProblem(
+                        application.getString(
+                            R.string
+                                .server_doesn_t_respond_try_again_a_little_bit_later
+                        )
+                    )
+                }
             }
         } else {
             _state.value = CameraFragmentState.Error(UNKNOWN_CODE)
