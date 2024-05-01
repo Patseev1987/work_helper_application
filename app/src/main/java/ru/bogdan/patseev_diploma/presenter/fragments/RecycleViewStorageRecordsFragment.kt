@@ -28,9 +28,10 @@ class RecycleViewStorageRecordsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var position: Int = 0
+
     @Suppress("DEPRECATION")
     // min SDK lower than 33 (TIRAMISU)
-    private val worker:Worker by lazy {
+    private val worker: Worker by lazy {
         requireArguments().getParcelable(WORKER)!!
     }
 
@@ -48,16 +49,17 @@ class RecycleViewStorageRecordsFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel by lazy {
-        ViewModelProvider(this,viewModelFactory)[RecycleViewStorageRecordsViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[RecycleViewStorageRecordsViewModel::class.java]
     }
 
     private val component by lazy {
         (this.activity?.application as MyApplication).component
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         position = arguments?.getInt(POSITION) ?: -1
-       component.inject(this)
+        component.inject(this)
         viewModel.setWorker(worker)
     }
 
@@ -74,14 +76,14 @@ class RecycleViewStorageRecordsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel(binding, viewModel)
         viewModel.loadTools(position)
-        setTextChangeListener(binding,viewModel)
+        setTextChangeListener(binding, viewModel)
         println(worker.toString())
-        }
+    }
 
     private fun setTextChangeListener(
         binding: FragmentRecycleViewToolsBinding,
         viewViewModel: RecycleViewStorageRecordsViewModel
-    ){
+    ) {
         binding.inEditTextRecycleViewTool.doAfterTextChanged {
             viewViewModel.updateToolsWithFilter(position, it.toString())
         }
@@ -90,14 +92,15 @@ class RecycleViewStorageRecordsFragment : Fragment() {
     private fun observeViewModel(
         binding: FragmentRecycleViewToolsBinding,
         viewViewModel: RecycleViewStorageRecordsViewModel
-    ){
+    ) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED){
-                viewViewModel.state.collect{state ->
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewViewModel.state.collect { state ->
                     when (state) {
                         is RecycleViewState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                         }
+
                         is RecycleViewState.Result -> {
                             adapter.submitList(state.records)
                             binding.toolsRecycleViewTools.adapter = adapter
@@ -115,7 +118,6 @@ class RecycleViewStorageRecordsFragment : Fragment() {
     }
 
 
-
     companion object {
         private const val POSITION = "position"
         const val WORKER = "worker"
@@ -125,7 +127,7 @@ class RecycleViewStorageRecordsFragment : Fragment() {
             RecycleViewStorageRecordsFragment().apply {
                 arguments = Bundle().apply {
                     putInt(POSITION, position)
-                    putParcelable(WORKER,worker)
+                    putParcelable(WORKER, worker)
                 }
             }
     }
