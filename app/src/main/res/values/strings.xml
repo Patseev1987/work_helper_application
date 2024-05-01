@@ -29,7 +29,7 @@
     <string name="actions_for_search_tool">actions for search tool</string>
     <string name="search_in_database">search in database</string>
     <string name="search_with_qr_code_2">search with qr-code</string>
-    <string name="search_string_template">Code: %s\nName: %s\nPlace:\nShelf: %s Column: %s Row:%s</string>
+    <string name="search_string_template">Code: %s Name: %s Place: Shelf: %s Column: %s Row:%s</string>
     <string name="cutting_tools">Cutting tools</string>
     <string name="measuring_tools">Measuring tools</string>
     <string name="helper_tools">Helper tools</string>
