@@ -72,6 +72,14 @@ class StorageWorkerFragment : Fragment() {
                     findNavController().navigate(R.id.action_storageWorkerFragment_to_cameraFragment)
                 }
 
+                R.id.item_storage_wealth -> {
+                    val action = StorageWorkerFragmentDirections
+                        .actionStorageWorkerFragmentToTabLayoutFragment(
+                        (requireActivity().application as MyApplication).worker
+                    )
+                    findNavController().navigate(action)
+                }
+
                 R.id.item_take_tool -> {
                     val receiver = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections

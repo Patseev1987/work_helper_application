@@ -46,7 +46,6 @@ interface ApiHelper {
 
     suspend fun loadTransactionsWithAnotherDepartment(
         anotherDepartment: Department,
-        page: Int = 0,
         toolCode: String = ""
     ): List<Transaction>
 

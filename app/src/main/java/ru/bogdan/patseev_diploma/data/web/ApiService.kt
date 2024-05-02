@@ -25,7 +25,6 @@ interface ApiService {
     @GET("transactions/worker")
     suspend fun loadTransactionsByWorkerId(
         @Query("workerId") workerId: Long,
-        @Query("page") page: Int = 0
     ): List<TransactionWEB>
 
 
@@ -61,7 +60,6 @@ interface ApiService {
     @GET("transactions/actionWithAnotherDepartments")
     suspend fun loadTransactionsWithAnotherDepartment(
         @Query("anotherDepartment") anotherDepartment: Department,
-        @Query("page") page: Int = 0,
         @Query("toolCode") toolCode: String
     ): List<TransactionWEB>
 

@@ -57,10 +57,9 @@ class ApplicationRepositoryImpl @Inject constructor(
 
     override suspend fun loadTransactionsWithAnotherDepartment(
         anotherDepartment: Department,
-        page: Int,
         toolCode: String
     ): List<Transaction> {
-        return apiHelper.loadTransactionsWithAnotherDepartment(anotherDepartment, page, toolCode)
+        return apiHelper.loadTransactionsWithAnotherDepartment(anotherDepartment, toolCode)
     }
 
     override suspend fun updateTransactions() {

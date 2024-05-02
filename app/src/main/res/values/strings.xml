@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">PBA Helper</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="sing_in">Sing in</string>
@@ -79,5 +78,6 @@
     <string name="give_tool">Give tool</string>
     <string name="you_should_enter_4_number_of_tool_code">You should enter 4 number of tool code</string>
     <string name="wrong_login_or_password">wrong login or password</string>
+    <string name="tools_in_storage">tools in storage</string>
 
 </resources>

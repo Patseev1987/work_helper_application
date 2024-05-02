@@ -9,8 +9,7 @@ class LoadTransactionsWithAnotherDepartmentUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         anotherDepartment: Department,
-        page: Int = 0,
         toolCode: String
     ) = repository
-        .loadTransactionsWithAnotherDepartment(anotherDepartment, page, toolCode)
+        .loadTransactionsWithAnotherDepartment(anotherDepartment, toolCode)
 }

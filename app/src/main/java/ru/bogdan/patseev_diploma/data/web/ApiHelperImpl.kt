@@ -88,10 +88,9 @@ class ApiHelperImpl @Inject constructor(
 
     override suspend fun loadTransactionsWithAnotherDepartment(
         anotherDepartment: Department,
-        page: Int,
         toolCode: String
     ): List<Transaction> {
-        return apiService.loadTransactionsWithAnotherDepartment(anotherDepartment, page, toolCode)
+        return apiService.loadTransactionsWithAnotherDepartment(anotherDepartment, toolCode)
             .map { it.toTransaction() }
     }
 

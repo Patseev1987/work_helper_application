@@ -23,12 +23,12 @@
     <string name="actions_with_tool">Действия с инструментом</string>
     <string name="take_tool_back_to_storage">Взять инструмент</string>
     <string name="give_tool_from_storage">Выдать инструмент</string>
-    <string name="send_tool_to_sharpen">отправить в заточку</string>
-    <string name="write_off_tool">списать инструмент</string>
+    <string name="send_tool_to_sharpen">Отправить в заточку</string>
+    <string name="write_off_tool">Списать инструмент</string>
     <string name="qr_code_action">QR-CODE</string>
-    <string name="actions_for_search_tool">поиск инструмента</string>
-    <string name="search_in_database">поиск в базе данных</string>
-    <string name="search_with_qr_code_2">поиск с QR-CODE</string>
+    <string name="actions_for_search_tool">Поиск инструмента</string>
+    <string name="search_in_database">Поиск в базе данных</string>
+    <string name="search_with_qr_code_2">Поиск с QR-CODE</string>
     <string name="search_string_template">Шифр: %s Название: %s Место: Полка: %s Колонка: %s Ряд:%s</string>
     <string name="cutting_tools">Режущий</string>
     <string name="measuring_tools">Мерительный</string>
@@ -55,8 +55,8 @@
     <string name="commit">Совершить</string>
     <string name="choose_worker">Выбрать рабочего</string>
     <string name="enter_worker_surname">Ввести фамилию</string>
-    <string name="enter_part_of_code">ввести часть шифра</string>
-    <string name="enter_the_number">ввести номер</string>
+    <string name="enter_part_of_code">Ввести часть шифра</string>
+    <string name="enter_the_number">Ввести номер</string>
     <string name="from_main_storage">С главного склада</string>
     <string name="sharpening">Заточка</string>
     <string name="decommissioned_tools">Списанный инструмент</string>
@@ -74,9 +74,10 @@
     <string name="network_unreachable_check_your_internet_connection">Проверьте интернет соединение</string>
     <string name="server_doesn_t_respond_try_again_a_little_bit_later">Сервер не доступен</string>
     <string name="update_transactions">Обновить транзакции</string>
-    <string name="get_from_main_storage">получить с главного склада</string>
-    <string name="get_from_sharpening">получить с заточки</string>
+    <string name="get_from_main_storage">Получить с главного склада</string>
+    <string name="get_from_sharpening">Получить с заточки</string>
     <string name="give_tool">Выдать инструмент</string>
     <string name="you_should_enter_4_number_of_tool_code">Вы должны ввести 4 знака шифра</string>
     <string name="wrong_login_or_password">Неправильный логин или пароль</string>
+    <string name="tools_in_storage">Инструмент в кладовой</string>
 </resources>
