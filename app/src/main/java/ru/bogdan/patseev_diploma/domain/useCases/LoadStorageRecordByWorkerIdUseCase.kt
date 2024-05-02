@@ -4,7 +4,7 @@ import ru.bogdan.patseev_diploma.domain.ApplicationRepository
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 import javax.inject.Inject
 
-class LoadStorageRecordByWorkerIdUseCase@Inject constructor(
+class LoadStorageRecordByWorkerIdUseCase @Inject constructor(
     private val repository: ApplicationRepository
 ) {
     suspend operator fun invoke(

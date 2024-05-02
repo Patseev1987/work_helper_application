@@ -80,11 +80,11 @@ class TransactionsAdapter(private val onClickListener: ((Transaction) -> Unit)? 
         }
     }
 
-override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TransactionViewHolder =
-    TransactionViewHolder.inflateFrom(p0)
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TransactionViewHolder =
+        TransactionViewHolder.inflateFrom(p0)
 
-override fun onBindViewHolder(p0: TransactionViewHolder, p1: Int) {
-    val transaction = getItem(p1)
-    p0.bind(transaction = transaction, onClickListener)
-}
+    override fun onBindViewHolder(p0: TransactionViewHolder, p1: Int) {
+        val transaction = getItem(p1)
+        p0.bind(transaction = transaction, onClickListener)
+    }
 }

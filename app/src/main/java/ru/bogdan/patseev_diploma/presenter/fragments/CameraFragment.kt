@@ -52,6 +52,7 @@ class CameraFragment : Fragment() {
             }
         }
     }
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -62,7 +63,7 @@ class CameraFragment : Fragment() {
     private lateinit var imageAnalyzer: ImageAnalysis
 
     private val viewModel by lazy {
-        ViewModelProvider(this,viewModelFactory)[CameraFragmentViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[CameraFragmentViewModel::class.java]
     }
 
     private val component by lazy {
@@ -86,8 +87,8 @@ class CameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnclickListeners(binding,viewModel)
-        observeState(binding,viewModel)
+        setOnclickListeners(binding, viewModel)
+        observeState(binding, viewModel)
 
     }
 
@@ -154,18 +155,20 @@ class CameraFragment : Fragment() {
     ) {
         barcodes.firstOrNull()?.let {
             it.rawValue?.let { inputString ->
-                    viewModel.getTool(inputString,
-                        (requireActivity().application as MyApplication).worker)
+                viewModel.getTool(
+                    inputString,
+                    (requireActivity().application as MyApplication).worker
+                )
             }
         }
     }
 
-    private fun showButtons(binding: FragmentCameraBinding){
-            binding.bGiveTool.visibility = View.VISIBLE
-            binding.bTakeTool.visibility = View.VISIBLE
+    private fun showButtons(binding: FragmentCameraBinding) {
+        binding.bGiveTool.visibility = View.VISIBLE
+        binding.bTakeTool.visibility = View.VISIBLE
     }
 
-    private fun goneButtons(binding: FragmentCameraBinding){
+    private fun goneButtons(binding: FragmentCameraBinding) {
         binding.bGiveTool.visibility = View.GONE
         binding.bTakeTool.visibility = View.GONE
     }
@@ -173,54 +176,60 @@ class CameraFragment : Fragment() {
     private fun setOnclickListeners(
         binding: FragmentCameraBinding,
         viewModel: CameraFragmentViewModel
-    ){
-        binding.bGiveTool.setOnClickListener{
+    ) {
+        binding.bGiveTool.setOnClickListener {
             try {
                 val action = CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
                     tool = viewModel.tool,
                     sender = (this@CameraFragment.requireActivity().application as MyApplication).worker
                 )
                 findNavController().navigate(action)
-            }catch (e:RuntimeException){
-                Toast.makeText(this@CameraFragment.context,
-                    e.message,Toast.LENGTH_SHORT).show()
+            } catch (e: RuntimeException) {
+                Toast.makeText(
+                    this@CameraFragment.context,
+                    e.message, Toast.LENGTH_SHORT
+                ).show()
                 goneButtons(binding)
             }
         }
-        binding.bTakeTool.setOnClickListener{
+        binding.bTakeTool.setOnClickListener {
             try {
                 val action = CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
                     tool = viewModel.tool,
                     receiver = (this@CameraFragment.requireActivity().application as MyApplication).worker
                 )
                 findNavController().navigate(action)
-            }catch (e:RuntimeException){
-                Toast.makeText(this@CameraFragment.context,
-                    e.message,Toast.LENGTH_SHORT).show()
+            } catch (e: RuntimeException) {
+                Toast.makeText(
+                    this@CameraFragment.context,
+                    e.message, Toast.LENGTH_SHORT
+                ).show()
                 goneButtons(binding)
             }
         }
     }
 
 
-    private fun observeState(binding: FragmentCameraBinding,viewModel: CameraFragmentViewModel){
+    private fun observeState(binding: FragmentCameraBinding, viewModel: CameraFragmentViewModel) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED){
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collectLatest { state ->
-                    when (state){
+                    when (state) {
                         is CameraFragmentState.Waiting -> {
                             goneButtons(binding)
                         }
 
                         is CameraFragmentState.Error -> {
-                            Toast.makeText(this@CameraFragment.context,
-                                state.msg,Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@CameraFragment.context,
+                                state.msg, Toast.LENGTH_SHORT
+                            ).show()
                             goneButtons(binding)
                             binding.twInformation.text = ""
                         }
 
                         is CameraFragmentState.Result -> {
-                            if (state.isShowButtons){
+                            if (state.isShowButtons) {
                                 showButtons(binding)
                             }
                             binding.twInformation.text = String.format(
@@ -232,6 +241,7 @@ class CameraFragment : Fragment() {
                                 state.tool.place.row
                             )
                         }
+
                         is CameraFragmentState.ConnectionProblem -> {
                             Toast.makeText(
                                 this@CameraFragment.context,

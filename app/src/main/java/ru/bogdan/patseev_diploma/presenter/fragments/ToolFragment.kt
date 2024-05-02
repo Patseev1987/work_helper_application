@@ -14,7 +14,7 @@ class ToolFragment : Fragment() {
     private var _binding: FragmentToolBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var tool:Tool
+    private lateinit var tool: Tool
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,16 +31,16 @@ class ToolFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView(binding,tool)
+        initView(binding, tool)
     }
 
-    private fun initView(binding: FragmentToolBinding, tool: Tool){
+    private fun initView(binding: FragmentToolBinding, tool: Tool) {
         Glide.with(this)
             .load(tool.icon)
             .into(binding.iconToolFragment)
 
         binding.twCode.text = tool.code
-        val newName = tool.name.replace(" ","\n")
+        val newName = tool.name.replace(" ", "\n")
         binding.twName.text = newName
         binding.twNote.text = tool.notes
         binding.twDescriptions.text = tool.description

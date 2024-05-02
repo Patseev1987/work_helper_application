@@ -16,17 +16,17 @@ class WorkersAdapter(private val onClickListener: ((Worker) -> Unit)? = null) :
     ListAdapter<Worker, WorkersAdapter.WorkerViewHolder>(DiffCallbackWorker()) {
 
     class WorkerViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView) {
-    private val twName = itemView.findViewById<TextView>(R.id.tw_name_worker_card)
-    private val twSurname = itemView.findViewById<TextView>(R.id.tw_surname_worker_card)
-    private val twPatronymic = itemView.findViewById<TextView>(R.id.tw_patronymic_worker_card)
-    private val twDepartment = itemView.findViewById<TextView>(R.id.tw_department_worker_card)
+        private val twName = itemView.findViewById<TextView>(R.id.tw_name_worker_card)
+        private val twSurname = itemView.findViewById<TextView>(R.id.tw_surname_worker_card)
+        private val twPatronymic = itemView.findViewById<TextView>(R.id.tw_patronymic_worker_card)
+        private val twDepartment = itemView.findViewById<TextView>(R.id.tw_department_worker_card)
 
         fun bind(worker: Worker, onClickListener: ((Worker) -> Unit)? = null) {
 
             twName.text = worker.firstName
             twSurname.text = worker.secondName
             twPatronymic.text = worker.patronymic
-            val prettyDepartment = worker.department.toNormalName().replace(" ","\n")
+            val prettyDepartment = worker.department.toNormalName().replace(" ", "\n")
             twDepartment.text = prettyDepartment
 
             if (onClickListener != null) {

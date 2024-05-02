@@ -8,6 +8,6 @@ import javax.inject.Inject
 class LoadAmountByWorkerAndToolUseCase @Inject constructor(
     private val repository: ApplicationRepository
 ) {
-suspend operator fun invoke(worker: Worker, tool: Tool) = repository
-    .loadAmountByWorkerAndTool(worker,tool)
+    suspend operator fun invoke(worker: Worker, tool: Tool) = repository
+        .loadAmountByWorkerAndTool(worker, tool)
 }

@@ -45,12 +45,12 @@ class LoginViewModel @Inject constructor(
                     _state.value = LoginState.Error
                 }
             } catch (e: Exception) {
-                        _state.value = LoginState.ConnectionProblem(
-                            application.getString(
-                                R.string
-                                    .server_doesn_t_respond_try_again_a_little_bit_later
-                            )
-                        )
+                _state.value = LoginState.ConnectionProblem(
+                    application.getString(
+                        R.string
+                            .server_doesn_t_respond_try_again_a_little_bit_later
+                    )
+                )
             }
         }
     }

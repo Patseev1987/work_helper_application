@@ -28,16 +28,18 @@ import java.lang.RuntimeException
 import javax.inject.Inject
 
 class TransactionFragment : Fragment() {
-    private var _binding:FragmentTransactionBinding? = null
-    private val binding get() = _binding !!
+    private var _binding: FragmentTransactionBinding? = null
+    private val binding get() = _binding!!
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by lazy {
-        ViewModelProvider(this,viewModelFactory)[TransactionViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[TransactionViewModel::class.java]
     }
     private val component by lazy {
         (this.activity?.application as MyApplication).component
     }
+
     @Suppress("DEPRECATION")
     // min SDK lower than 33 (TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,19 +48,19 @@ class TransactionFragment : Fragment() {
         parseArgs(viewModel)
         setFragmentResultListener(REQUEST_KEY_TOOL) { _, bundle ->
             val tool = bundle.getParcelable<Tool>(BUNDLE_KEY_TOOL)
-           tool?.let{t ->
-               viewModel.setTool(t)
-           }
+            tool?.let { t ->
+                viewModel.setTool(t)
+            }
         }
-        setFragmentResultListener(REQUEST_KEY_RECEIVER) {_, bundle ->
+        setFragmentResultListener(REQUEST_KEY_RECEIVER) { _, bundle ->
             val receiver = bundle.getParcelable<Worker>(BUNDLE_KEY_RECEIVER)
-            receiver?.let{
+            receiver?.let {
                 viewModel.setReceiver(receiver)
             }
         }
         setFragmentResultListener(REQUEST_KEY_SENDER) { _, bundle ->
             val sender = bundle.getParcelable<Worker>(BUNDLE_KEY_SENDER)
-            sender?.let{
+            sender?.let {
                 viewModel.setSender(sender)
             }
         }
@@ -70,24 +72,27 @@ class TransactionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-    _binding = FragmentTransactionBinding.inflate(inflater,container,false)
+        _binding = FragmentTransactionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeState(binding,viewModel)
-        setOnClickListeners(binding,viewModel)
+        observeState(binding, viewModel)
+        setOnClickListeners(binding, viewModel)
     }
 
 
-    private fun setOnClickListeners(binding: FragmentTransactionBinding, viewModel: TransactionViewModel){
-        binding.bCommitTransactionFragment.setOnClickListener{
+    private fun setOnClickListeners(
+        binding: FragmentTransactionBinding,
+        viewModel: TransactionViewModel
+    ) {
+        binding.bCommitTransactionFragment.setOnClickListener {
             binding.inLayoutTransactionFragment.error = WITH_OUT_ERROR
             viewModel.doTransaction(
                 try {
                     binding.inEditTextTransaction.text.toString().toInt()
-                }catch (e:RuntimeException) {
+                } catch (e: RuntimeException) {
                     binding.inLayoutTransactionFragment.error =
                         getString(R.string.enter_the_number)
                     return@setOnClickListener
@@ -96,10 +101,10 @@ class TransactionFragment : Fragment() {
 
         }
 
-        binding.bSetTool.setOnClickListener{
+        binding.bSetTool.setOnClickListener {
             findNavController().navigate(R.id.action_transactionFragment_to_toolsFragmentForSearchFragment)
         }
-        binding.bSetReceiver.setOnClickListener{
+        binding.bSetReceiver.setOnClickListener {
             val action = TransactionFragmentDirections
                 .actionTransactionFragmentToRecycleViewWithWorkersFragment(
                     RecycleViewWithWorkersFragment.RECEIVER_MODE
@@ -107,7 +112,7 @@ class TransactionFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.bSetSender.setOnClickListener{
+        binding.bSetSender.setOnClickListener {
             val action = TransactionFragmentDirections
                 .actionTransactionFragmentToRecycleViewWithWorkersFragment(
                     RecycleViewWithWorkersFragment.SENDER_MODE
@@ -115,10 +120,11 @@ class TransactionFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
-    private fun observeState(binding: FragmentTransactionBinding, viewModel: TransactionViewModel){
+
+    private fun observeState(binding: FragmentTransactionBinding, viewModel: TransactionViewModel) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED){
-                viewModel.state.collect{
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.state.collect {
                     when (it) {
                         is TransactionState.Error -> {
                             Toast.makeText(
@@ -128,9 +134,11 @@ class TransactionFragment : Fragment() {
                             ).show()
                             binding.progressBarTransactionFragment.visibility = View.GONE
                         }
-                        is TransactionState.Waiting ->{
+
+                        is TransactionState.Waiting -> {
                             binding.progressBarTransactionFragment.visibility = View.GONE
                         }
+
                         is TransactionState.Result -> {
                             Toast.makeText(
                                 this@TransactionFragment.context,
@@ -139,19 +147,22 @@ class TransactionFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             binding.progressBarTransactionFragment.visibility = View.GONE
-                                delay(1000)
-                                requireActivity().onBackPressedDispatcher.onBackPressed()
+                            delay(1000)
+                            requireActivity().onBackPressedDispatcher.onBackPressed()
                         }
+
                         is TransactionState.ReceiverState -> {
                             binding.twReceiverTransactionFragment.text = it.receiver.secondName
                             binding.progressBarTransactionFragment.visibility = View.GONE
                             binding.bSetReceiver.isEnabled = false
                         }
+
                         is TransactionState.SenderState -> {
                             binding.twSenderTransactionFragment.text = it.sender.secondName
                             binding.progressBarTransactionFragment.visibility = View.GONE
                             binding.bSetSender.isEnabled = false
                         }
+
                         is TransactionState.ToolState -> {
                             binding.twToolCodeTransactionFragment.text = it.tool.code
                             Glide.with(this@TransactionFragment)
@@ -161,9 +172,11 @@ class TransactionFragment : Fragment() {
                             binding.progressBarTransactionFragment.visibility = View.GONE
                             binding.bSetTool.isEnabled = false
                         }
-                        is TransactionState.Loading ->{
+
+                        is TransactionState.Loading -> {
                             binding.progressBarTransactionFragment.visibility = View.VISIBLE
                         }
+
                         is TransactionState.ConnectionProblem -> {
                             binding.progressBarTransactionFragment.visibility = View.GONE
                             Toast.makeText(
@@ -177,17 +190,18 @@ class TransactionFragment : Fragment() {
             }
         }
     }
-    private fun parseArgs(viewModel: TransactionViewModel){
-            TransactionFragmentArgs.fromBundle(requireArguments()).apply{
-                receiver?.let {receiver ->
-                    viewModel.setReceiver(receiver)
 
-                }
-                sender?.let{sender ->
-                    viewModel.setSender(sender)
-                }
-                tool?.let { tool ->
-                    viewModel.setTool(tool)
+    private fun parseArgs(viewModel: TransactionViewModel) {
+        TransactionFragmentArgs.fromBundle(requireArguments()).apply {
+            receiver?.let { receiver ->
+                viewModel.setReceiver(receiver)
+
+            }
+            sender?.let { sender ->
+                viewModel.setSender(sender)
+            }
+            tool?.let { tool ->
+                viewModel.setTool(tool)
             }
         }
     }
@@ -197,7 +211,7 @@ class TransactionFragment : Fragment() {
         _binding = null
     }
 
-    companion object{
+    companion object {
         const val REQUEST_KEY_SENDER = "sender"
         const val REQUEST_KEY_RECEIVER = "receiver"
         const val REQUEST_KEY_TOOL = "tool"

@@ -23,7 +23,7 @@ class StorageRecordsAdapter(private val onClickListener: ((StorageRecord) -> Uni
         private val iwIcon = itemView.findViewById<ImageView>(R.id.icon_tool)
 
         fun bind(storageRecord: StorageRecord, onClickListener: ((StorageRecord) -> Unit)? = null) {
-            val newName = storageRecord.tool.name.replace(" ","\n")
+            val newName = storageRecord.tool.name.replace(" ", "\n")
             twName.text = newName
             twCode.text = storageRecord.tool.code
             twAmount.text = storageRecord.amount.toString()
@@ -48,7 +48,8 @@ class StorageRecordsAdapter(private val onClickListener: ((StorageRecord) -> Uni
         }
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): CuttingToolViewHolder = CuttingToolViewHolder.inflateFrom(p0)
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): CuttingToolViewHolder =
+        CuttingToolViewHolder.inflateFrom(p0)
 
     override fun onBindViewHolder(p0: CuttingToolViewHolder, p1: Int) {
         val storageRecord = getItem(p1)

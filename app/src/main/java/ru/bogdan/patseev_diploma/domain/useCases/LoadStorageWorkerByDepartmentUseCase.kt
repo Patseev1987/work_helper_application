@@ -7,6 +7,6 @@ import javax.inject.Inject
 class LoadStorageWorkerByDepartmentUseCase @Inject constructor(
     private val repository: ApplicationRepository
 ) {
-    suspend operator fun invoke(department:Department) = repository
+    suspend operator fun invoke(department: Department) = repository
         .loadStorageWorkerByDepartment(department)
 }

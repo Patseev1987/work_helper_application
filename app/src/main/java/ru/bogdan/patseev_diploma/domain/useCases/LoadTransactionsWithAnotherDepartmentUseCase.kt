@@ -7,8 +7,10 @@ import javax.inject.Inject
 class LoadTransactionsWithAnotherDepartmentUseCase @Inject constructor(
     private val repository: ApplicationRepository
 ) {
-    suspend operator fun invoke(anotherDepartment: Department,
-                                page: Int = 0,
-                                toolCode: String) = repository
-        .loadTransactionsWithAnotherDepartment(anotherDepartment,page,toolCode)
+    suspend operator fun invoke(
+        anotherDepartment: Department,
+        page: Int = 0,
+        toolCode: String
+    ) = repository
+        .loadTransactionsWithAnotherDepartment(anotherDepartment, page, toolCode)
 }

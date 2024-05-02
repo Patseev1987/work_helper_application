@@ -27,6 +27,7 @@ import javax.inject.Inject
 class StorageWorkerFragment : Fragment() {
     private var _binding: FragmentStorageWorkerBinding? = null
     private val binding get() = _binding!!
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by lazy {
@@ -35,6 +36,7 @@ class StorageWorkerFragment : Fragment() {
     private val component by lazy {
         (this.activity?.application as MyApplication).component
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component.inject(this)
@@ -179,6 +181,7 @@ class StorageWorkerFragment : Fragment() {
                         is StorageWorkerFragmentState.Loading -> {
                             binding.progressBarStorageWorkerFragment.visibility = View.VISIBLE
                         }
+
                         is StorageWorkerFragmentState.ConnectionProblem -> {
                             binding.progressBarStorageWorkerFragment.visibility = View.GONE
                             Toast.makeText(

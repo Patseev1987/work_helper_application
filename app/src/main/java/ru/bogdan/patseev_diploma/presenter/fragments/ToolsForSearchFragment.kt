@@ -24,13 +24,14 @@ import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
 import javax.inject.Inject
 
 class ToolsForSearchFragment : Fragment() {
-    private var _binding:FragmentToolsForSearchBinding? = null
+    private var _binding: FragmentToolsForSearchBinding? = null
     private val binding get() = _binding!!
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel by lazy {
-        ViewModelProvider(this,viewModelFactory)[ToolsSearchFragmentViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[ToolsSearchFragmentViewModel::class.java]
     }
     private val component by lazy {
         (this.activity?.application as MyApplication).component
@@ -40,39 +41,48 @@ class ToolsForSearchFragment : Fragment() {
         super.onCreate(savedInstanceState)
         component.inject(this)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentToolsForSearchBinding.inflate(inflater,container,false)
+        _binding = FragmentToolsForSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeViewModel(binding,viewModel)
-        setListeners(binding,viewModel)
+        observeViewModel(binding, viewModel)
+        setListeners(binding, viewModel)
 
     }
 
 
-    private fun setListeners(binding: FragmentToolsForSearchBinding,viewModel: ToolsSearchFragmentViewModel){
+    private fun setListeners(
+        binding: FragmentToolsForSearchBinding,
+        viewModel: ToolsSearchFragmentViewModel
+    ) {
         binding.inEditTextSearchTools.doAfterTextChanged {
             viewModel.searchString.value = it.toString()
         }
     }
-    private fun observeViewModel(binding: FragmentToolsForSearchBinding, viewModel: ToolsSearchFragmentViewModel){
-        lifecycleScope.launch{
-            repeatOnLifecycle(Lifecycle.State.RESUMED){
-                viewModel.state.collect{state ->
+
+    private fun observeViewModel(
+        binding: FragmentToolsForSearchBinding,
+        viewModel: ToolsSearchFragmentViewModel
+    ) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.state.collect { state ->
                     when (state) {
                         is FragmentSearchToolsState.Loading -> {
                             binding.progressBarSearchTools.visibility = View.VISIBLE
                         }
+
                         is FragmentSearchToolsState.Result -> {
-                            val adapter = ToolsAdapter{tool ->
+                            val adapter = ToolsAdapter { tool ->
                                 setFragmentResult(
-                                   TransactionFragment.REQUEST_KEY_TOOL ,
+                                    TransactionFragment.REQUEST_KEY_TOOL,
                                     bundleOf(TransactionFragment.BUNDLE_KEY_TOOL to tool)
                                 )
                                 requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -81,6 +91,7 @@ class ToolsForSearchFragment : Fragment() {
                             adapter.submitList(state.tools)
                             binding.progressBarSearchTools.visibility = View.GONE
                         }
+
                         is FragmentSearchToolsState.Waiting -> {
                             Toast.makeText(
                                 this@ToolsForSearchFragment.context,
@@ -90,7 +101,8 @@ class ToolsForSearchFragment : Fragment() {
                             binding.progressBarSearchTools.visibility = View.GONE
 
                         }
-                        is FragmentSearchToolsState.ConnectionProblem ->{
+
+                        is FragmentSearchToolsState.ConnectionProblem -> {
                             Toast.makeText(
                                 this@ToolsForSearchFragment.context,
                                 state.message,

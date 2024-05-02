@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 import javax.inject.Inject
 
 @Parcelize
-data class Worker (
+data class Worker(
     val id: Long,
     val firstName: String,
     val secondName: String,

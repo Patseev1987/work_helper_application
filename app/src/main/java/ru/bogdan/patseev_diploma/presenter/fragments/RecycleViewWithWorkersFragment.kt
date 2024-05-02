@@ -28,6 +28,7 @@ class RecycleViewWithWorkersFragment : Fragment() {
     private var _binding: FragmentRecycleViewWithWorkersBinding? = null
     private val binding get() = _binding!!
     private var mode = UNKNOWN_MODE
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by lazy {
@@ -36,6 +37,7 @@ class RecycleViewWithWorkersFragment : Fragment() {
     private val component by lazy {
         (this.activity?.application as MyApplication).component
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseArguments()
@@ -105,6 +107,7 @@ class RecycleViewWithWorkersFragment : Fragment() {
                             binding.workersListRecycleViewWorkers.adapter = adapter
                             binding.progressBarRecycleViewWorkers.visibility = View.GONE
                         }
+
                         is RecycleViewWorkerState.ConnectionProblem -> {
                             binding.progressBarRecycleViewWorkers.visibility = View.GONE
                             Toast.makeText(

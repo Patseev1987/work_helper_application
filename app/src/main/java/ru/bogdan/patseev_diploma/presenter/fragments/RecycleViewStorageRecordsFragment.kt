@@ -107,6 +107,7 @@ class RecycleViewStorageRecordsFragment : Fragment() {
                             binding.toolsRecycleViewTools.adapter = adapter
                             binding.progressBar.visibility = View.GONE
                         }
+
                         is RecycleViewState.ConnectionProblem -> {
                             Toast.makeText(
                                 this@RecycleViewStorageRecordsFragment.context,

@@ -25,6 +25,7 @@ import javax.inject.Inject
 class WorkerFragment : Fragment() {
     private var _binding: FragmentWorkerBinding? = null
     private val binding get() = _binding!!
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -52,13 +53,13 @@ class WorkerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(binding, (requireActivity().application as MyApplication).worker)
-        observeViewModel(binding,viewModel)
-        setListeners(binding,viewModel)
+        observeViewModel(binding, viewModel)
+        setListeners(binding, viewModel)
     }
 
     //set listener for bottom bar menu
-    private fun setListeners(binding: FragmentWorkerBinding,viewModel: WorkerFragmentViewModel) {
-        binding.updateTransactionsWorkerFragment.setOnClickListener{
+    private fun setListeners(binding: FragmentWorkerBinding, viewModel: WorkerFragmentViewModel) {
+        binding.updateTransactionsWorkerFragment.setOnClickListener {
             viewModel.updateTransactions()
         }
 
@@ -104,12 +105,14 @@ class WorkerFragment : Fragment() {
                         is WorkerFragmentState.ResultsTransaction -> {
                             val adapter = TransactionsAdapter()
                             binding.workerTransactions.adapter = adapter
-                          adapter.submitList(it.transactions)
+                            adapter.submitList(it.transactions)
                             binding.progressBarWorkerFragment.visibility = View.GONE
                         }
+
                         is WorkerFragmentState.Loading -> {
                             binding.progressBarWorkerFragment.visibility = View.VISIBLE
                         }
+
                         is WorkerFragmentState.ConnectionProblem -> {
                             binding.progressBarWorkerFragment.visibility = View.GONE
                             Toast.makeText(

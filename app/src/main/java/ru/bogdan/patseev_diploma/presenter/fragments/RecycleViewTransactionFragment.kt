@@ -31,8 +31,8 @@ class RecycleViewTransactionFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel:RecycleViewTransactionsViewModel by lazy {
-        ViewModelProvider(this,viewModelFactory)[RecycleViewTransactionsViewModel::class.java]
+    private val viewModel: RecycleViewTransactionsViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[RecycleViewTransactionsViewModel::class.java]
     }
 
     private val component by lazy {
@@ -44,6 +44,7 @@ class RecycleViewTransactionFragment : Fragment() {
         parseMode()
         component.inject(this)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,9 +59,9 @@ class RecycleViewTransactionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeState(binding,viewModel)
+        observeState(binding, viewModel)
         viewModel.loadTransactions(anotherDepartment)
-        setOnChangeText(binding,viewModel)
+        setOnChangeText(binding, viewModel)
     }
 
     override fun onDestroy() {
@@ -71,48 +72,50 @@ class RecycleViewTransactionFragment : Fragment() {
     private fun setOnChangeText(
         binding: FragmentRecycleViewTransactionBinding,
         viewModel: RecycleViewTransactionsViewModel
-    ){
+    ) {
         binding.inEditTextRecycleViewTransactions.doAfterTextChanged {
-            viewModel.updateTransactionWithFilter(anotherDepartment,it.toString())
+            viewModel.updateTransactionWithFilter(anotherDepartment, it.toString())
         }
     }
-
 
 
     private fun observeState(
         binding: FragmentRecycleViewTransactionBinding,
         viewModel: RecycleViewTransactionsViewModel
-    ){
+    ) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED){
-                viewModel.state.collectLatest{state ->
-                        when (state) {
-                            is RecycleVIewTransactionState.Loading -> {
-                                binding.progressBarRecycleViewTransactions.visibility = View.VISIBLE
-                            }
-                            is RecycleVIewTransactionState.Result -> {
-                                binding.twRecycleViewTransactionsLabel.text  = state.message
-                                val adapter = TransactionsAdapter()
-                                binding.recycleViewTransactions.adapter = adapter
-                                adapter.submitList(state.transactions)
-                                binding.progressBarRecycleViewTransactions.visibility = View.GONE
-                            }
-                            is RecycleVIewTransactionState.ConnectionProblem -> {
-                                Toast.makeText(
-                                    this@RecycleViewTransactionFragment.context,
-                                    state.message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                binding.progressBarRecycleViewTransactions.visibility = View.GONE
-                            }
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.state.collectLatest { state ->
+                    when (state) {
+                        is RecycleVIewTransactionState.Loading -> {
+                            binding.progressBarRecycleViewTransactions.visibility = View.VISIBLE
                         }
+
+                        is RecycleVIewTransactionState.Result -> {
+                            binding.twRecycleViewTransactionsLabel.text = state.message
+                            val adapter = TransactionsAdapter()
+                            binding.recycleViewTransactions.adapter = adapter
+                            adapter.submitList(state.transactions)
+                            binding.progressBarRecycleViewTransactions.visibility = View.GONE
+                        }
+
+                        is RecycleVIewTransactionState.ConnectionProblem -> {
+                            Toast.makeText(
+                                this@RecycleViewTransactionFragment.context,
+                                state.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            binding.progressBarRecycleViewTransactions.visibility = View.GONE
+                        }
+                    }
                 }
             }
         }
     }
 
-    private fun parseMode(){
-      anotherDepartment = RecycleViewTransactionFragmentArgs.fromBundle(requireArguments()).anotherDepartment
+    private fun parseMode() {
+        anotherDepartment =
+            RecycleViewTransactionFragmentArgs.fromBundle(requireArguments()).anotherDepartment
     }
 
 }

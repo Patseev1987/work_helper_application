@@ -23,7 +23,7 @@ class ToolsAdapter(private val onClickListener: ((Tool) -> Unit)? = null) :
         private val iwIcon = itemView.findViewById<ImageView>(R.id.icon_tool)
 
         fun bind(tool: Tool, onClickListener: ((Tool) -> Unit)? = null) {
-            val newName = tool.name.replace(" ","\n")
+            val newName = tool.name.replace(" ", "\n")
             twName.text = newName
             twCode.text = tool.code
 
@@ -47,7 +47,8 @@ class ToolsAdapter(private val onClickListener: ((Tool) -> Unit)? = null) :
         }
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ToolViewHolder = ToolViewHolder.inflateFrom(p0)
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ToolViewHolder =
+        ToolViewHolder.inflateFrom(p0)
 
     override fun onBindViewHolder(p0: ToolViewHolder, p1: Int) {
         val tool = getItem(p1)
