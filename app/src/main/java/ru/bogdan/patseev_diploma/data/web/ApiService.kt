@@ -62,6 +62,5 @@ interface ApiService {
         @Query("anotherDepartment") anotherDepartment: Department,
         @Query("toolCode") toolCode: String
     ): List<TransactionWEB>
-
 }
 
