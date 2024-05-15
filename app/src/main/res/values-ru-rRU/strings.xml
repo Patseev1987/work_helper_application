@@ -56,7 +56,7 @@
     <string name="choose_worker">Выбрать рабочего</string>
     <string name="enter_worker_surname">Ввести фамилию</string>
     <string name="enter_part_of_code">Ввести часть шифра</string>
-    <string name="enter_the_number">Ввести номер</string>
+    <string name="enter_the_number">Ввести количество</string>
     <string name="from_main_storage">С главного склада</string>
     <string name="sharpening">Заточка</string>
     <string name="decommissioned_tools">Списанный инструмент</string>
