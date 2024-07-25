@@ -7,6 +7,8 @@ import ru.bogdan.patseev_diploma.data.web.mappers.toTool
 import ru.bogdan.patseev_diploma.data.web.mappers.toTransaction
 import ru.bogdan.patseev_diploma.data.web.mappers.toTransactionWEB
 import ru.bogdan.patseev_diploma.data.web.mappers.toWorker
+import ru.bogdan.patseev_diploma.data.web.pojo.Token
+import ru.bogdan.patseev_diploma.data.web.pojo.UserDTOSignIn
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Transaction
@@ -54,8 +56,9 @@ class ApiHelperImpl @Inject constructor(
     }
 
 
-    override suspend fun checkLogin(login: String, password: String): Worker {
-        return apiService.checkLogin(login, password).toWorker()
+    override suspend fun checkLogin(login: String, password: String): Token {
+        val userDTO =  UserDTOSignIn ( username = login, password = password )
+        return apiService.checkLogin(userDTO).body() ?: throw IllegalArgumentException("Empty token")
     }
 
     override suspend fun createTransaction(

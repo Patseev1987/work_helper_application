@@ -2,6 +2,7 @@ package ru.bogdan.patseev_diploma.data
 
 import kotlinx.coroutines.flow.Flow
 import ru.bogdan.patseev_diploma.data.web.ApiHelper
+import ru.bogdan.patseev_diploma.data.web.pojo.Token
 import ru.bogdan.patseev_diploma.domain.ApplicationRepository
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 import ru.bogdan.patseev_diploma.domain.models.Tool
@@ -22,7 +23,7 @@ class ApplicationRepositoryImpl @Inject constructor(
         return apiHelper.loadStorageRecordByWorkerId(workerId, toolType, toolCode)
     }
 
-    override suspend fun checkLogin(login: String, password: String): Worker {
+    override suspend fun checkLogin(login: String, password: String): Token {
         return apiHelper.checkLogin(login, password)
     }
 

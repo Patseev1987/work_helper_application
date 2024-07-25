@@ -1,6 +1,7 @@
 package ru.bogdan.patseev_diploma.domain
 
 import kotlinx.coroutines.flow.Flow
+import ru.bogdan.patseev_diploma.data.web.pojo.Token
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Transaction
@@ -15,7 +16,7 @@ interface ApplicationRepository {
         toolCode: String = ""
     ): List<StorageRecord>
 
-    suspend fun checkLogin(login: String, password: String): Worker
+    suspend fun checkLogin(login: String, password: String): Token
     suspend fun createTransaction(
         sender: Worker,
         receiver: Worker,

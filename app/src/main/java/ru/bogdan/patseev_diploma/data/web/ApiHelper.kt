@@ -6,10 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
-import ru.bogdan.patseev_diploma.data.web.pojo.StorageRecordWEB
-import ru.bogdan.patseev_diploma.data.web.pojo.ToolWEB
-import ru.bogdan.patseev_diploma.data.web.pojo.TransactionWEB
-import ru.bogdan.patseev_diploma.data.web.pojo.WorkerWEB
+import ru.bogdan.patseev_diploma.data.web.pojo.*
 import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Transaction
@@ -26,7 +23,7 @@ interface ApiHelper {
         toolCode: String = ""
     ): List<StorageRecord>
 
-    suspend fun checkLogin(login: String, password: String): Worker
+    suspend fun checkLogin(login: String, password: String): Token
     suspend fun createTransaction(
         sender: Worker,
         receiver: Worker,

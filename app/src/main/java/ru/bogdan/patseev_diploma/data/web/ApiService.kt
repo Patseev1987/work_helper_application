@@ -1,14 +1,12 @@
 package ru.bogdan.patseev_diploma.data.web
 
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.bogdan.patseev_diploma.data.web.pojo.StorageRecordWEB
-import ru.bogdan.patseev_diploma.data.web.pojo.ToolWEB
-import ru.bogdan.patseev_diploma.data.web.pojo.TransactionWEB
-import ru.bogdan.patseev_diploma.data.web.pojo.WorkerWEB
+import ru.bogdan.patseev_diploma.data.web.pojo.*
 import ru.bogdan.patseev_diploma.domain.models.Transaction
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
@@ -28,11 +26,10 @@ interface ApiService {
     ): List<TransactionWEB>
 
 
-    @GET("check_login")
+    @POST("auth/sign-in")
     suspend fun checkLogin(
-        @Query("login") login: String,
-        @Query("password") password: String
-    ): WorkerWEB
+    @Body userDTOSignIn: UserDTOSignIn
+    ):Response<Token>
 
     @GET("storage_worker_by_department")
     suspend fun loadStorageWorkerByDepartment(

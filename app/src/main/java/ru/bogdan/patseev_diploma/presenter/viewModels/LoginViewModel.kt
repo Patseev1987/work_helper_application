@@ -1,6 +1,7 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -31,19 +32,11 @@ class LoginViewModel @Inject constructor(
     fun checkLogin(login: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                Log.d("TOKEN_TOKEN_TOKEN", "1")
                 _state.value = LoginState.Loading
-                val worker = checkLoginUseCase(login, password)
-                if (worker.login.isNotEmpty()) {
-                    application.setWorker(worker)
-                    if (worker.type != WorkerType.STORAGE_WORKER) {
-                        val storageWorker =
-                            loadStorageWorkerByDepartmentUseCase(worker.department)
-                        application.setStorageWorker(storageWorker);
-                    }
-                    _state.value = LoginState.LoginResult(worker)
-                } else {
-                    _state.value = LoginState.Error
-                }
+                val token = checkLoginUseCase(login, password)
+                Log.d("TOKEN_TOKEN_TOKEN", token.token)
+               _state.value = LoginState.ConnectionProblem( token.token )
             } catch (e: Exception) {
                 _state.value = LoginState.ConnectionProblem(
                     application.getString(
