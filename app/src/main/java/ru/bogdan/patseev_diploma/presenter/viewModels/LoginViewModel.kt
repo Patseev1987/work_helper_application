@@ -17,13 +17,13 @@ import ru.bogdan.patseev_diploma.domain.useCases.LoadStorageWorkerByDepartmentUs
 import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
 import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import java.net.ConnectException
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val application: MyApplication,
     private val checkLoginUseCase: CheckLoginUseCase,
-    private val loadStorageWorkerByDepartmentUseCase: LoadStorageWorkerByDepartmentUseCase
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<LoginState> = MutableStateFlow(LoginState.Waiting)
@@ -36,8 +36,12 @@ class LoginViewModel @Inject constructor(
                 _state.value = LoginState.Loading
                 val token = checkLoginUseCase(login, password)
                 Log.d("TOKEN_TOKEN_TOKEN", token.token)
+                TokenBundle.setToken(application,token.token)
+                Log.d("TOKEN_TOKEN_TOKEN", "after setToken")
+                Log.d("TOKEN_TOKEN_TOKEN","worker id -> "+TokenBundle.getWorkerId(application).toString())
+
                _state.value = LoginState.ConnectionProblem( token.token )
-            } catch (e: Exception) {
+            } catch (e: RuntimeException) {
                 _state.value = LoginState.ConnectionProblem(
                     application.getString(
                         R.string

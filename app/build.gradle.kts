@@ -84,4 +84,6 @@ dependencies {
 
     implementation ("com.google.android.gms:play-services-mlkit-barcode-scanning:16.1.0")
     implementation ("com.google.mlkit:barcode-scanning:17.2.0")
+
+    implementation ("com.auth0.android:jwtdecode:2.0.2")
 }
