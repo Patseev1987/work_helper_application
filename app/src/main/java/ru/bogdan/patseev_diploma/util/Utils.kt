@@ -24,8 +24,6 @@ fun Department.toNormalName(): String {
 }
 
 
-const val NETWORK_UNREACHABLE = "Network is unreachable"
-const val CONNECTION_REFUSED = "Connection refused"
 const val BLANK_TOOL_CODE = ""
 
 

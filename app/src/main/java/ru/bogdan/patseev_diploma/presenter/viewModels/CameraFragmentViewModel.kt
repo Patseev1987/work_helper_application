@@ -2,25 +2,17 @@ package ru.bogdan.patseev_diploma.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
-import ru.bogdan.patseev_diploma.data.web.ApiFactory
-import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.domain.useCases.LoadToolsForSearchUseCase
 import ru.bogdan.patseev_diploma.presenter.states.CameraFragmentState
-import ru.bogdan.patseev_diploma.presenter.states.LoginState
-import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
-import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
-import java.lang.RuntimeException
-import java.net.ConnectException
 import javax.inject.Inject
 
 class CameraFragmentViewModel @Inject constructor(

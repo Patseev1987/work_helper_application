@@ -31,10 +31,8 @@ class LoginViewModel @Inject constructor(
                 val token = checkLoginUseCase(login, password)
                 tokenBundle.setToken(token.token)
                 val workerType = tokenBundle.getWorkerType()
-                Log.d("TOKEN_TOKEN_TOKEN",tokenBundle.getToken())
                _state.value = LoginState.LoginResult( workerType = workerType)
-            } catch (e: RuntimeException) {
-                Log.d("TOKEN_TOKEN_TOKEN",e.message.toString())
+            } catch (e: Exception) {
                 _state.value = LoginState.ConnectionProblem(
                     application.getString(
                         R.string
