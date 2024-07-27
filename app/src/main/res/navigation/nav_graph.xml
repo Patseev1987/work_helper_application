@@ -28,7 +28,6 @@
     <fragment android:id="@+id/storageWorkerFragment"
               android:name="ru.bogdan.patseev_diploma.presenter.fragments.StorageWorkerFragment"
               android:label="fragment_storage_worker" tools:layout="@layout/fragment_storage_worker">
-        <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
         <action android:id="@+id/action_storageWorkerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
         <action
             android:id="@+id/action_storageWorkerFragment_to_tabLayoutFragment"

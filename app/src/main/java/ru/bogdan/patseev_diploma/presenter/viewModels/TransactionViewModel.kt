@@ -19,6 +19,7 @@ import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.TransactionState
 import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
 import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import java.net.ConnectException
 import javax.inject.Inject
 
@@ -27,6 +28,9 @@ class TransactionViewModel @Inject constructor(
     private val loadAmountByWorkerAndToolUseCase: LoadAmountByWorkerAndToolUseCase,
     private val createTransactionUseCase: CreateTransactionUseCase
 ) : ViewModel() {
+
+    private val tokenBundle = TokenBundle(application)
+
     private var sender: Worker? = null
     private var receiver: Worker? = null
     private var tool: Tool? = null
@@ -106,7 +110,11 @@ class TransactionViewModel @Inject constructor(
                 }
             }
             try {
-                val amountToolFromSender = loadAmountByWorkerAndToolUseCase(sender!!, tool!!)
+                val amountToolFromSender = loadAmountByWorkerAndToolUseCase(
+                    tokenBundle.getToken(),
+                    sender!!,
+                    tool!!
+                )
                 if (amountToolFromSender == -1) {
                     _state.value = TransactionState.Error(
                         application.getString(
@@ -124,7 +132,12 @@ class TransactionViewModel @Inject constructor(
                         )
                         return@launch
                     } else {
-                        createTransactionUseCase(sender!!, receiver!!, tool!!, amount)
+                        createTransactionUseCase(
+                            tokenBundle.getToken(),
+                            sender!!,
+                            receiver!!,
+                            tool!!,
+                            amount)
                         _state.value = TransactionState.Result(sender!!, receiver!!, tool!!, amount)
                     }
                 }

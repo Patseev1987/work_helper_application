@@ -26,6 +26,7 @@ import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.StorageWorkerFragmentState
 import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
 import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import java.lang.RuntimeException
 import java.net.ConnectException
 import javax.inject.Inject
@@ -38,6 +39,8 @@ class StorageWorkerViewModel @Inject constructor(
     private val updateTransactionUseCase: UpdateTransactionUseCase
 ) : ViewModel() {
 
+   private val tokenBundle = TokenBundle(application)
+
     private var _sharpen: Worker? = null
     val sharpen: Worker get() = _sharpen ?: throw RuntimeException("_sharpen = null")
     private var _storageOfDecommissionedTools: Worker? = null
@@ -48,6 +51,7 @@ class StorageWorkerViewModel @Inject constructor(
     private val loadingFlow: MutableSharedFlow<StorageWorkerFragmentState> = MutableSharedFlow()
 
     val state: StateFlow<StorageWorkerFragmentState> = loadTransactionsByWorkerIdUseCase(
+        tokenBundle.getToken(),
         application.worker.id
     )
         .onStart { StorageWorkerFragmentState.Loading }
@@ -75,9 +79,13 @@ class StorageWorkerViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             try {
-                _sharpen = loadStorageWorkerByDepartmentUseCase(Department.SHARPENING)
+                _sharpen = loadStorageWorkerByDepartmentUseCase(
+                    tokenBundle.getToken(),
+                    Department.SHARPENING)
                 _storageOfDecommissionedTools =
-                    loadStorageWorkerByDepartmentUseCase(Department.STORAGE_OF_DECOMMISSIONED_TOOLS)
+                    loadStorageWorkerByDepartmentUseCase(
+                        tokenBundle.getToken(),
+                        Department.STORAGE_OF_DECOMMISSIONED_TOOLS)
             } catch (e: Exception) {
                 loadingFlow.emit(
                     StorageWorkerFragmentState.ConnectionProblem(

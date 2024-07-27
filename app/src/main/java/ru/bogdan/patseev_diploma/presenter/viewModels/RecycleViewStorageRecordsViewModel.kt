@@ -19,6 +19,7 @@ import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
 import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
 import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import java.net.ConnectException
 import java.time.LocalDate
 import javax.inject.Inject
@@ -28,6 +29,8 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
     private val application: MyApplication,
     private val loadStorageRecordByWorkerIdUseCase: LoadStorageRecordByWorkerIdUseCase
 ) : ViewModel() {
+
+    private val tokenBundle = TokenBundle(application)
 
     private val searchString: MutableStateFlow<String> = MutableStateFlow(BLANK_TOOL_CODE)
 
@@ -42,7 +45,11 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _state.value = RecycleViewState.Result(
-                    loadStorageRecordByWorkerIdUseCase(worker.id, position.getToolType(), toolCode)
+                    loadStorageRecordByWorkerIdUseCase(
+                        tokenBundle.getToken(),
+                        tokenBundle.getWorkerId(),
+                        position.getToolType(),
+                        toolCode)
                 )
             } catch (e: Exception) {
                 _state.value = RecycleViewState.ConnectionProblem(
@@ -94,7 +101,6 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
             LocalDate.now(),
             Department.DEPARTMENT_19,
             WorkerType.WORKER,
-            "",
             ""
         )
     }

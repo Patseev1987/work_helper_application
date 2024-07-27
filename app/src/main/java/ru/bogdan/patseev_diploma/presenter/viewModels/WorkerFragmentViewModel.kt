@@ -16,29 +16,45 @@ import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
+import ru.bogdan.patseev_diploma.domain.useCases.LoadStorageWorkerByDepartmentUseCase
+import ru.bogdan.patseev_diploma.domain.useCases.LoadTransactionsByWorkerIdUseCase
+import ru.bogdan.patseev_diploma.domain.useCases.LoadWorkerByIdUseCase
 import ru.bogdan.patseev_diploma.domain.useCases.UpdateTransactionUseCase
-import ru.bogdan.patseev_diploma.presenter.states.LoginState
-import ru.bogdan.patseev_diploma.presenter.states.StorageWorkerFragmentState
 import ru.bogdan.patseev_diploma.presenter.states.WorkerFragmentState
-import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
-import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import javax.inject.Inject
 
 
 class WorkerFragmentViewModel @Inject constructor(
     private val application: MyApplication,
-    private val updateTransactionUseCase: UpdateTransactionUseCase
+    private val updateTransactionUseCase: UpdateTransactionUseCase,
+    private val loadWorkerByIdUseCase: LoadWorkerByIdUseCase,
+    private val loadTransactionsByWorkerIdUseCase: LoadTransactionsByWorkerIdUseCase,
+    private val loadStorageWorkerByDepartmentUseCase: LoadStorageWorkerByDepartmentUseCase
 ) : ViewModel() {
+
+    private val tokenBundle = TokenBundle(application)
 
     private val apiHelperImpl = ApiHelperImpl(ApiFactory.apiService)
 
     private val loadingFlow: MutableSharedFlow<WorkerFragmentState> = MutableSharedFlow()
 
-    val state: StateFlow<WorkerFragmentState> = apiHelperImpl
-        .loadTransactionsByWorkerId(application.worker.id)
+    val state: StateFlow<WorkerFragmentState> = loadTransactionsByWorkerIdUseCase(
+            tokenBundle.getToken(),
+            tokenBundle.getWorkerId()
+        )
         .onStart { WorkerFragmentState.Loading }
-        .map {
-            WorkerFragmentState.ResultsTransaction(it) as WorkerFragmentState
+        .map {transactions ->
+            val worker = loadWorkerByIdUseCase(tokenBundle.getToken(),tokenBundle.getWorkerId())
+            val storageWorker = loadStorageWorkerByDepartmentUseCase(
+                tokenBundle.getToken(),
+                tokenBundle.getDepartment()
+            )
+            WorkerFragmentState.Results(
+                transactions = transactions,
+                worker = worker,
+                storageWorker = storageWorker
+            ) as WorkerFragmentState
         }
         .mergeWith(loadingFlow)
         .catch {

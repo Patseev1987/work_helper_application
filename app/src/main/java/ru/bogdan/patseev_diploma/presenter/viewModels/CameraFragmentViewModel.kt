@@ -50,11 +50,11 @@ class CameraFragmentViewModel @Inject constructor(
         if (checkToolCode(inputString)) {
             viewModelScope.launch(Dispatchers.IO) {
                 try {
-                    _state.value = CameraFragmentState.Result(
-                        loadToolsForSearchUseCase(inputString).first(),
-                        showButton(worker)
-                    )
-                    _tool = loadToolsForSearchUseCase(inputString).first()
+//                    _state.value = CameraFragmentState.Result(
+//                        loadToolsForSearchUseCase(inputString).first(),
+//                        showButton(worker)
+//                    )
+//                    _tool = loadToolsForSearchUseCase(inputString).first()
                 } catch (e: Exception) {
                     _state.value = CameraFragmentState.ConnectionProblem(
                         application.getString(

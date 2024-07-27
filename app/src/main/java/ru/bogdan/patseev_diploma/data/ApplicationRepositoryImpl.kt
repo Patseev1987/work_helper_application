@@ -16,11 +16,12 @@ class ApplicationRepositoryImpl @Inject constructor(
     private val apiHelper: ApiHelper
 ) : ApplicationRepository {
     override suspend fun loadStorageRecordByWorkerId(
+        token:String,
         workerId: Long,
         toolType: ToolType,
         toolCode: String
     ): List<StorageRecord> {
-        return apiHelper.loadStorageRecordByWorkerId(workerId, toolType, toolCode)
+        return apiHelper.loadStorageRecordByWorkerId(token, workerId, toolType, toolCode)
     }
 
     override suspend fun checkLogin(login: String, password: String): Token {
@@ -28,42 +29,48 @@ class ApplicationRepositoryImpl @Inject constructor(
     }
 
     override suspend fun createTransaction(
+        token:String,
         sender: Worker,
         receiver: Worker,
         tool: Tool,
         amount: Int
     ): Transaction {
-        return apiHelper.createTransaction(sender, receiver, tool, amount)
+        return apiHelper.createTransaction(token, sender, receiver, tool, amount)
     }
 
-    override fun loadTransactionsByWorkerId(workerId: Long): Flow<List<Transaction>> {
-        return apiHelper.loadTransactionsByWorkerId(workerId)
+    override fun loadTransactionsByWorkerId( token:String,workerId: Long): Flow<List<Transaction>> {
+        return apiHelper.loadTransactionsByWorkerId(token, workerId)
     }
 
-    override suspend fun loadWorkersByDepartment(department: Department): List<Worker> {
-        return apiHelper.loadWorkersByDepartment(department)
+    override suspend fun loadWorkersByDepartment( token:String,department: Department): List<Worker> {
+        return apiHelper.loadWorkersByDepartment(token, department)
     }
 
-    override suspend fun loadStorageWorkerByDepartment(department: Department): Worker {
-        return apiHelper.loadStorageWorkerByDepartment(department)
+    override suspend fun loadStorageWorkerByDepartment( token:String,department: Department): Worker {
+        return apiHelper.loadStorageWorkerByDepartment(token, department)
     }
 
-    override suspend fun loadAmountByWorkerAndTool(worker: Worker, tool: Tool): Int {
-        return apiHelper.loadAmountByWorkerAndTool(worker, tool)
+    override suspend fun loadAmountByWorkerAndTool( token:String, worker: Worker, tool: Tool): Int {
+        return apiHelper.loadAmountByWorkerAndTool( token, worker, tool)
     }
 
-    override suspend fun loadToolsForSearch(code: String): List<Tool> {
-        return apiHelper.loadToolsForSearch(code)
+    override suspend fun loadToolsForSearch( token:String, code: String): List<Tool> {
+        return apiHelper.loadToolsForSearch(token, code)
     }
 
     override suspend fun loadTransactionsWithAnotherDepartment(
+        token:String,
         anotherDepartment: Department,
         toolCode: String
     ): List<Transaction> {
-        return apiHelper.loadTransactionsWithAnotherDepartment(anotherDepartment, toolCode)
+        return apiHelper.loadTransactionsWithAnotherDepartment(token ,anotherDepartment, toolCode)
     }
 
     override suspend fun updateTransactions() {
         apiHelper.updateTransactions()
+    }
+
+    override suspend fun loadWorkerById(token: String, id: Long): Worker {
+      return  apiHelper.loadWorkerById(token, id)
     }
 }

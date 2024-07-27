@@ -6,5 +6,5 @@ import javax.inject.Inject
 class LoadToolsForSearchUseCase @Inject constructor(
     private val repository: ApplicationRepository
 ) {
-    suspend operator fun invoke(code: String) = repository.loadToolsForSearch(code)
+    suspend operator fun invoke(token: String, code: String) = repository.loadToolsForSearch(token, code)
 }

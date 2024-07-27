@@ -18,6 +18,7 @@ import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.RecycleVIewTransactionState
 import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
 import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import java.lang.RuntimeException
 import java.net.ConnectException
 import javax.inject.Inject
@@ -26,6 +27,8 @@ class RecycleViewTransactionsViewModel @Inject constructor(
     private val application: MyApplication,
     private val loadTransactionsWithAnotherDepartmentUseCase: LoadTransactionsWithAnotherDepartmentUseCase
 ) : ViewModel() {
+
+    private val tokenBundle = TokenBundle(application)
 
     private val searchString: MutableStateFlow<String> =
         MutableStateFlow(BLANK_TOOL_CODE)
@@ -40,6 +43,7 @@ class RecycleViewTransactionsViewModel @Inject constructor(
             try {
                 _state.value = RecycleVIewTransactionState.Result(
                     loadTransactionsWithAnotherDepartmentUseCase(
+                        tokenBundle.getToken(),
                         anotherDepartment,
                         toolCode = toolCode
                     ),

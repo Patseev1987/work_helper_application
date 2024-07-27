@@ -19,6 +19,7 @@ import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.util.BLANK_TOOL_CODE
 import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
 import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import java.net.ConnectException
 import javax.inject.Inject
 
@@ -28,6 +29,8 @@ class ToolsSearchFragmentViewModel @Inject constructor(
     private val application: MyApplication,
     private val loadToolsForSearchUseCase: LoadToolsForSearchUseCase
 ) : ViewModel() {
+
+   private val tokenBundle = TokenBundle(application)
 
     private val _state: MutableStateFlow<FragmentSearchToolsState> =
         MutableStateFlow(FragmentSearchToolsState.Waiting)
@@ -53,7 +56,7 @@ class ToolsSearchFragmentViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _state.value = FragmentSearchToolsState.Loading
-                val tools = loadToolsForSearchUseCase(code)
+                val tools = loadToolsForSearchUseCase(tokenBundle.getToken(), code)
                 _state.value = FragmentSearchToolsState.Result(tools)
             } catch (e: Exception) {
 

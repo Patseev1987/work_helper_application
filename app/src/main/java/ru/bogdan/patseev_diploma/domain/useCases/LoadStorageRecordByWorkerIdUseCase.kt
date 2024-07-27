@@ -8,10 +8,12 @@ class LoadStorageRecordByWorkerIdUseCase @Inject constructor(
     private val repository: ApplicationRepository
 ) {
     suspend operator fun invoke(
+        token: String,
         workerId: Long,
         toolType: ToolType,
         toolCode: String
     ) = repository.loadStorageRecordByWorkerId(
+        token,
         workerId,
         toolType,
         toolCode

@@ -25,34 +25,35 @@ class ApiHelperImpl @Inject constructor(
     private val updateTransactionsFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
 
     override suspend fun loadStorageRecordByWorkerId(
+        token:String,
         workerId: Long,
         toolType: ToolType,
         toolCode: String
     ): List<StorageRecord> {
-        return apiService.loadStorageRecordsByWorkerId(workerId, toolType, toolCode)
+        return apiService.loadStorageRecordsByWorkerId(token, workerId, toolType, toolCode)
             .map { it.toStorageRecord() }
     }
 
 
-    override fun loadTransactionsByWorkerId(workerId: Long): Flow<List<Transaction>> {
+    override fun loadTransactionsByWorkerId( token:String,workerId: Long): Flow<List<Transaction>> {
         return flow {
-            emit(apiService.loadTransactionsByWorkerId(workerId)
+            emit(apiService.loadTransactionsByWorkerId(token, workerId)
                 .map { it.toTransaction() })
             updateTransactionsFlow.collect {
-                emit(apiService.loadTransactionsByWorkerId(workerId)
+                emit(apiService.loadTransactionsByWorkerId(token, workerId)
                     .map { it.toTransaction() })
             }
         }
     }
 
 
-    override suspend fun loadWorkersByDepartment(department: Department): List<Worker> {
-        return apiService.loadWorkersByDepartment(department)
+    override suspend fun loadWorkersByDepartment( token:String,department: Department): List<Worker> {
+        return apiService.loadWorkersByDepartment(token, department)
             .map { it.toWorker() }
     }
 
-    override suspend fun loadStorageWorkerByDepartment(department: Department): Worker {
-        return apiService.loadStorageWorkerByDepartment(department).toWorker()
+    override suspend fun loadStorageWorkerByDepartment( token:String,department: Department): Worker {
+        return apiService.loadStorageWorkerByDepartment(token, department).toWorker()
     }
 
 
@@ -62,6 +63,7 @@ class ApiHelperImpl @Inject constructor(
     }
 
     override suspend fun createTransaction(
+        token:String,
         sender: Worker,
         receiver: Worker,
         tool: Tool,
@@ -74,26 +76,28 @@ class ApiHelperImpl @Inject constructor(
             amount = amount,
             date = LocalDate.now()
         )
-        val commitTransaction = apiService.createTransaction(transaction.toTransactionWEB())
+        val commitTransaction = apiService.createTransaction(token, transaction.toTransactionWEB())
         return commitTransaction.toTransaction()
     }
 
-    override suspend fun loadAmountByWorkerAndTool(worker: Worker, tool: Tool): Int {
+    override suspend fun loadAmountByWorkerAndTool(token:String,worker: Worker, tool: Tool): Int {
         return apiService.loadAmountByWorkerAndTool(
+            token,
             worker.id,
             tool.code
         )
     }
 
-    override suspend fun loadToolsForSearch(code: String): List<Tool> {
-        return apiService.loadToolsForSearch(code).map { it.toTool() }
+    override suspend fun loadToolsForSearch( token:String,code: String): List<Tool> {
+        return apiService.loadToolsForSearch(token,code).map { it.toTool() }
     }
 
     override suspend fun loadTransactionsWithAnotherDepartment(
+        token:String,
         anotherDepartment: Department,
         toolCode: String
     ): List<Transaction> {
-        return apiService.loadTransactionsWithAnotherDepartment(anotherDepartment, toolCode)
+        return apiService.loadTransactionsWithAnotherDepartment(token, anotherDepartment, toolCode)
             .map { it.toTransaction() }
     }
 
@@ -101,5 +105,8 @@ class ApiHelperImpl @Inject constructor(
         updateTransactionsFlow.emit(Unit)
     }
 
+    override suspend fun loadWorkerById(token: String, id: Long): Worker {
+            return ApiFactory.apiService.loadWorkerById(token,id)
+    }
 
 }

@@ -17,6 +17,7 @@ import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewWorkerState
 import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
 import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import java.net.ConnectException
 import javax.inject.Inject
 
@@ -25,6 +26,8 @@ class RecycleViewWorkersViewModel @Inject constructor(
     private val application: MyApplication,
     private val loadWorkersByDepartmentUseCase: LoadWorkersByDepartmentUseCase
 ) : ViewModel() {
+
+    val tokenBundle = TokenBundle(application)
 
     val searchString: MutableStateFlow<String> = MutableStateFlow("")
 
@@ -55,6 +58,7 @@ class RecycleViewWorkersViewModel @Inject constructor(
             try {
                 _state.value = RecycleViewWorkerState.Loading
                 workers = loadWorkersByDepartmentUseCase(
+                    tokenBundle.getToken(),
                     application.worker.department
                 )
                 _state.value = RecycleViewWorkerState.Result(workers)

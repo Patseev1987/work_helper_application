@@ -1,13 +1,10 @@
 package ru.bogdan.patseev_diploma.data.web
 
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import ru.bogdan.patseev_diploma.data.web.pojo.*
 import ru.bogdan.patseev_diploma.domain.models.Transaction
+import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 
@@ -15,6 +12,7 @@ import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 interface ApiService {
     @GET("records/workerId")
     suspend fun loadStorageRecordsByWorkerId(
+        @Header("Authorization") token: String,
         @Query("workerId") workerId: Long,
         @Query("toolType") toolType: ToolType,
         @Query("toolCode") toolCode: String
@@ -22,6 +20,7 @@ interface ApiService {
 
     @GET("transactions/worker")
     suspend fun loadTransactionsByWorkerId(
+        @Header("Authorization") token: String,
         @Query("workerId") workerId: Long,
     ): List<TransactionWEB>
 
@@ -33,31 +32,46 @@ interface ApiService {
 
     @GET("storage_worker_by_department")
     suspend fun loadStorageWorkerByDepartment(
+        @Header("Authorization") token: String,
         @Query("department") department: Department
     ): WorkerWEB
 
     @GET("workers_by_department")
     suspend fun loadWorkersByDepartment(
+        @Header("Authorization") token: String,
         @Query("department") department: Department
     ): List<WorkerWEB>
 
 
     @POST("transaction/create")
-    suspend fun createTransaction(@Body transaction: TransactionWEB): TransactionWEB
+    suspend fun createTransaction(
+        @Header("Authorization") token: String,
+        @Body transaction: TransactionWEB): TransactionWEB
 
     @GET("tools/code")
-    suspend fun loadToolsForSearch(@Query("code") code: String): List<ToolWEB>
+    suspend fun loadToolsForSearch(
+        @Header("Authorization") token: String,
+        @Query("code") code: String): List<ToolWEB>
 
     @GET("records/amount")
     suspend fun loadAmountByWorkerAndTool(
+        @Header("Authorization") token: String,
         @Query("workerId") workerId: Long,
         @Query("toolCode") toolCode: String
     ): Int
 
     @GET("transactions/actionWithAnotherDepartments")
     suspend fun loadTransactionsWithAnotherDepartment(
+        @Header("Authorization") token: String,
         @Query("anotherDepartment") anotherDepartment: Department,
         @Query("toolCode") toolCode: String
     ): List<TransactionWEB>
+
+
+    @GET("worker/{id}")
+    suspend fun loadWorkerById(
+        @Header("Authorization") token: String,
+        @Path("id") workerId: Long
+    ): Worker
 }
 

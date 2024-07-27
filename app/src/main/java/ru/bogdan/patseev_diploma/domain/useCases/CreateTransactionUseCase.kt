@@ -7,9 +7,10 @@ import javax.inject.Inject
 
 class CreateTransactionUseCase @Inject constructor(private val repository: ApplicationRepository) {
     suspend operator fun invoke(
+        token: String,
         sender: Worker,
         receiver: Worker,
         tool: Tool,
         amount: Int
-    ) = repository.createTransaction(sender, receiver, tool, amount)
+    ) = repository.createTransaction(token, sender, receiver, tool, amount)
 }

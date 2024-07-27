@@ -21,7 +21,6 @@ fun Worker.toWorkerWEB(): WorkerWEB {
         department = this.department,
         patronymic = this.patronymic,
         login = this.login,
-        password = this.password,
         joinDate = this.joinDate.toString(),
         type = this.type,
     )
@@ -37,7 +36,6 @@ fun WorkerWEB.toWorker(): Worker {
         department = this.department,
         patronymic = this.patronymic,
         login = this.login,
-        password = this.password,
     )
 }
 

@@ -6,5 +6,5 @@ import javax.inject.Inject
 class LoadTransactionsByWorkerIdUseCase @Inject constructor(
     private val repository: ApplicationRepository
 ) {
-    operator fun invoke(workerId: Long) = repository.loadTransactionsByWorkerId(workerId)
+    operator fun invoke(token: String, workerId: Long) = repository.loadTransactionsByWorkerId(token, workerId)
 }

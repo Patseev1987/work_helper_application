@@ -19,8 +19,6 @@ data class WorkerWEB(
     val lastName: String,
     @SerializedName("login")
     val login: String ,
-    @SerializedName("password")
-    val password: String,
     @SerializedName("patronymic")
     val patronymic: String,
     @SerializedName("type")
