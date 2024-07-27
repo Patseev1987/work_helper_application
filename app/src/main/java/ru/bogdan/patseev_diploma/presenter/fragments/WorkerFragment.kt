@@ -52,9 +52,7 @@ class WorkerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView(binding, (requireActivity().application as MyApplication).worker)
         observeViewModel(binding, viewModel)
-
     }
 
     //set listener for bottom bar menu

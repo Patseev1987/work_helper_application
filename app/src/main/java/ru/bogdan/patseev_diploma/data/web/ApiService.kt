@@ -10,7 +10,7 @@ import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 
 
 interface ApiService {
-    @GET("records/workerId")
+    @GET("api/records/workerId")
     suspend fun loadStorageRecordsByWorkerId(
         @Header("Authorization") token: String,
         @Query("workerId") workerId: Long,
@@ -18,7 +18,7 @@ interface ApiService {
         @Query("toolCode") toolCode: String
     ): List<StorageRecordWEB>
 
-    @GET("transactions/worker")
+    @GET("api/transactions/worker")
     suspend fun loadTransactionsByWorkerId(
         @Header("Authorization") token: String,
         @Query("workerId") workerId: Long,
@@ -30,37 +30,37 @@ interface ApiService {
     @Body userDTOSignIn: UserDTOSignIn
     ):Response<Token>
 
-    @GET("storage_worker_by_department")
+    @GET("api/storage_worker_by_department")
     suspend fun loadStorageWorkerByDepartment(
         @Header("Authorization") token: String,
         @Query("department") department: Department
     ): WorkerWEB
 
-    @GET("workers_by_department")
+    @GET("api/workers_by_department")
     suspend fun loadWorkersByDepartment(
         @Header("Authorization") token: String,
         @Query("department") department: Department
     ): List<WorkerWEB>
 
 
-    @POST("transaction/create")
+    @POST("api/transaction/create")
     suspend fun createTransaction(
         @Header("Authorization") token: String,
         @Body transaction: TransactionWEB): TransactionWEB
 
-    @GET("tools/code")
+    @GET("api/tools/code")
     suspend fun loadToolsForSearch(
         @Header("Authorization") token: String,
         @Query("code") code: String): List<ToolWEB>
 
-    @GET("records/amount")
+    @GET("api/records/amount")
     suspend fun loadAmountByWorkerAndTool(
         @Header("Authorization") token: String,
         @Query("workerId") workerId: Long,
         @Query("toolCode") toolCode: String
     ): Int
 
-    @GET("transactions/actionWithAnotherDepartments")
+    @GET("api/transactions/actionWithAnotherDepartments")
     suspend fun loadTransactionsWithAnotherDepartment(
         @Header("Authorization") token: String,
         @Query("anotherDepartment") anotherDepartment: Department,
@@ -68,10 +68,10 @@ interface ApiService {
     ): List<TransactionWEB>
 
 
-    @GET("worker/{id}")
+    @GET("api/worker_by_id/{id}")
     suspend fun loadWorkerById(
         @Header("Authorization") token: String,
         @Path("id") workerId: Long
-    ): Worker
+    ): WorkerWEB
 }
 

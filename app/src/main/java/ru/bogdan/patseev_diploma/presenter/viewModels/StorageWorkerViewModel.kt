@@ -52,7 +52,7 @@ class StorageWorkerViewModel @Inject constructor(
 
     val state: StateFlow<StorageWorkerFragmentState> = loadTransactionsByWorkerIdUseCase(
         tokenBundle.getToken(),
-        application.worker.id
+        tokenBundle.getWorkerId()
     )
         .onStart { StorageWorkerFragmentState.Loading }
         .map {

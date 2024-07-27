@@ -59,7 +59,7 @@ class RecycleViewWorkersViewModel @Inject constructor(
                 _state.value = RecycleViewWorkerState.Loading
                 workers = loadWorkersByDepartmentUseCase(
                     tokenBundle.getToken(),
-                    application.worker.department
+                    tokenBundle.getDepartment()
                 )
                 _state.value = RecycleViewWorkerState.Result(workers)
             } catch (e: Exception) {

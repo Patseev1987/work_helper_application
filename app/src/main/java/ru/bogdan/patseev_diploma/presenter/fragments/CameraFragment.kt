@@ -155,10 +155,10 @@ class CameraFragment : Fragment() {
     ) {
         barcodes.firstOrNull()?.let {
             it.rawValue?.let { inputString ->
-                viewModel.getTool(
-                    inputString,
-                    (requireActivity().application as MyApplication).worker
-                )
+//                viewModel.getTool(
+//                    inputString,
+//
+//                )
             }
         }
     }
@@ -179,11 +179,11 @@ class CameraFragment : Fragment() {
     ) {
         binding.bGiveTool.setOnClickListener {
             try {
-                val action = CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
-                    tool = viewModel.tool,
-                    sender = (this@CameraFragment.requireActivity().application as MyApplication).worker
-                )
-                findNavController().navigate(action)
+//                val action = CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
+//                    tool = viewModel.tool,
+//                    sender = (this@CameraFragment.requireActivity().application as MyApplication).worker
+//                )
+//                findNavController().navigate(action)
             } catch (e: RuntimeException) {
                 Toast.makeText(
                     this@CameraFragment.context,
@@ -194,11 +194,11 @@ class CameraFragment : Fragment() {
         }
         binding.bTakeTool.setOnClickListener {
             try {
-                val action = CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
-                    tool = viewModel.tool,
-                    receiver = (this@CameraFragment.requireActivity().application as MyApplication).worker
-                )
-                findNavController().navigate(action)
+//                val action = CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
+//                    tool = viewModel.tool,
+//                    receiver = (this@CameraFragment.requireActivity().application as MyApplication).worker
+//                )
+//                findNavController().navigate(action)
             } catch (e: RuntimeException) {
                 Toast.makeText(
                     this@CameraFragment.context,

@@ -73,67 +73,67 @@ class StorageWorkerFragment : Fragment() {
                 }
 
                 R.id.item_storage_wealth -> {
-                    val action = StorageWorkerFragmentDirections
-                        .actionStorageWorkerFragmentToTabLayoutFragment(
-                        (requireActivity().application as MyApplication).worker
-                    )
-                    findNavController().navigate(action)
+//                    val action = StorageWorkerFragmentDirections
+//                        .actionStorageWorkerFragmentToTabLayoutFragment(
+//                        (requireActivity().application as MyApplication).worker
+//                    )
+//                    findNavController().navigate(action)
                 }
 
                 R.id.item_take_tool -> {
-                    val receiver = (this.requireActivity().application as MyApplication).worker
-                    val action = StorageWorkerFragmentDirections
-                        .actionStorageWorkerFragmentToTransactionFragment(receiver = receiver)
-                    findNavController().navigate(action)
+//                    val receiver = (this.requireActivity().application as MyApplication).worker
+//                    val action = StorageWorkerFragmentDirections
+//                        .actionStorageWorkerFragmentToTransactionFragment(receiver = receiver)
+//                    findNavController().navigate(action)
                 }
 
                 R.id.item_to_sharpen -> {
-                    val receiver = viewModel.sharpen
-                    val sender = (this.requireActivity().application as MyApplication).worker
-                    val action = StorageWorkerFragmentDirections
-                        .actionStorageWorkerFragmentToTransactionFragment(
-                            receiver = receiver,
-                            sender = sender
-                        )
-                    findNavController().navigate(action)
+//                    val receiver = viewModel.sharpen
+//                    val sender = (this.requireActivity().application as MyApplication).worker
+//                    val action = StorageWorkerFragmentDirections
+//                        .actionStorageWorkerFragmentToTransactionFragment(
+//                            receiver = receiver,
+//                            sender = sender
+//                        )
+//                    findNavController().navigate(action)
                 }
 
                 R.id.item_from_sharpen -> {
-                    val sender = viewModel.sharpen
-                    val receiver = (this.requireActivity().application as MyApplication).worker
-                    val action = StorageWorkerFragmentDirections
-                        .actionStorageWorkerFragmentToTransactionFragment(
-                            receiver = receiver,
-                            sender = sender
-                        )
-                    findNavController().navigate(action)
+//                    val sender = viewModel.sharpen
+//                    val receiver = (this.requireActivity().application as MyApplication).worker
+//                    val action = StorageWorkerFragmentDirections
+//                        .actionStorageWorkerFragmentToTransactionFragment(
+//                            receiver = receiver,
+//                            sender = sender
+//                        )
+//                    findNavController().navigate(action)
                 }
 
                 R.id.item_storage_of_decommissioned_tools -> {
-                    val receiver = viewModel.storageOfDecommissionedTools
-                    val sender = (this.requireActivity().application as MyApplication).worker
-                    val action = StorageWorkerFragmentDirections
-                        .actionStorageWorkerFragmentToTransactionFragment(
-                            receiver = receiver,
-                            sender = sender
-                        )
-                    findNavController().navigate(action)
+//                    val receiver = viewModel.storageOfDecommissionedTools
+//                    val sender = (this.requireActivity().application as MyApplication).worker
+//                    val action = StorageWorkerFragmentDirections
+//                        .actionStorageWorkerFragmentToTransactionFragment(
+//                            receiver = receiver,
+//                            sender = sender
+//                        )
+//                    findNavController().navigate(action)
                 }
 
                 R.id.item_give_tool -> {
-                    val sender = (this.requireActivity().application as MyApplication).worker
-                    val action = StorageWorkerFragmentDirections
-                        .actionStorageWorkerFragmentToTransactionFragment(sender = sender)
-                    findNavController().navigate(action)
+//                    val sender = (this.requireActivity().application as MyApplication).worker
+//                    val action = StorageWorkerFragmentDirections
+//                        .actionStorageWorkerFragmentToTransactionFragment(sender = sender)
+//                    findNavController().navigate(action)
                 }
 
-                R.id.item_workers -> {
-                    val action = StorageWorkerFragmentDirections
-                        .actionStorageWorkerFragmentToRecycleViewWithWorkersFragment(
-                            RecycleViewWithWorkersFragment.STORAGE_WORKER_MODE
-                        )
-                    findNavController().navigate(action)
-                }
+//                R.id.item_workers -> {
+//                    val action = StorageWorkerFragmentDirections
+//                        .actionStorageWorkerFragmentToRecycleViewWithWorkersFragment(
+//                            RecycleViewWithWorkersFragment.STORAGE_WORKER_MODE
+//                        )
+//                    findNavController().navigate(action)
+//                }
 
                 R.id.item_list_of_decommissioned_tools -> {
                     val action = StorageWorkerFragmentDirections
@@ -165,9 +165,9 @@ class StorageWorkerFragment : Fragment() {
     }
 
     private fun initViews(binding: FragmentStorageWorkerBinding) {
-        val worker = (this.requireActivity().application as MyApplication).worker
-        binding.twNameStorageWorker.text = worker.firstName
-        binding.twDepartmentStorageWorker.text = worker.department.toNormalName()
+//        val worker = (this.requireActivity().application as MyApplication).worker
+//        binding.twNameStorageWorker.text = worker.firstName
+//        binding.twDepartmentStorageWorker.text = worker.department.toNormalName()
 
     }
 

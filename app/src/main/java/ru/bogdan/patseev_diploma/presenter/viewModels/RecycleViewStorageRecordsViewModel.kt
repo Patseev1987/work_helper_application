@@ -1,5 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -15,12 +16,8 @@ import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.domain.useCases.LoadStorageRecordByWorkerIdUseCase
-import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
-import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
-import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
 import ru.bogdan.patseev_diploma.util.TokenBundle
-import java.net.ConnectException
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -47,7 +44,7 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
                 _state.value = RecycleViewState.Result(
                     loadStorageRecordByWorkerIdUseCase(
                         tokenBundle.getToken(),
-                        tokenBundle.getWorkerId(),
+                        worker.id,
                         position.getToolType(),
                         toolCode)
                 )

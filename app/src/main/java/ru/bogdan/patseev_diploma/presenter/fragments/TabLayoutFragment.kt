@@ -1,6 +1,7 @@
 package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class TabLayoutFragment : Fragment() {
 
     private val worker: Worker by lazy {
         TabLayoutFragmentArgs.fromBundle(requireArguments()).worker
+
     }
 
     @Inject
@@ -50,10 +52,8 @@ class TabLayoutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val adapter = PageAdapter(worker, this.requireActivity())
         binding.viewPager.adapter = adapter
-
         binding.apply {
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text = viewModel.tabNames[position]

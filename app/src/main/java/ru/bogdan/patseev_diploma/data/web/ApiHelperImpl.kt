@@ -1,6 +1,7 @@
 package ru.bogdan.patseev_diploma.data.web
 
 
+import android.util.Log
 import kotlinx.coroutines.flow.*
 import ru.bogdan.patseev_diploma.data.web.mappers.toStorageRecord
 import ru.bogdan.patseev_diploma.data.web.mappers.toTool
@@ -31,7 +32,8 @@ class ApiHelperImpl @Inject constructor(
         toolCode: String
     ): List<StorageRecord> {
         return apiService.loadStorageRecordsByWorkerId(token, workerId, toolType, toolCode)
-            .map { it.toStorageRecord() }
+            .map {
+                it.toStorageRecord() }
     }
 
 
@@ -106,7 +108,7 @@ class ApiHelperImpl @Inject constructor(
     }
 
     override suspend fun loadWorkerById(token: String, id: Long): Worker {
-            return ApiFactory.apiService.loadWorkerById(token,id)
+            return ApiFactory.apiService.loadWorkerById(token,id).toWorker()
     }
 
 }
