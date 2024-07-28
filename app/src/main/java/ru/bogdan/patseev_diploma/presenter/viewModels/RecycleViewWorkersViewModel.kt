@@ -58,8 +58,8 @@ class RecycleViewWorkersViewModel @Inject constructor(
                 )
                 _state.value = RecycleViewWorkerState.Result(workers)
             }catch (e: retrofit2.HttpException) {
-                Log.d("XYUXYUXYU", e.message())
-                if (e.message().equals("HTTP 406")){
+                Log.d("XYUXYUXYU", e.message.toString())
+                if (e.message.toString()==("HTTP 406 ")){
                     Log.d("XYUXYUXYU", "YRQYRQYRQYRQ")
                 }
             } catch (e: Exception) {
