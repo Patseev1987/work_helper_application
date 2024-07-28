@@ -1,5 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.FlowPreview
@@ -49,7 +50,7 @@ class ToolsSearchFragmentViewModel @Inject constructor(
                 val tools = loadToolsForSearchUseCase(tokenBundle.getToken(), code)
                 _state.value = FragmentSearchToolsState.Result(tools)
             } catch (e: Exception) {
-
+                Log.d("EXCEPTION_EXCEPTION", "ToolSearchViewModel ${e.message}")
                 _state.value = FragmentSearchToolsState.ConnectionProblem(
                     application.getString(
                         R.string

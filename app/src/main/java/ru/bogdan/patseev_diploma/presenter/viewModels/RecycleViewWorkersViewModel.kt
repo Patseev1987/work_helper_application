@@ -1,5 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.FlowPreview
@@ -56,6 +57,11 @@ class RecycleViewWorkersViewModel @Inject constructor(
                     tokenBundle.getDepartment()
                 )
                 _state.value = RecycleViewWorkerState.Result(workers)
+            }catch (e: retrofit2.HttpException) {
+                Log.d("XYUXYUXYU", e.message())
+                if (e.message().equals("HTTP 406")){
+                    Log.d("XYUXYUXYU", "YRQYRQYRQYRQ")
+                }
             } catch (e: Exception) {
                 _state.value = RecycleViewWorkerState.ConnectionProblem(
                     application.getString(

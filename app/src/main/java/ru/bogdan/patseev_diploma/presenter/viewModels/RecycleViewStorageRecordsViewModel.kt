@@ -1,5 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -48,6 +49,7 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
                         toolCode)
                 )
             } catch (e: Exception) {
+                Log.d("EXCEPTION_EXCEPTION", "RecycleViewStorageRecordsViewModel ${e.message}")
                 _state.value = RecycleViewState.ConnectionProblem(
                     application.getString(
                         R.string

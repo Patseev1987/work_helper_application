@@ -1,5 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
@@ -48,6 +49,7 @@ class WorkerFragmentViewModel @Inject constructor(
         }
         .mergeWith(loadingFlow)
         .catch {
+            Log.d("EXCEPTION_EXCEPTION", "WorkerFragmentViewModel ${it.message}")
             loadingFlow.emit(
                 WorkerFragmentState.ConnectionProblem(
                     application.getString(

@@ -1,5 +1,6 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
@@ -54,6 +55,7 @@ class StorageWorkerViewModel @Inject constructor(
                 ) as StorageWorkerFragmentState
         }
         .catch {
+            Log.d("EXCEPTION_EXCEPTION", "StorageWorkerVIewModel ${it.message}")
             loadingFlow.emit(
                 StorageWorkerFragmentState.ConnectionProblem(
                     application.getString(
