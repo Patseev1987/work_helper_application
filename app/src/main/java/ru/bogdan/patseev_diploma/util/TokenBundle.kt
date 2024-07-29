@@ -3,10 +3,12 @@ package ru.bogdan.patseev_diploma.util
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import androidx.navigation.NavController
 import com.auth0.android.jwt.JWT
+import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
-import java.io.Serializable
 
 data class TokenBundle(private val context:Context){
 
@@ -45,6 +47,10 @@ data class TokenBundle(private val context:Context){
         return Department.valueOf(type)
     }
 
+    fun returnToLoginFragment(navController: NavController, destinationId:Int){
+        navController.navigate(destinationId)
+        Toast.makeText(context, context.getString(R.string.token_was_expired),Toast.LENGTH_SHORT).show()
+    }
 
     private fun getTokenWithoutBearer(): String {
         val sharedPref = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)

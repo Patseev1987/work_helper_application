@@ -3,6 +3,7 @@ package ru.bogdan.patseev_diploma.presenter.viewModels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 class RecycleViewWorkersViewModel @Inject constructor(
     private val application: MyApplication,
-    private val loadWorkersByDepartmentUseCase: LoadWorkersByDepartmentUseCase
+    private val loadWorkersByDepartmentUseCase: LoadWorkersByDepartmentUseCase,
+    private val navController: NavController
 ) : ViewModel() {
 
     val tokenBundle = TokenBundle(application)
@@ -57,10 +59,12 @@ class RecycleViewWorkersViewModel @Inject constructor(
                     tokenBundle.getDepartment()
                 )
                 _state.value = RecycleViewWorkerState.Result(workers)
-            }catch (e: retrofit2.HttpException) {
-                Log.d("XYUXYUXYU", e.message.toString())
-                if (e.message.toString()==("HTTP 406 ")){
-                    Log.d("XYUXYUXYU", "YRQYRQYRQYRQ")
+            } catch (e: retrofit2.HttpException) {
+                if (e.message?.trim() == HTTP_406) {
+                    tokenBundle.returnToLoginFragment(
+                        navController,
+                        R.id.action_recycleViewWithWorkersFragment_to_loginFragment
+                    )
                 }
             } catch (e: Exception) {
                 _state.value = RecycleViewWorkerState.ConnectionProblem(
@@ -73,4 +77,7 @@ class RecycleViewWorkersViewModel @Inject constructor(
         }
     }
 
+    private companion object {
+        const val HTTP_406 = "HTTP 406"
+    }
 }

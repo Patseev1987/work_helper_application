@@ -21,13 +21,14 @@ interface ApplicationComponent {
     fun inject(cameraFragment: CameraFragment)
     fun inject(loginFragment: LoginFragment)
     fun inject(recycleViewTransactionFragment: RecycleViewTransactionFragment)
-    fun inject(recycleViewWithWorkersFragment: RecycleViewWithWorkersFragment)
     fun inject(storageWorkerFragment: StorageWorkerFragment)
     fun inject(tabLayoutFragment: TabLayoutFragment)
     fun inject(toolsForSearchFragment: ToolsForSearchFragment)
     fun inject(transactionFragment: TransactionFragment)
     fun inject(workerFragment: WorkerFragment)
     fun inject(recycleViewStorageRecordsFragment: RecycleViewStorageRecordsFragment)
+
+    fun getSubComponentFactory():SubComponentApplication.Factory
 
     @Factory
     interface ComponentFactory {

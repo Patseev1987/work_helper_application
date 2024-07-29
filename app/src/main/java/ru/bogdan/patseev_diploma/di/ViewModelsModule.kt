@@ -42,12 +42,6 @@ interface ViewModelsModule {
         recycleViewTransactionsViewModel: RecycleViewTransactionsViewModel
     ): ViewModel
 
-    @Binds
-    @ViewModelKey(RecycleViewWorkersViewModel::class)
-    @IntoMap
-    fun bindRecycleViewWorkersViewModel(
-        recycleViewWorkersViewModel: RecycleViewWorkersViewModel
-    ): ViewModel
 
     @Binds
     @ViewModelKey(StorageWorkerViewModel::class)
