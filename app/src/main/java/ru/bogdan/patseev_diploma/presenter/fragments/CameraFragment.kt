@@ -66,6 +66,8 @@ class CameraFragment : Fragment() {
 
     private val component by lazy {
         (this.activity?.application as MyApplication).component
+            .getSubComponentFactory()
+            .create(findNavController())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

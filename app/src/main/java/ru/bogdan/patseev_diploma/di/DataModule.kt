@@ -4,6 +4,7 @@ import android.app.Application
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.data.ApplicationRepositoryImpl
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelper
@@ -30,12 +31,7 @@ interface DataModule {
         fun provideApiService() = ApiFactory.apiService
 
         @Provides
-        fun provideWorker(fragment: RecycleViewStorageRecordsFragment): Long {
-            return fragment.id.toLong()
-        }
-
-        @Provides
-        fun provideTokenBundle(application: Application): TokenBundle {
+        fun provideTokenBundle(application: MyApplication): TokenBundle {
             return TokenBundle(application)
         }
     }

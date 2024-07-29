@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
@@ -35,6 +36,8 @@ class ToolsForSearchFragment : Fragment() {
     }
     private val component by lazy {
         (this.activity?.application as MyApplication).component
+            .getSubComponentFactory()
+            .create(findNavController())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

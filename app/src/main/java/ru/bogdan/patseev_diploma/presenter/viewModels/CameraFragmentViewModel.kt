@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.Tool
@@ -67,10 +68,12 @@ class CameraFragmentViewModel @Inject constructor(
                     ).first()
                 } catch (e: retrofit2.HttpException) {
                     if (e.message?.trim() == HTTP_406) {
-                        tokenBundle.returnToLoginFragment(
-                            navController,
-                            R.id.action_recycleViewWithWorkersFragment_to_loginFragment
-                        )
+                        withContext(Dispatchers.Main){
+                            tokenBundle.returnToLoginFragment(
+                                navController,
+                                R.id.action_recycleViewWithWorkersFragment_to_loginFragment
+                            )
+                        }
                     }
                 } catch (e: Exception) {
                     _state.value = CameraFragmentState.ConnectionProblem(

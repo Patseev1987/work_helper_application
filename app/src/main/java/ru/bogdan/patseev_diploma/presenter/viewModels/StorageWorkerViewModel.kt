@@ -3,8 +3,10 @@ package ru.bogdan.patseev_diploma.presenter.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
@@ -58,10 +60,13 @@ class StorageWorkerViewModel @Inject constructor(
         .mergeWith(loadingFlow)
         .catch {
             if (it.message?.trim() == HTTP_406) {
-                tokenBundle.returnToLoginFragment(
-                    navController,
-                    R.id.action_recycleViewWithWorkersFragment_to_loginFragment
-                )} else {
+                withContext(Dispatchers.Main){
+                    tokenBundle.returnToLoginFragment(
+                        navController,
+                        R.id.action_recycleViewWithWorkersFragment_to_loginFragment
+                    )
+                }
+             } else {
                     loadingFlow.emit(
                         StorageWorkerFragmentState.ConnectionProblem(
                             application.getString(
