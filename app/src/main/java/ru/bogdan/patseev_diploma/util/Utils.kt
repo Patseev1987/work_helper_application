@@ -2,6 +2,7 @@ package ru.bogdan.patseev_diploma.util
 
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 
+const val HTTP_406 = "HTTP 406"
 
 fun Department.toNormalName(): String {
     return when (this) {

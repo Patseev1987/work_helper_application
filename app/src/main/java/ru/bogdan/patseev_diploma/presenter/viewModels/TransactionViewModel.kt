@@ -1,8 +1,8 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,16 +14,17 @@ import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.useCases.CreateTransactionUseCase
 import ru.bogdan.patseev_diploma.domain.useCases.LoadAmountByWorkerAndToolUseCase
 import ru.bogdan.patseev_diploma.presenter.states.TransactionState
+import ru.bogdan.patseev_diploma.util.HTTP_406
 import ru.bogdan.patseev_diploma.util.TokenBundle
 import javax.inject.Inject
 
 class TransactionViewModel @Inject constructor(
     private val application: MyApplication,
     private val loadAmountByWorkerAndToolUseCase: LoadAmountByWorkerAndToolUseCase,
-    private val createTransactionUseCase: CreateTransactionUseCase
+    private val createTransactionUseCase: CreateTransactionUseCase,
+    private val navController: NavController,
+    private val tokenBundle: TokenBundle
 ) : ViewModel() {
-
-    private val tokenBundle = TokenBundle(application)
 
     private var sender: Worker? = null
     private var receiver: Worker? = null
@@ -135,8 +136,14 @@ class TransactionViewModel @Inject constructor(
                         _state.value = TransactionState.Result(sender!!, receiver!!, tool!!, amount)
                     }
                 }
+            } catch (e: retrofit2.HttpException) {
+                if (e.message?.trim() == HTTP_406) {
+                    tokenBundle.returnToLoginFragment(
+                        navController,
+                        R.id.action_transactionFragment_to_loginFragment
+                    )
+                }
             } catch (e: Exception) {
-                Log.d("TRANSACTIONS_TRANSACTIONS",e.message.toString())
                 _state.value = TransactionState.ConnectionProblem(
                     application.getString(
                         R.string

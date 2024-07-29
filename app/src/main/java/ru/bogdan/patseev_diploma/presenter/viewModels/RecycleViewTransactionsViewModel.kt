@@ -2,6 +2,7 @@ package ru.bogdan.patseev_diploma.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,12 +14,14 @@ import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.useCases.LoadTransactionsWithAnotherDepartmentUseCase
 import ru.bogdan.patseev_diploma.presenter.states.RecycleVIewTransactionState
+import ru.bogdan.patseev_diploma.util.HTTP_406
 import ru.bogdan.patseev_diploma.util.TokenBundle
 import javax.inject.Inject
 
 class RecycleViewTransactionsViewModel @Inject constructor(
     private val application: MyApplication,
-    private val loadTransactionsWithAnotherDepartmentUseCase: LoadTransactionsWithAnotherDepartmentUseCase
+    private val loadTransactionsWithAnotherDepartmentUseCase: LoadTransactionsWithAnotherDepartmentUseCase,
+    private val navController: NavController
 ) : ViewModel() {
 
     private val tokenBundle = TokenBundle(application)
@@ -42,6 +45,13 @@ class RecycleViewTransactionsViewModel @Inject constructor(
                     ),
                     anotherDepartment.getMessageForTitle()
                 )
+            } catch (e: retrofit2.HttpException) {
+                if (e.message?.trim() == HTTP_406) {
+                    tokenBundle.returnToLoginFragment(
+                        navController,
+                        R.id.action_recycleViewTransactionFragment_to_loginFragment
+                    )
+                }
             } catch (e: Exception) {
                 _state.value = RecycleVIewTransactionState.ConnectionProblem(
                     application.getString(

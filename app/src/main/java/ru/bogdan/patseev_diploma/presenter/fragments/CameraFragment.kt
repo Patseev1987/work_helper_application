@@ -4,8 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +13,7 @@ import androidx.annotation.OptIn
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -30,11 +28,11 @@ import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentCameraBinding
-import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
+import ru.bogdan.patseev_diploma.domain.models.Tool
+import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.presenter.states.CameraFragmentState
 import ru.bogdan.patseev_diploma.presenter.viewModels.CameraFragmentViewModel
 import ru.bogdan.patseev_diploma.presenter.viewModels.ViewModelFactory
-import java.lang.RuntimeException
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
@@ -87,7 +85,7 @@ class CameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnclickListeners(binding, viewModel)
+
         observeState(binding, viewModel)
 
     }
@@ -123,7 +121,7 @@ class CameraFragment : Fragment() {
                 .setTargetRotation(binding.cameraViewFinder.display.rotation)
                 .build()
 
-            var imageAnalysis = ImageAnalysis.Analyzer { imageProxy ->
+            val imageAnalysis = ImageAnalysis.Analyzer { imageProxy ->
                 val image = imageProxy.image ?: return@Analyzer
 
                 val inputImage = InputImage.fromMediaImage(
@@ -151,14 +149,11 @@ class CameraFragment : Fragment() {
 
     private fun onSuccessQRCode(
         barcodes: List<Barcode>,
-        viewModel: CameraFragmentViewModel,
+        viewModel: CameraFragmentViewModel
     ) {
         barcodes.firstOrNull()?.let {
             it.rawValue?.let { inputString ->
-//                viewModel.getTool(
-//                    inputString,
-//
-//                )
+                viewModel.getTool(inputString)
             }
         }
     }
@@ -175,37 +170,47 @@ class CameraFragment : Fragment() {
 
     private fun setOnclickListeners(
         binding: FragmentCameraBinding,
-        viewModel: CameraFragmentViewModel
+        viewModel: CameraFragmentViewModel,
+        worker: Worker
     ) {
         binding.bGiveTool.setOnClickListener {
-            try {
-//                val action = CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
-//                    tool = viewModel.tool,
-//                    sender = (this@CameraFragment.requireActivity().application as MyApplication).worker
-//                )
-//                findNavController().navigate(action)
-            } catch (e: RuntimeException) {
-                Toast.makeText(
-                    this@CameraFragment.context,
-                    e.message, Toast.LENGTH_SHORT
-                ).show()
-                goneButtons(binding)
-            }
+            onClickListeners(
+                tool = viewModel.tool,
+                worker = worker,
+                mode = SEND_TOOL
+            )
         }
         binding.bTakeTool.setOnClickListener {
-            try {
-//                val action = CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
-//                    tool = viewModel.tool,
-//                    receiver = (this@CameraFragment.requireActivity().application as MyApplication).worker
-//                )
-//                findNavController().navigate(action)
-            } catch (e: RuntimeException) {
-                Toast.makeText(
-                    this@CameraFragment.context,
-                    e.message, Toast.LENGTH_SHORT
-                ).show()
-                goneButtons(binding)
+            onClickListeners(
+                tool = viewModel.tool,
+                worker = worker,
+                mode = RECEIVE_TOOL
+            )
+        }
+    }
+
+    private fun onClickListeners(tool:Tool, worker: Worker, mode:Int) {
+        try {
+            val action = when(mode) {
+                RECEIVE_TOOL -> CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
+                    tool = tool,
+                    receiver = worker
+                )
+
+                SEND_TOOL ->  CameraFragmentDirections.actionCameraFragmentToTransactionFragment(
+                    tool = viewModel.tool,
+                    sender = worker
+                )
+
+                else -> throw IllegalArgumentException("wrong onClickListeners mode")
             }
+            findNavController().navigate(action)
+        } catch (e: RuntimeException) {
+            Toast.makeText(
+                this@CameraFragment.context,
+                e.message, Toast.LENGTH_SHORT
+            ).show()
+            goneButtons(binding)
         }
     }
 
@@ -225,7 +230,7 @@ class CameraFragment : Fragment() {
                                 state.msg, Toast.LENGTH_SHORT
                             ).show()
                             goneButtons(binding)
-                            binding.twInformation.text = ""
+                            binding.twInformation.text = DEFAULT_INFO
                         }
 
                         is CameraFragmentState.Result -> {
@@ -240,6 +245,7 @@ class CameraFragment : Fragment() {
                                 state.tool.place.column,
                                 state.tool.place.row
                             )
+                            setOnclickListeners(binding, viewModel, state.worker)
                         }
 
                         is CameraFragmentState.ConnectionProblem -> {
@@ -263,6 +269,11 @@ class CameraFragment : Fragment() {
 
 
     companion object {
+
+        private const val DEFAULT_INFO = ""
+        private const val SEND_TOOL = 1
+        private const val RECEIVE_TOOL = 2
+
         private val REQUEST_PERMISSIONS: Array<String> = buildList {
             add(Manifest.permission.CAMERA)
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {

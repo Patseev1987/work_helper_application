@@ -14,6 +14,7 @@ import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.useCases.LoadWorkersByDepartmentUseCase
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewWorkerState
+import ru.bogdan.patseev_diploma.util.HTTP_406
 import ru.bogdan.patseev_diploma.util.TokenBundle
 import javax.inject.Inject
 
@@ -77,7 +78,4 @@ class RecycleViewWorkersViewModel @Inject constructor(
         }
     }
 
-    private companion object {
-        const val HTTP_406 = "HTTP 406"
-    }
 }

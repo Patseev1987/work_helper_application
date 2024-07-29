@@ -1,8 +1,8 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
@@ -12,6 +12,7 @@ import ru.bogdan.patseev_diploma.domain.useCases.LoadTransactionsByWorkerIdUseCa
 import ru.bogdan.patseev_diploma.domain.useCases.LoadWorkerByIdUseCase
 import ru.bogdan.patseev_diploma.domain.useCases.UpdateTransactionUseCase
 import ru.bogdan.patseev_diploma.presenter.states.WorkerFragmentState
+import ru.bogdan.patseev_diploma.util.HTTP_406
 import ru.bogdan.patseev_diploma.util.TokenBundle
 import javax.inject.Inject
 
@@ -21,10 +22,10 @@ class WorkerFragmentViewModel @Inject constructor(
     private val updateTransactionUseCase: UpdateTransactionUseCase,
     private val loadWorkerByIdUseCase: LoadWorkerByIdUseCase,
     private val loadTransactionsByWorkerIdUseCase: LoadTransactionsByWorkerIdUseCase,
-    private val loadStorageWorkerByDepartmentUseCase: LoadStorageWorkerByDepartmentUseCase
+    private val loadStorageWorkerByDepartmentUseCase: LoadStorageWorkerByDepartmentUseCase,
+    private val tokenBundle:TokenBundle,
+    private val navController: NavController
 ) : ViewModel() {
-
-    private val tokenBundle = TokenBundle(application)
 
     private val loadingFlow: MutableSharedFlow<WorkerFragmentState> = MutableSharedFlow()
 
@@ -49,15 +50,21 @@ class WorkerFragmentViewModel @Inject constructor(
         }
         .mergeWith(loadingFlow)
         .catch {
-            Log.d("EXCEPTION_EXCEPTION", "WorkerFragmentViewModel ${it.message}")
-            loadingFlow.emit(
-                WorkerFragmentState.ConnectionProblem(
-                    application.getString(
-                        R.string
-                            .server_doesn_t_respond_try_again_a_little_bit_later
+            if (it.message?.trim() == HTTP_406) {
+                tokenBundle.returnToLoginFragment(
+                    navController,
+                    R.id.action_recycleViewWithWorkersFragment_to_loginFragment
+                )
+            } else {
+                loadingFlow.emit(
+                    WorkerFragmentState.ConnectionProblem(
+                        application.getString(
+                            R.string
+                                .server_doesn_t_respond_try_again_a_little_bit_later
+                        )
                     )
                 )
-            )
+            }
         }
         .stateIn(
             scope = viewModelScope,

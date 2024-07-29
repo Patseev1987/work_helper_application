@@ -1,8 +1,8 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -11,6 +11,7 @@ import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.useCases.LoadToolsForSearchUseCase
 import ru.bogdan.patseev_diploma.presenter.states.FragmentSearchToolsState
 import ru.bogdan.patseev_diploma.util.BLANK_TOOL_CODE
+import ru.bogdan.patseev_diploma.util.HTTP_406
 import ru.bogdan.patseev_diploma.util.TokenBundle
 import javax.inject.Inject
 
@@ -18,10 +19,10 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 class ToolsSearchFragmentViewModel @Inject constructor(
     private val application: MyApplication,
-    private val loadToolsForSearchUseCase: LoadToolsForSearchUseCase
+    private val loadToolsForSearchUseCase: LoadToolsForSearchUseCase,
+    private val navController : NavController,
+    private val tokenBundle:TokenBundle
 ) : ViewModel() {
-
-   private val tokenBundle = TokenBundle(application)
 
     private val _state: MutableStateFlow<FragmentSearchToolsState> =
         MutableStateFlow(FragmentSearchToolsState.Waiting)
@@ -49,8 +50,14 @@ class ToolsSearchFragmentViewModel @Inject constructor(
                 _state.value = FragmentSearchToolsState.Loading
                 val tools = loadToolsForSearchUseCase(tokenBundle.getToken(), code)
                 _state.value = FragmentSearchToolsState.Result(tools)
+            } catch (e: retrofit2.HttpException) {
+                if (e.message?.trim() == HTTP_406) {
+                    tokenBundle.returnToLoginFragment(
+                        navController,
+                        R.id.action_toolsFragmentForSearchFragment_to_loginFragment
+                    )
+                }
             } catch (e: Exception) {
-                Log.d("EXCEPTION_EXCEPTION", "ToolSearchViewModel ${e.message}")
                 _state.value = FragmentSearchToolsState.ConnectionProblem(
                     application.getString(
                         R.string

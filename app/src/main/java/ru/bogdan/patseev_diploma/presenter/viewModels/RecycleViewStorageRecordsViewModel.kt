@@ -3,6 +3,7 @@ package ru.bogdan.patseev_diploma.presenter.viewModels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,7 @@ import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.domain.useCases.LoadStorageRecordByWorkerIdUseCase
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
+import ru.bogdan.patseev_diploma.util.HTTP_406
 import ru.bogdan.patseev_diploma.util.TokenBundle
 import java.time.LocalDate
 import javax.inject.Inject
@@ -24,7 +26,8 @@ import javax.inject.Inject
 
 class RecycleViewStorageRecordsViewModel @Inject constructor(
     private val application: MyApplication,
-    private val loadStorageRecordByWorkerIdUseCase: LoadStorageRecordByWorkerIdUseCase
+    private val loadStorageRecordByWorkerIdUseCase: LoadStorageRecordByWorkerIdUseCase,
+    private val navController: NavController
 ) : ViewModel() {
 
     private val tokenBundle = TokenBundle(application)
@@ -48,8 +51,14 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
                         position.getToolType(),
                         toolCode)
                 )
+            } catch (e: retrofit2.HttpException) {
+                if (e.message?.trim() == HTTP_406) {
+                    tokenBundle.returnToLoginFragment(
+                        navController,
+                        R.id.action_recycleViewCuttingToolsFragment_to_loginFragment
+                    )
+                }
             } catch (e: Exception) {
-                Log.d("EXCEPTION_EXCEPTION", "RecycleViewStorageRecordsViewModel ${e.message}")
                 _state.value = RecycleViewState.ConnectionProblem(
                     application.getString(
                         R.string
