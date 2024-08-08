@@ -1,32 +1,31 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.bogdan.patseev_diploma.data.web.ApiFactory
-import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.domain.models.Tool
 import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.useCases.CreateTransactionUseCase
 import ru.bogdan.patseev_diploma.domain.useCases.LoadAmountByWorkerAndToolUseCase
-import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.TransactionState
-import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
-import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
-import java.net.ConnectException
+import ru.bogdan.patseev_diploma.util.HTTP_406
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import javax.inject.Inject
 
 class TransactionViewModel @Inject constructor(
     private val application: MyApplication,
     private val loadAmountByWorkerAndToolUseCase: LoadAmountByWorkerAndToolUseCase,
-    private val createTransactionUseCase: CreateTransactionUseCase
+    private val createTransactionUseCase: CreateTransactionUseCase,
+    private val navController: NavController,
+    private val tokenBundle: TokenBundle
 ) : ViewModel() {
+
     private var sender: Worker? = null
     private var receiver: Worker? = null
     private var tool: Tool? = null
@@ -106,7 +105,11 @@ class TransactionViewModel @Inject constructor(
                 }
             }
             try {
-                val amountToolFromSender = loadAmountByWorkerAndToolUseCase(sender!!, tool!!)
+                val amountToolFromSender = loadAmountByWorkerAndToolUseCase(
+                    tokenBundle.getToken(),
+                    sender!!,
+                    tool!!
+                )
                 if (amountToolFromSender == -1) {
                     _state.value = TransactionState.Error(
                         application.getString(
@@ -124,9 +127,21 @@ class TransactionViewModel @Inject constructor(
                         )
                         return@launch
                     } else {
-                        createTransactionUseCase(sender!!, receiver!!, tool!!, amount)
+                        createTransactionUseCase(
+                            tokenBundle.getToken(),
+                            sender!!,
+                            receiver!!,
+                            tool!!,
+                            amount)
                         _state.value = TransactionState.Result(sender!!, receiver!!, tool!!, amount)
                     }
+                }
+            } catch (e: retrofit2.HttpException) {
+                if (e.message?.trim() == HTTP_406) {
+                    tokenBundle.returnToLoginFragment(
+                        navController,
+                        R.id.action_transactionFragment_to_loginFragment
+                    )
                 }
             } catch (e: Exception) {
                 _state.value = TransactionState.ConnectionProblem(

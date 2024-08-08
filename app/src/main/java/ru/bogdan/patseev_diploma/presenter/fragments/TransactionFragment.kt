@@ -38,6 +38,8 @@ class TransactionFragment : Fragment() {
     }
     private val component by lazy {
         (this.activity?.application as MyApplication).component
+            .getSubComponentFactory()
+            .create(findNavController())
     }
 
     @Suppress("DEPRECATION")

@@ -34,6 +34,8 @@ class WorkerFragment : Fragment() {
     }
     private val component by lazy {
         (this.activity?.application as MyApplication).component
+            .getSubComponentFactory()
+            .create(findNavController())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,13 +54,16 @@ class WorkerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView(binding, (requireActivity().application as MyApplication).worker)
         observeViewModel(binding, viewModel)
-        setListeners(binding, viewModel)
     }
 
     //set listener for bottom bar menu
-    private fun setListeners(binding: FragmentWorkerBinding, viewModel: WorkerFragmentViewModel) {
+    private fun setListeners(
+        binding: FragmentWorkerBinding,
+        viewModel: WorkerFragmentViewModel,
+        worker:Worker,
+        storageWorker:Worker
+    ) {
         binding.updateTransactionsWorkerFragment.setOnClickListener {
             viewModel.updateTransactions()
         }
@@ -67,7 +72,7 @@ class WorkerFragment : Fragment() {
             when (item.itemId) {
                 R.id.wealth -> {
                     val action = WorkerFragmentDirections.actionWorkerFragmentToTabLayoutFragment(
-                        (requireActivity().application as MyApplication).worker
+                        worker
                     )
                     findNavController().navigate(action)
                     true
@@ -75,7 +80,7 @@ class WorkerFragment : Fragment() {
 
                 R.id.storage_wealth -> {
                     val action = WorkerFragmentDirections.actionWorkerFragmentToTabLayoutFragment(
-                        (requireActivity().application as MyApplication).storageWorker
+                        storageWorker
                     )
                     findNavController().navigate(action)
                     true
@@ -102,11 +107,13 @@ class WorkerFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collect {
                     when (it) {
-                        is WorkerFragmentState.ResultsTransaction -> {
+                        is WorkerFragmentState.Results -> {
                             val adapter = TransactionsAdapter()
                             binding.workerTransactions.adapter = adapter
                             adapter.submitList(it.transactions)
                             binding.progressBarWorkerFragment.visibility = View.GONE
+                            initView(binding, worker = it.worker)
+                            setListeners(binding, viewModel, it.worker, it.storageWorker)
                         }
 
                         is WorkerFragmentState.Loading -> {

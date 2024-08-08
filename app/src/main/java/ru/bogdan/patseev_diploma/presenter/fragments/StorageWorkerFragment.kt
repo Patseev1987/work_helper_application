@@ -1,11 +1,11 @@
 package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
 import ru.bogdan.patseev_diploma.databinding.FragmentStorageWorkerBinding
+import ru.bogdan.patseev_diploma.domain.models.Worker
 import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.presenter.recycleViews.TransactionsAdapter
 import ru.bogdan.patseev_diploma.presenter.states.StorageWorkerFragmentState
@@ -35,6 +36,8 @@ class StorageWorkerFragment : Fragment() {
     }
     private val component by lazy {
         (this.activity?.application as MyApplication).component
+            .getSubComponentFactory()
+            .create(findNavController())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,15 +55,16 @@ class StorageWorkerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnClickListeners(binding, viewModel)
-        initViews(binding)
         observeViewModel(binding, viewModel)
     }
 
 
     private fun setOnClickListeners(
         binding: FragmentStorageWorkerBinding,
-        viewModel: StorageWorkerViewModel
+        viewModel: StorageWorkerViewModel,
+        worker:Worker,
+        sharpen:Worker,
+        storageOfDecommissionedTools:Worker
     ) {
         binding.updateTransactionsStorageWorkerFragment.setOnClickListener {
             viewModel.updateTransactions()
@@ -74,56 +78,46 @@ class StorageWorkerFragment : Fragment() {
 
                 R.id.item_storage_wealth -> {
                     val action = StorageWorkerFragmentDirections
-                        .actionStorageWorkerFragmentToTabLayoutFragment(
-                        (requireActivity().application as MyApplication).worker
-                    )
+                        .actionStorageWorkerFragmentToTabLayoutFragment(worker)
                     findNavController().navigate(action)
                 }
 
                 R.id.item_take_tool -> {
-                    val receiver = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections
-                        .actionStorageWorkerFragmentToTransactionFragment(receiver = receiver)
+                        .actionStorageWorkerFragmentToTransactionFragment(receiver = worker)
                     findNavController().navigate(action)
                 }
 
                 R.id.item_to_sharpen -> {
-                    val receiver = viewModel.sharpen
-                    val sender = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToTransactionFragment(
-                            receiver = receiver,
-                            sender = sender
+                            receiver = sharpen,
+                            sender = worker
                         )
                     findNavController().navigate(action)
                 }
 
                 R.id.item_from_sharpen -> {
-                    val sender = viewModel.sharpen
-                    val receiver = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToTransactionFragment(
-                            receiver = receiver,
-                            sender = sender
+                            receiver = worker,
+                            sender = sharpen
                         )
                     findNavController().navigate(action)
                 }
 
                 R.id.item_storage_of_decommissioned_tools -> {
-                    val receiver = viewModel.storageOfDecommissionedTools
-                    val sender = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections
                         .actionStorageWorkerFragmentToTransactionFragment(
-                            receiver = receiver,
-                            sender = sender
+                            receiver = storageOfDecommissionedTools,
+                            sender = worker
                         )
                     findNavController().navigate(action)
                 }
 
                 R.id.item_give_tool -> {
-                    val sender = (this.requireActivity().application as MyApplication).worker
                     val action = StorageWorkerFragmentDirections
-                        .actionStorageWorkerFragmentToTransactionFragment(sender = sender)
+                        .actionStorageWorkerFragmentToTransactionFragment(sender = worker)
                     findNavController().navigate(action)
                 }
 
@@ -164,8 +158,7 @@ class StorageWorkerFragment : Fragment() {
         }
     }
 
-    private fun initViews(binding: FragmentStorageWorkerBinding) {
-        val worker = (this.requireActivity().application as MyApplication).worker
+    private fun initViews(binding: FragmentStorageWorkerBinding, worker:Worker) {
         binding.twNameStorageWorker.text = worker.firstName
         binding.twDepartmentStorageWorker.text = worker.department.toNormalName()
 
@@ -184,6 +177,18 @@ class StorageWorkerFragment : Fragment() {
                             binding.storageWorkerTransactions.adapter = adapter
                             adapter.submitList(it.transactions)
                             binding.progressBarStorageWorkerFragment.visibility = View.GONE
+
+                            setOnClickListeners(
+                                binding =  binding,
+                                viewModel =  viewModel,
+                                worker = it.worker,
+                                sharpen = it.sharpen,
+                                storageOfDecommissionedTools = it.storageOfDecommissionedTools
+                            )
+                            initViews(
+                               binding = binding,
+                                worker = it.worker
+                            )
                         }
 
                         is StorageWorkerFragmentState.Loading -> {

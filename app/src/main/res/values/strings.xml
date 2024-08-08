@@ -79,5 +79,6 @@
     <string name="you_should_enter_4_number_of_tool_code">You should enter 4 number of tool code</string>
     <string name="wrong_login_or_password">wrong login or password</string>
     <string name="tools_in_storage">tools in storage</string>
+    <string name="token_was_expired">Token was expired</string>
 
 </resources>

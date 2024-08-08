@@ -18,17 +18,18 @@
         <action
             android:id="@+id/action_workerFragment_to_tabLayoutFragment"
             app:destination="@id/tabLayoutFragment" />
+        <action android:id="@+id/action_workerFragment_to_loginFragment" app:destination="@id/loginFragment"/>
     </fragment>
     <fragment android:id="@+id/cameraFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.CameraFragment"
               android:label="fragment_camera" tools:layout="@layout/fragment_camera">
         <action
             android:id="@+id/action_cameraFragment_to_transactionFragment"
             app:destination="@id/transactionFragment" />
+        <action android:id="@+id/action_cameraFragment_to_loginFragment" app:destination="@id/loginFragment"/>
     </fragment>
     <fragment android:id="@+id/storageWorkerFragment"
               android:name="ru.bogdan.patseev_diploma.presenter.fragments.StorageWorkerFragment"
               android:label="fragment_storage_worker" tools:layout="@layout/fragment_storage_worker">
-        <argument android:name="worker" app:argType="ru.bogdan.patseev_diploma.domain.models.Worker"/>
         <action android:id="@+id/action_storageWorkerFragment_to_cameraFragment" app:destination="@id/cameraFragment"/>
         <action
             android:id="@+id/action_storageWorkerFragment_to_tabLayoutFragment"
@@ -42,6 +43,7 @@
         <action
             android:id="@+id/action_storageWorkerFragment_to_recycleViewTransactionFragment"
             app:destination="@id/recycleViewTransactionFragment" />
+        <action android:id="@+id/action_storageWorkerFragment_to_loginFragment" app:destination="@id/loginFragment"/>
     </fragment>
     <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
@@ -54,6 +56,7 @@
         <argument
             android:name="tool"
             app:argType="ru.bogdan.patseev_diploma.domain.models.Tool" />
+        <action android:id="@+id/action_toolFragment_to_loginFragment" app:destination="@id/loginFragment"/>
     </fragment>
 
     <fragment
@@ -73,6 +76,7 @@
         <argument
             android:name="worker"
             app:argType="ru.bogdan.patseev_diploma.domain.models.Worker" />
+        <action android:id="@+id/action_tabLayoutFragment_to_loginFragment" app:destination="@id/loginFragment"/>
     </fragment>
     <fragment
         android:id="@+id/recycleViewCuttingToolsFragment"
@@ -82,6 +86,8 @@
         <argument
             android:name="worker"
             app:argType="ru.bogdan.patseev_diploma.domain.models.Worker" />
+        <action android:id="@+id/action_recycleViewCuttingToolsFragment_to_loginFragment"
+                app:destination="@id/loginFragment"/>
     </fragment>
     <fragment
         android:id="@+id/transactionFragment"
@@ -109,6 +115,7 @@
         <action
             android:id="@+id/action_transactionFragment_to_recycleViewWithWorkersFragment"
             app:destination="@id/recycleViewWithWorkersFragment" />
+        <action android:id="@+id/action_transactionFragment_to_loginFragment" app:destination="@id/loginFragment"/>
     </fragment>
     <fragment
         android:id="@+id/recycleViewWithWorkersFragment"
@@ -125,12 +132,17 @@
         <action
             android:id="@+id/action_recycleViewWithWorkersFragment_to_tabLayoutFragment"
             app:destination="@id/tabLayoutFragment" />
+        <action android:id="@+id/action_recycleViewWithWorkersFragment_to_loginFragment"
+                app:destination="@id/loginFragment"/>
     </fragment>
     <fragment
         android:id="@+id/toolsFragmentForSearchFragment"
         android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolsForSearchFragment"
         android:label="fragment_tools_for_search"
-        tools:layout="@layout/fragment_tools_for_search" />
+        tools:layout="@layout/fragment_tools_for_search" >
+        <action android:id="@+id/action_toolsFragmentForSearchFragment_to_loginFragment"
+                app:destination="@id/loginFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/recycleViewTransactionFragment"
         android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewTransactionFragment"
@@ -140,5 +152,7 @@
             android:name="anotherDepartment"
             app:argType="ru.bogdan.patseev_diploma.domain.models.enums.Department"
             android:defaultValue="STORAGE_OF_DECOMMISSIONED_TOOLS" />
+        <action android:id="@+id/action_recycleViewTransactionFragment_to_loginFragment"
+                app:destination="@id/loginFragment"/>
     </fragment>
 </navigation>

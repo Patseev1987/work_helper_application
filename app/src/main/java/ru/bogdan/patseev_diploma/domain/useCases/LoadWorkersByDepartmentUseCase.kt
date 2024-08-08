@@ -7,6 +7,6 @@ import javax.inject.Inject
 class LoadWorkersByDepartmentUseCase @Inject constructor(
     private val repository: ApplicationRepository
 ) {
-    suspend operator fun invoke(department: Department) = repository
-        .loadWorkersByDepartment(department)
+    suspend operator fun invoke( token:String, department: Department) = repository
+        .loadWorkersByDepartment(token, department)
 }

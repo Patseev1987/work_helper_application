@@ -18,6 +18,5 @@ data class Worker(
     val department: Department,
     val type: WorkerType,
     val login: String,
-    val password: String
 ) : Parcelable {
 }

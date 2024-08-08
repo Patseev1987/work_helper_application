@@ -2,31 +2,26 @@ package ru.bogdan.patseev_diploma.presenter.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.R
-import ru.bogdan.patseev_diploma.data.web.ApiFactory
-import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.domain.useCases.LoadToolsForSearchUseCase
 import ru.bogdan.patseev_diploma.presenter.states.FragmentSearchToolsState
-import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.util.BLANK_TOOL_CODE
-import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
-import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
-import java.net.ConnectException
+import ru.bogdan.patseev_diploma.util.HTTP_406
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import javax.inject.Inject
 
 
 @OptIn(FlowPreview::class)
 class ToolsSearchFragmentViewModel @Inject constructor(
     private val application: MyApplication,
-    private val loadToolsForSearchUseCase: LoadToolsForSearchUseCase
+    private val loadToolsForSearchUseCase: LoadToolsForSearchUseCase,
+    private val navController : NavController,
+    private val tokenBundle:TokenBundle
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<FragmentSearchToolsState> =
@@ -53,10 +48,16 @@ class ToolsSearchFragmentViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _state.value = FragmentSearchToolsState.Loading
-                val tools = loadToolsForSearchUseCase(code)
+                val tools = loadToolsForSearchUseCase(tokenBundle.getToken(), code)
                 _state.value = FragmentSearchToolsState.Result(tools)
+            } catch (e: retrofit2.HttpException) {
+                if (e.message?.trim() == HTTP_406) {
+                    tokenBundle.returnToLoginFragment(
+                        navController,
+                        R.id.action_toolsFragmentForSearchFragment_to_loginFragment
+                    )
+                }
             } catch (e: Exception) {
-
                 _state.value = FragmentSearchToolsState.ConnectionProblem(
                     application.getString(
                         R.string

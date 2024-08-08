@@ -1,7 +1,9 @@
 package ru.bogdan.patseev_diploma.presenter.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,19 +17,20 @@ import ru.bogdan.patseev_diploma.domain.models.enums.Department
 import ru.bogdan.patseev_diploma.domain.models.enums.ToolType
 import ru.bogdan.patseev_diploma.domain.models.enums.WorkerType
 import ru.bogdan.patseev_diploma.domain.useCases.LoadStorageRecordByWorkerIdUseCase
-import ru.bogdan.patseev_diploma.presenter.states.LoginState
 import ru.bogdan.patseev_diploma.presenter.states.RecycleViewState
-import ru.bogdan.patseev_diploma.util.CONNECTION_REFUSED
-import ru.bogdan.patseev_diploma.util.NETWORK_UNREACHABLE
-import java.net.ConnectException
+import ru.bogdan.patseev_diploma.util.HTTP_406
+import ru.bogdan.patseev_diploma.util.TokenBundle
 import java.time.LocalDate
 import javax.inject.Inject
 
 
 class RecycleViewStorageRecordsViewModel @Inject constructor(
     private val application: MyApplication,
-    private val loadStorageRecordByWorkerIdUseCase: LoadStorageRecordByWorkerIdUseCase
+    private val loadStorageRecordByWorkerIdUseCase: LoadStorageRecordByWorkerIdUseCase,
+    private val navController: NavController
 ) : ViewModel() {
+
+    private val tokenBundle = TokenBundle(application)
 
     private val searchString: MutableStateFlow<String> = MutableStateFlow(BLANK_TOOL_CODE)
 
@@ -42,8 +45,19 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _state.value = RecycleViewState.Result(
-                    loadStorageRecordByWorkerIdUseCase(worker.id, position.getToolType(), toolCode)
+                    loadStorageRecordByWorkerIdUseCase(
+                        tokenBundle.getToken(),
+                        worker.id,
+                        position.getToolType(),
+                        toolCode)
                 )
+            } catch (e: retrofit2.HttpException) {
+                if (e.message?.trim() == HTTP_406) {
+                    tokenBundle.returnToLoginFragment(
+                        navController,
+                        R.id.action_recycleViewCuttingToolsFragment_to_loginFragment
+                    )
+                }
             } catch (e: Exception) {
                 _state.value = RecycleViewState.ConnectionProblem(
                     application.getString(
@@ -94,7 +108,6 @@ class RecycleViewStorageRecordsViewModel @Inject constructor(
             LocalDate.now(),
             Department.DEPARTMENT_19,
             WorkerType.WORKER,
-            "",
             ""
         )
     }

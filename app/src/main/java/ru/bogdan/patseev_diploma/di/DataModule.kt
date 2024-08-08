@@ -1,14 +1,17 @@
 package ru.bogdan.patseev_diploma.di
 
+import android.app.Application
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import ru.bogdan.patseev_diploma.MyApplication
 import ru.bogdan.patseev_diploma.data.ApplicationRepositoryImpl
 import ru.bogdan.patseev_diploma.data.web.ApiFactory
 import ru.bogdan.patseev_diploma.data.web.ApiHelper
 import ru.bogdan.patseev_diploma.data.web.ApiHelperImpl
 import ru.bogdan.patseev_diploma.domain.ApplicationRepository
 import ru.bogdan.patseev_diploma.presenter.fragments.RecycleViewStorageRecordsFragment
+import ru.bogdan.patseev_diploma.util.TokenBundle
 
 
 @Module
@@ -28,8 +31,8 @@ interface DataModule {
         fun provideApiService() = ApiFactory.apiService
 
         @Provides
-        fun provideWorker(fragment: RecycleViewStorageRecordsFragment): Long {
-            return fragment.id.toLong()
+        fun provideTokenBundle(application: MyApplication): TokenBundle {
+            return TokenBundle(application)
         }
     }
 }
