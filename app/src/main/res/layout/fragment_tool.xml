@@ -32,10 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tw_code_label"
+        app:layout_constraintBottom_toBottomOf="@+id/record_card_tw_code_label"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tw_code_label"
-        app:layout_constraintTop_toTopOf="@+id/tw_code_label"
+        app:layout_constraintStart_toEndOf="@+id/record_card_tw_code_label"
+        app:layout_constraintTop_toTopOf="@+id/record_card_tw_code_label"
         tools:text="1111-1111" />
 
     <TextView
@@ -44,8 +44,8 @@
         android:layout_height="wrap_content"
         android:text="@string/name"
         app:layout_constraintBottom_toBottomOf="@+id/icon_tool_fragment"
-        app:layout_constraintStart_toStartOf="@+id/tw_code_label"
-        app:layout_constraintTop_toBottomOf="@+id/tw_code_label" />
+        app:layout_constraintStart_toStartOf="@+id/record_card_tw_code_label"
+        app:layout_constraintTop_toBottomOf="@+id/record_card_tw_code_label" />
 
     <TextView
         android:id="@+id/tw_name"
@@ -53,10 +53,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tw_name_label"
+        app:layout_constraintBottom_toBottomOf="@+id/record_card_tw_name_label"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tw_name_label"
-        app:layout_constraintTop_toTopOf="@+id/tw_name_label"
+        app:layout_constraintStart_toEndOf="@+id/record_card_tw_name_label"
+        app:layout_constraintTop_toTopOf="@+id/record_card_tw_name_label"
         tools:text="Inner CNMG120408" />
 
     <TextView
@@ -78,7 +78,7 @@
         android:text="@string/self"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tw_place_label"
+        app:layout_constraintTop_toBottomOf="@+id/record_card_tw_place_label"
         app:layout_constraintEnd_toStartOf="@+id/tw_column_label"/>
 
 

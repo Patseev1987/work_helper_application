@@ -19,6 +19,9 @@
             android:id="@+id/action_workerFragment_to_tabLayoutFragment"
             app:destination="@id/tabLayoutFragment" />
         <action android:id="@+id/action_workerFragment_to_loginFragment" app:destination="@id/loginFragment"/>
+        <action
+            android:id="@+id/action_workerFragment_to_recordSearchByToolCodeFragment"
+            app:destination="@id/recordSearchByToolCodeFragment" />
     </fragment>
     <fragment android:id="@+id/cameraFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.CameraFragment"
               android:label="fragment_camera" tools:layout="@layout/fragment_camera">
@@ -44,6 +47,9 @@
             android:id="@+id/action_storageWorkerFragment_to_recycleViewTransactionFragment"
             app:destination="@id/recycleViewTransactionFragment" />
         <action android:id="@+id/action_storageWorkerFragment_to_loginFragment" app:destination="@id/loginFragment"/>
+        <action
+            android:id="@+id/action_storageWorkerFragment_to_recordSearchByToolCodeFragment"
+            app:destination="@id/recordSearchByToolCodeFragment" />
     </fragment>
     <fragment android:id="@+id/toolFragment" android:name="ru.bogdan.patseev_diploma.presenter.fragments.ToolFragment"
               android:label="fragment_tool" tools:layout="@layout/fragment_tool">
@@ -155,4 +161,9 @@
         <action android:id="@+id/action_recycleViewTransactionFragment_to_loginFragment"
                 app:destination="@id/loginFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/recordSearchByToolCodeFragment"
+        android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecordSearchByToolCodeFragment"
+        android:label="fragment_record_search_by_tool_code"
+        tools:layout="@layout/fragment_record_search_by_tool_code" />
 </navigation>

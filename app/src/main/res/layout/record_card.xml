@@ -86,6 +86,49 @@
             app:layout_constraintTop_toTopOf="@+id/record_card_tw_place_label"
             tools:text="25" />
 
+
+        <TextView
+            android:id="@+id/record_card_tw_worker_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/worker"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@+id/record_card_icon_tool"
+            app:layout_constraintTop_toBottomOf="@+id/record_card_tw_place_label" />
+
+        <TextView
+            android:id="@+id/record_card_tw_worker_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="@+id/record_card_tw_code"
+            app:layout_constraintStart_toStartOf="@+id/record_card_tw_code"
+            app:layout_constraintTop_toTopOf="@+id/record_card_tw_worker_name_label"
+            tools:text="John week" />
+
+        <TextView
+            android:id="@+id/record_card_department_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/department_1"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@+id/record_card_icon_tool"
+            app:layout_constraintTop_toBottomOf="@+id/record_card_tw_worker_name_label" />
+
+        <TextView
+            android:id="@+id/record_card_tw_department"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="@+id/record_card_tw_code"
+            app:layout_constraintStart_toStartOf="@+id/record_card_tw_code"
+            app:layout_constraintTop_toTopOf="@+id/record_card_department_label"
+            tools:text="Department 19" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

@@ -16,5 +16,8 @@
         android:id="@+id/cameraFragment"
         android:icon="@drawable/baseline_search_24"
         android:title="@string/search_with_qr_code" />
-
+    <item
+        android:id="@+id/recordSearchByToolCodeFragment"
+        android:icon="@drawable/baseline_person_search_24"
+        android:title="@string/search_with_qr_code" />
 </menu>

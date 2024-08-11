@@ -17,10 +17,10 @@ class StorageRecordsAdapter(private val onClickListener: ((StorageRecord) -> Uni
     ) {
 
     class CuttingToolViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView) {
-        private val twName = itemView.findViewById<TextView>(R.id.tw_name)
-        private val twCode = itemView.findViewById<TextView>(R.id.tw_code)
-        private val twAmount = itemView.findViewById<TextView>(R.id.tw_amount_tool)
-        private val iwIcon = itemView.findViewById<ImageView>(R.id.icon_tool)
+        private val twName = itemView.findViewById<TextView>(R.id.record_card_tw_name)
+        private val twCode = itemView.findViewById<TextView>(R.id.record_card_tw_code)
+        private val twAmount = itemView.findViewById<TextView>(R.id.record_card_tw_amount_tool)
+        private val iwIcon = itemView.findViewById<ImageView>(R.id.record_card_icon_tool)
 
         fun bind(storageRecord: StorageRecord, onClickListener: ((StorageRecord) -> Unit)? = null) {
             val newName = storageRecord.tool.name.replace(" ", "\n")

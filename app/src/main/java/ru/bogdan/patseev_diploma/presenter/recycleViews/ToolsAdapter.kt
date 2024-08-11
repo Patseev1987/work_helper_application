@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.bogdan.patseev_diploma.R
-import ru.bogdan.patseev_diploma.domain.models.StorageRecord
 import ru.bogdan.patseev_diploma.domain.models.Tool
 
 class ToolsAdapter(private val onClickListener: ((Tool) -> Unit)? = null) :
@@ -18,9 +17,9 @@ class ToolsAdapter(private val onClickListener: ((Tool) -> Unit)? = null) :
     ) {
 
     class ToolViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView) {
-        private val twName = itemView.findViewById<TextView>(R.id.tw_name)
-        private val twCode = itemView.findViewById<TextView>(R.id.tw_code)
-        private val iwIcon = itemView.findViewById<ImageView>(R.id.icon_tool)
+        private val twName = itemView.findViewById<TextView>(R.id.record_card_tw_name)
+        private val twCode = itemView.findViewById<TextView>(R.id.record_card_tw_code)
+        private val iwIcon = itemView.findViewById<ImageView>(R.id.record_card_icon_tool)
 
         fun bind(tool: Tool, onClickListener: ((Tool) -> Unit)? = null) {
             val newName = tool.name.replace(" ", "\n")

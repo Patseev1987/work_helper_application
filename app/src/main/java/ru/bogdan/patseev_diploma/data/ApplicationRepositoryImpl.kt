@@ -74,4 +74,11 @@ class ApplicationRepositoryImpl @Inject constructor(
     override suspend fun loadWorkerById(token: String, id: Long): Worker {
       return  apiHelper.loadWorkerById(token, id)
     }
+
+    override suspend fun getRecordsByToolCode(
+        token: String,
+        toolCode: String
+    ): List<StorageRecord> {
+      return  apiHelper.getRecordsByToolCode(token,toolCode)
+    }
 }

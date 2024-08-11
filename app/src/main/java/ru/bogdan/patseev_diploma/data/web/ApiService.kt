@@ -73,5 +73,12 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") workerId: Long
     ): WorkerWEB
+
+
+    @GET("api/records/{toolCode}")
+    suspend fun getRecordsByToolCode(
+        @Header("Authorization") token: String,
+        @Path("toolCode") toolCode:String
+    ):List<StorageRecordWEB>
 }
 

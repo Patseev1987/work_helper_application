@@ -111,4 +111,11 @@ class ApiHelperImpl @Inject constructor(
             return ApiFactory.apiService.loadWorkerById(token,id).toWorker()
     }
 
+    override suspend fun getRecordsByToolCode(
+        token: String,
+        toolCode: String
+    ): List<StorageRecord> {
+        return apiService.getRecordsByToolCode(token,toolCode).map{it.toStorageRecord()}
+    }
+
 }
