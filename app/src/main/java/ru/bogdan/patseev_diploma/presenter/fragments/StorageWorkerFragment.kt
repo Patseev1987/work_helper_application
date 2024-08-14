@@ -62,9 +62,9 @@ class StorageWorkerFragment : Fragment() {
     private fun setOnClickListeners(
         binding: FragmentStorageWorkerBinding,
         viewModel: StorageWorkerViewModel,
-        worker:Worker,
-        sharpen:Worker,
-        storageOfDecommissionedTools:Worker
+        worker: Worker,
+        sharpen: Worker,
+        storageOfDecommissionedTools: Worker
     ) {
         binding.updateTransactionsStorageWorkerFragment.setOnClickListener {
             viewModel.updateTransactions()
@@ -153,12 +153,18 @@ class StorageWorkerFragment : Fragment() {
                     findNavController().navigate(action)
                 }
 
+                R.id.item_find_records -> {
+                    findNavController().navigate(
+                        R.id.action_storageWorkerFragment_to_recordSearchByToolCodeFragment
+                    )
+                }
+
             }
             true
         }
     }
 
-    private fun initViews(binding: FragmentStorageWorkerBinding, worker:Worker) {
+    private fun initViews(binding: FragmentStorageWorkerBinding, worker: Worker) {
         binding.twNameStorageWorker.text = worker.firstName
         binding.twDepartmentStorageWorker.text = worker.department.toNormalName()
 
@@ -179,14 +185,14 @@ class StorageWorkerFragment : Fragment() {
                             binding.progressBarStorageWorkerFragment.visibility = View.GONE
 
                             setOnClickListeners(
-                                binding =  binding,
-                                viewModel =  viewModel,
+                                binding = binding,
+                                viewModel = viewModel,
                                 worker = it.worker,
                                 sharpen = it.sharpen,
                                 storageOfDecommissionedTools = it.storageOfDecommissionedTools
                             )
                             initViews(
-                               binding = binding,
+                                binding = binding,
                                 worker = it.worker
                             )
                         }

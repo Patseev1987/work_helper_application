@@ -47,4 +47,6 @@ interface ApplicationRepository {
     suspend fun loadWorkerById(token:String,id:Long): Worker
 
     suspend fun getRecordsByToolCode(token:String, toolCode:String):List<StorageRecord>
+
+    suspend fun getRecordsByToolCodeInDepartment(token: String, toolCode: String): List<StorageRecord>
 }

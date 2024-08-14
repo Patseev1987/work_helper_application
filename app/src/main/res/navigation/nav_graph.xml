@@ -165,5 +165,9 @@
         android:id="@+id/recordSearchByToolCodeFragment"
         android:name="ru.bogdan.patseev_diploma.presenter.fragments.RecordSearchByToolCodeFragment"
         android:label="fragment_record_search_by_tool_code"
-        tools:layout="@layout/fragment_record_search_by_tool_code" />
+        tools:layout="@layout/fragment_record_search_by_tool_code" >
+        <action
+            android:id="@+id/action_recordSearchByToolCodeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

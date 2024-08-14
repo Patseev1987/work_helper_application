@@ -15,6 +15,7 @@ interface SubComponentApplication {
     fun inject(toolsForSearchFragment: ToolsForSearchFragment)
     fun inject(transactionFragment: TransactionFragment)
     fun inject(workerFragment: WorkerFragment)
+    fun inject(recordSearchByToolCodeFragment: RecordSearchByToolCodeFragment)
 
     @Subcomponent.Factory
     interface Factory {

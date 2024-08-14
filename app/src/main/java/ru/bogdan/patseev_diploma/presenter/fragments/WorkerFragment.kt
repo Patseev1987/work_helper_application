@@ -61,8 +61,8 @@ class WorkerFragment : Fragment() {
     private fun setListeners(
         binding: FragmentWorkerBinding,
         viewModel: WorkerFragmentViewModel,
-        worker:Worker,
-        storageWorker:Worker
+        worker: Worker,
+        storageWorker: Worker
     ) {
         binding.updateTransactionsWorkerFragment.setOnClickListener {
             viewModel.updateTransactions()
@@ -88,6 +88,13 @@ class WorkerFragment : Fragment() {
 
                 R.id.cameraFragment -> {
                     findNavController().navigate(R.id.action_workerFragment_to_cameraFragment)
+                    true
+                }
+
+                R.id.recordSearchByToolCodeFragment -> {
+                    findNavController().navigate(
+                        R.id.action_workerFragment_to_recordSearchByToolCodeFragment
+                    )
                     true
                 }
 

@@ -81,4 +81,11 @@ class ApplicationRepositoryImpl @Inject constructor(
     ): List<StorageRecord> {
       return  apiHelper.getRecordsByToolCode(token,toolCode)
     }
+
+    override suspend fun getRecordsByToolCodeInDepartment(
+        token: String,
+        toolCode: String
+    ): List<StorageRecord> {
+        return apiHelper.getRecordsByToolCodeInDepartment(token,toolCode)
+    }
 }

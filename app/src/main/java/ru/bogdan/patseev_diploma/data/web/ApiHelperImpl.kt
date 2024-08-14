@@ -118,4 +118,11 @@ class ApiHelperImpl @Inject constructor(
         return apiService.getRecordsByToolCode(token,toolCode).map{it.toStorageRecord()}
     }
 
+    override suspend fun getRecordsByToolCodeInDepartment(
+        token: String,
+        toolCode: String
+    ): List<StorageRecord> {
+        return apiService.getRecordsByToolCodeInDepartment(token,toolCode).map{it.toStorageRecord()}
+    }
+
 }

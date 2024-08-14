@@ -5,6 +5,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import ru.bogdan.patseev_diploma.presenter.viewModels.CameraFragmentViewModel
+import ru.bogdan.patseev_diploma.presenter.viewModels.RecordsSearchByToolCodeViewModel
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewStorageRecordsViewModel
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewTransactionsViewModel
 import ru.bogdan.patseev_diploma.presenter.viewModels.RecycleViewWorkersViewModel
@@ -69,5 +70,12 @@ interface ViewModelsModuleWithParam {
     @IntoMap
     fun bindWorkerFragmentViewModel(
         workerFragmentViewModel: WorkerFragmentViewModel
+    ): ViewModel
+
+    @Binds
+    @ViewModelKey(RecordsSearchByToolCodeViewModel::class)
+    @IntoMap
+    fun bindRecordsSearchByToolCodeViewModel(
+        workerFragmentViewModel: RecordsSearchByToolCodeViewModel
     ): ViewModel
 }

@@ -84,5 +84,6 @@
     <string name="department_1">Department:</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="find_tool">Find tool</string>
 
 </resources>

@@ -40,6 +40,10 @@
                 android:id="@+id/item_storage_wealth"
                 android:icon="@drawable/baseline_search_by_code"
                 android:title="@string/tools_in_storage" />
+            <item
+                android:id="@+id/item_find_records"
+                android:icon="@drawable/baseline_person_search_24"
+                android:title="@string/tools_in_storage" />
         </menu>
     </item>
     <item
