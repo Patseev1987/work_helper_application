@@ -36,7 +36,7 @@ class RecordsSearchByToolCodeViewModel @Inject constructor(
     val searchString: MutableStateFlow<String> = MutableStateFlow("")
 
     private val _state: MutableStateFlow<RecordsSearchByToolCodeState> =
-        MutableStateFlow(RecordsSearchByToolCodeState.Loading)
+        MutableStateFlow(RecordsSearchByToolCodeState.Waiting)
     val state = _state.asStateFlow()
 
     init {
@@ -44,7 +44,9 @@ class RecordsSearchByToolCodeViewModel @Inject constructor(
             searchString
                 .debounce(500)
                 .collect { toolCode ->
+                   if (toolCode.length > 3){
                     loadingRecords(toolCode)
+                   }
                 }
         }
     }

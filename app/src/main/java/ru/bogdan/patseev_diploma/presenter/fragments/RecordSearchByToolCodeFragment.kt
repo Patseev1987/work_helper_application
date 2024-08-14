@@ -1,6 +1,7 @@
 package ru.bogdan.patseev_diploma.presenter.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -84,6 +85,7 @@ class RecordSearchByToolCodeFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collect { state ->
+                    Log.d("State_State", state.toString())
                     when (state) {
                         is RecordsSearchByToolCodeState.Loading -> {
                             binding.progressBarRecordsSearch.visibility = View.VISIBLE
@@ -103,7 +105,6 @@ class RecordSearchByToolCodeFragment : Fragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                             binding.progressBarRecordsSearch.visibility = View.GONE
-
                         }
 
                         is RecordsSearchByToolCodeState.ConnectionProblem -> {
